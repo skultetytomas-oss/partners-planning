@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PARTNERS | Admin — Exercise Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #AB0534; --red-hover: #c2073c; --red-dim: rgba(171,5,52,0.2);
+  --white: #fff; --muted: rgba(255,255,255,0.55); --card: rgba(255,255,255,0.06);
+  --border: rgba(255,255,255,0.12); --green: #22c55e; --amber: #f59e0b;
+  --font: 'Figtree', system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font); color: var(--white); min-height: 100vh;
+  background: linear-gradient(135deg, #3D0024 0%, #2A0018 50%, #1A0010 100%);
+  background-attachment: fixed;
+}
+
+/* ── LOGIN ── */
+#login-screen {
+  position: fixed; inset: 0; background: linear-gradient(135deg, #3D0024, #1A0010);
+  display: flex; align-items: center; justify-content: center; z-index: 100;
+}
+.login-box {
+  background: rgba(255,255,255,0.07); border: 1px solid var(--border);
+  border-radius: 20px; padding: 48px 40px; max-width: 380px; width: 90%; text-align: center;
+}
+.login-logo { font-size: 26px; font-weight: 800; letter-spacing: 2px; margin-bottom: 6px; }
+.login-logo span { color: var(--red); }
+.login-sub { font-size: 12px; color: var(--muted); margin-bottom: 30px; }
+.login-box h2 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+.login-box p { font-size: 13px; color: var(--muted); margin-bottom: 22px; }
+.fi {
+  width: 100%; padding: 13px 16px; border-radius: 10px;
+  border: 1px solid var(--border); background: rgba(255,255,255,0.08);
+  color: var(--white); font-family: var(--font); font-size: 15px; outline: none; margin-bottom: 14px;
+}
+.fi:focus { border-color: var(--red); }
+.fi::placeholder { color: var(--muted); }
+.btn {
+  padding: 12px 20px; border-radius: 10px; border: none; cursor: pointer;
+  font-family: var(--font); font-size: 14px; font-weight: 700; transition: all .2s;
+}
+.btn-red { background: var(--red); color: #fff; }
+.btn-red:hover { background: var(--red-hover); }
+.btn-red:active { transform: scale(.98); }
+.btn-ghost { background: rgba(255,255,255,0.08); color: var(--white); border: 1px solid var(--border); }
+.btn-ghost:hover { background: rgba(255,255,255,0.14); }
+.btn-full { width: 100%; }
+.login-hint { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 14px; }
+
+/* ── HEADER ── */
+#admin-app { display: none; }
+header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(40,0,20,0.9); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px; height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.h-logo { font-size: 17px; font-weight: 800; letter-spacing: 1.5px; }
+.h-logo span { color: var(--red); }
+.h-right { display: flex; align-items: center; gap: 12px; }
+.admin-badge {
+  font-size: 11px; font-weight: 700; letter-spacing: 1px;
+  background: var(--red-dim); color: var(--red);
+  border: 1px solid rgba(171,5,52,0.4); border-radius: 6px; padding: 3px 10px;
+}
+
+/* ── TABS ── */
+.tab-bar {
+  background: rgba(30,0,15,0.8); border-bottom: 1px solid var(--border);
+  display: flex; overflow-x: auto; scrollbar-width: none;
+}
+.tab-bar::-webkit-scrollbar { display: none; }
+.t-tab {
+  flex-shrink: 0; padding: 14px 20px; font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .5px; color: var(--muted);
+  border: none; background: none; cursor: pointer; border-bottom: 2px solid transparent;
+  transition: all .2s; font-family: var(--font); white-space: nowrap;
+}
+.t-tab:hover { color: var(--white); }
+.t-tab.active { color: var(--white); border-bottom-color: var(--red); }
+
+/* ── MAIN ── */
+main { max-width: 960px; margin: 0 auto; padding: 28px 20px 80px; }
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ── CARD ── */
+.card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 22px; margin-bottom: 16px;
+}
+.card-title {
+  font-size: 11px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--red); margin-bottom: 14px;
+}
+.card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.card p { font-size: 13px; color: var(--muted); }
+
+/* ── EXERCISE ROWS ── */
+.ex-list { display: flex; flex-direction: column; gap: 10px; }
+.ex-row {
+  display: grid; grid-template-columns: 40px 1fr auto auto;
+  align-items: center; gap: 12px;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 14px;
+  transition: background .2s;
+}
+.ex-row:hover { background: rgba(255,255,255,0.07); }
+.ex-id { font-size: 11px; font-weight: 700; color: var(--red); }
+.ex-text-col { min-width: 0; }
+.ex-text { font-size: 13px; line-height: 1.4; }
+.ex-meta { font-size: 11px; color: var(--muted); margin-top: 3px; }
+.ex-inputs-badge {
+  font-size: 11px; font-weight: 700; background: rgba(255,255,255,0.08);
+  border-radius: 6px; padding: 3px 8px; white-space: nowrap; color: var(--muted);
+}
+.toggle {
+  width: 38px; height: 22px; background: rgba(255,255,255,0.12);
+  border-radius: 11px; position: relative; cursor: pointer; transition: background .2s;
+  border: none; flex-shrink: 0;
+}
+.toggle.on { background: var(--red); }
+.toggle::after {
+  content: ''; position: absolute; width: 16px; height: 16px; background: #fff;
+  border-radius: 50%; top: 3px; left: 3px; transition: left .2s;
+}
+.toggle.on::after { left: 19px; }
+
+/* ── MONTH SCHEDULE ── */
+.month-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.month-card {
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px;
+}
+.month-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 12px; color: var(--white); }
+.month-section { margin-bottom: 10px; }
+.month-section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--red); margin-bottom: 6px; }
+.ex-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--red-dim); border: 1px solid rgba(171,5,52,0.3);
+  border-radius: 6px; padding: 3px 8px; font-size: 11px; font-weight: 600;
+  margin: 2px; cursor: pointer; color: var(--white); transition: background .2s;
+}
+.ex-chip:hover { background: rgba(171,5,52,0.4); }
+.ex-chip .chip-x { color: rgba(255,255,255,0.5); font-size: 10px; }
+.ex-chip-add {
+  display: inline-block; background: rgba(255,255,255,0.06);
+  border: 1px dashed var(--border); border-radius: 6px;
+  padding: 3px 8px; font-size: 11px; cursor: pointer;
+  color: var(--muted); margin: 2px; transition: all .2s;
+}
+.ex-chip-add:hover { border-color: var(--red); color: var(--red); }
+.chips-wrap { min-height: 28px; }
+
+/* ── ADD EXERCISE FORM ── */
+.add-form { background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+.add-form textarea, .add-form input, .add-form select {
+  width: 100%; padding: 10px 12px; border-radius: 8px;
+  border: 1px solid var(--border); background: rgba(255,255,255,0.06);
+  color: var(--white); font-family: var(--font); font-size: 13px;
+  margin-bottom: 10px; outline: none; transition: border-color .2s;
+}
+.add-form textarea { resize: vertical; }
+.add-form textarea:focus, .add-form input:focus, .add-form select:focus { border-color: var(--red); }
+.add-form textarea::placeholder, .add-form input::placeholder { color: rgba(255,255,255,0.28); }
+.add-form select option { background: #2A0018; }
+.form-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.form-row > * { flex: 1; min-width: 120px; }
+label.fl { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; display: block; margin-bottom: 5px; }
+
+/* ── EXPORT SECTION ── */
+.export-box {
+  background: rgba(34,197,94,.08); border: 1px solid rgba(34,197,94,.3);
+  border-radius: 12px; padding: 20px;
+}
+.export-box h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; color: var(--green); }
+.export-box p { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+.steps { counter-reset: step; list-style: none; }
+.steps li { counter-increment: step; display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; font-size: 13px; color: var(--muted); }
+.steps li::before {
+  content: counter(step); width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(34,197,94,.2); color: var(--green); font-size: 11px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+}
+
+/* ── TOAST ── */
+#toast {
+  position: fixed; bottom: 24px; right: 20px; z-index: 200;
+  background: rgba(30,0,15,0.95); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 18px; font-size: 12px;
+  color: var(--white); opacity: 0; transition: opacity .3s; pointer-events: none;
+}
+#toast.show { opacity: 1; }
+#toast.error { border-color: var(--red); color: #ff7676; }
+
+/* ── MODAL ── */
+#ex-picker { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 300; display: none; align-items: center; justify-content: center; }
+#ex-picker.open { display: flex; }
+.picker-box {
+  background: #2A0018; border: 1px solid var(--border); border-radius: 16px;
+  max-width: 560px; width: 90%; max-height: 80vh; display: flex; flex-direction: column;
+}
+.picker-head { padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.picker-head h3 { font-size: 15px; font-weight: 700; }
+.picker-close { background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; line-height: 1; }
+.picker-list { overflow-y: auto; padding: 14px; flex: 1; }
+.picker-item {
+  display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px;
+  border-radius: 8px; cursor: pointer; transition: background .2s;
+}
+.picker-item:hover { background: rgba(255,255,255,0.07); }
+.picker-item-id { font-size: 11px; font-weight: 700; color: var(--red); flex-shrink: 0; width: 28px; }
+.picker-item-text { font-size: 12px; line-height: 1.4; }
+
+/* ── MISC ── */
+.divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+.section-gap { margin-bottom: 24px; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">P<span>/\</span>RTNERS</div>
+    <div class="login-sub">Exercise Manager — Admin Only</div>
+    <h2>Admin Access</h2>
+    <p>Enter the admin password to manage exercises and monthly schedules.</p>
+    <input type="password" class="fi" id="pw-input" placeholder="Password" onkeydown="if(event.key==='Enter') login()">
+    <button class="btn btn-red btn-full" onclick="login()">Enter</button>
+    <div class="login-hint">Default password: <b>partners2024</b><br>Change it in the JS below after deployment.</div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- EXERCISE PICKER MODAL -->
+<div id="ex-picker">
+  <div class="picker-box">
+    <div class="picker-head">
+      <h3 id="picker-title">Add Exercise</h3>
+      <button class="picker-close" onclick="closePicker()">✕</button>
+    </div>
+    <div class="picker-list" id="picker-list"></div>
+  </div>
+</div>
+
+<!-- ADMIN APP -->
+<div id="admin-app">
+  <header>
+    <div class="h-logo">P<span>/\</span>RTNERS</div>
+    <div class="h-right">
+      <div class="admin-badge">ADMIN</div>
+      <button class="btn btn-ghost" onclick="logout()" style="font-size:12px;padding:6px 12px">Logout</button>
+    </div>
+  </header>
+
+  <div class="tab-bar">
+    <button class="t-tab active" data-p="p-library" onclick="switchPanel('p-library')">Exercise Library</button>
+    <button class="t-tab" data-p="p-schedule" onclick="switchPanel('p-schedule')">Monthly Schedule</button>
+    <button class="t-tab" data-p="p-add" onclick="switchPanel('p-add')">Add Exercise</button>
+    <button class="t-tab" data-p="p-export" onclick="switchPanel('p-export')">Export & Deploy</button>
+  </div>
+
+  <main>
+
+    <!-- ══ PANEL: LIBRARY ══ -->
+    <div class="panel active" id="p-library">
+      <div class="card">
+        <div class="card-title">Recruitment Exercises</div>
+        <div class="ex-list" id="lib-recruitment"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Client Exercises</div>
+        <div class="ex-list" id="lib-clients"></div>
+      </div>
+    </div>
+
+    <!-- ══ PANEL: SCHEDULE ══ -->
+    <div class="panel" id="p-schedule">
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-title">How this works</div>
+        <p>Each month shows which exercises are assigned. Click <b>+ Add</b> to pick from the library. Click an exercise chip to remove it. Changes are saved in memory — go to <b>Export & Deploy</b> when done.</p>
+      </div>
+      <div class="month-grid" id="month-grid"></div>
+    </div>
+
+    <!-- ══ PANEL: ADD EXERCISE ══ -->
+    <div class="panel" id="p-add">
+      <div class="card">
+        <div class="card-title">Add New Exercise</div>
+        <div class="add-form">
+          <div class="form-row">
+            <div>
+              <label class="fl">Category</label>
+              <select id="new-category">
+                <option value="recruitment">Recruitment</option>
+                <option value="clients">Clients</option>
+              </select>
+            </div>
+            <div>
+              <label class="fl">Number of input fields</label>
+              <input type="number" id="new-inputs" value="5" min="1" max="25" placeholder="5">
+            </div>
+            <div>
+              <label class="fl">Placeholder text</label>
+              <input type="text" id="new-placeholder" placeholder="e.g. Name">
+            </div>
+          </div>
+          <label class="fl">Exercise text / prompt</label>
+          <textarea id="new-text" rows="4" placeholder="Write the exercise prompt here — be specific and action-oriented..."></textarea>
+          <button class="btn btn-red" onclick="addExercise()" style="width:180px">Add to Library →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PANEL: EXPORT ══ -->
+    <div class="panel" id="p-export">
+      <div class="card">
+        <div class="card-title">Generate exercises.js</div>
+        <div class="export-box">
+          <h3>✓ Ready to export</h3>
+          <p>This will download an updated <code>exercises.js</code> file with all your changes — new exercises and monthly schedule included.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
+            <button class="btn btn-red" onclick="downloadExercisesJS()" style="padding:12px 24px">⬇ Download exercises.js</button>
+            <button class="btn btn-ghost" onclick="applyToBrowser()" style="padding:12px 24px" title="Saves config to localStorage — index.html picks it up immediately on reload">🔄 Apply to browser (local test)</button>
+          </div>
+          <hr class="divider">
+          <p style="margin-bottom:12px"><b>After downloading, upload to GitHub in 3 steps:</b></p>
+          <ol class="steps">
+            <li>Go to your GitHub repository → find <code>exercises.js</code></li>
+            <li>Click the pencil icon (Edit) → scroll to bottom → click <b>Upload files</b></li>
+            <li>Drag the downloaded file → click <b>Commit changes</b></li>
+          </ol>
+          <p style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.3)">All consultants will see updated exercises on next page reload. No action needed on their side.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <div class="card-title">Import existing exercises.js</div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:14px">If you want to edit an existing file, paste its contents below and click Load.</p>
+        <textarea id="import-raw" rows="6" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--white);font-family:monospace;font-size:12px;resize:vertical;outline:none" placeholder="Paste exercises.js content here..."></textarea>
+        <button class="btn btn-ghost" style="margin-top:10px;padding:10px 20px" onclick="importConfig()">Load Configuration</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="exercises.js"></script>
+<script>
+// ══════════════════════════════════════════
+//  CONFIG (edit after deployment)
+// ══════════════════════════════════════════
+const ADMIN_PASSWORD = 'partners2024';
+
+// ══════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════
+let cfg = null;  // working copy of EXERCISES_CONFIG
+
+// ══════════════════════════════════════════
+//  LOGIN
+// ══════════════════════════════════════════
+function login() {
+  const pw = document.getElementById('pw-input').value;
+  if (pw === ADMIN_PASSWORD) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-app').style.display = 'block';
+    initAdmin();
+  } else {
+    toast('Wrong password', true);
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+}
+document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key==='Enter') login(); });
+
+function logout() {
+  location.reload();
+}
+
+// ══════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════
+function initAdmin() {
+  cfg = JSON.parse(JSON.stringify(window.EXERCISES_CONFIG || { version:'1.0.0', quotes:[], exercises:{recruitment:[],clients:[]}, monthly_schedule:{} }));
+  renderLibrary();
+  renderSchedule();
+}
+
+// ══════════════════════════════════════════
+//  NAVIGATION
+// ══════════════════════════════════════════
+function switchPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.t-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector(`[data-p="${id}"]`).classList.add('active');
+  if (id === 'p-library') renderLibrary();
+  if (id === 'p-schedule') renderSchedule();
+}
+
+// ══════════════════════════════════════════
+//  LIBRARY
+// ══════════════════════════════════════════
+function renderLibrary() {
+  renderExList('lib-recruitment', cfg.exercises.recruitment);
+  renderExList('lib-clients',     cfg.exercises.clients);
+}
+
+function renderExList(containerId, list) {
+  const el = document.getElementById(containerId);
+  if (!list || list.length === 0) {
+    el.innerHTML = '<p style="color:var(--muted);font-size:13px">No exercises yet. Add some in the Add Exercise tab.</p>';
+    return;
+  }
+  el.innerHTML = list.map(ex => `
+    <div class="ex-row" id="exrow-${ex.id}">
+      <div class="ex-id">${ex.id}</div>
+      <div class="ex-text-col">
+        <div class="ex-text">${esc(ex.text)}</div>
+        <div class="ex-meta">${ex.placeholder || 'Answer'} · ${ex.inputs} fields</div>
+      </div>
+      <div class="ex-inputs-badge">${ex.inputs} inputs</div>
+      <button class="toggle ${!ex.disabled ? 'on' : ''}" onclick="toggleEx('${ex.id}')" title="${ex.disabled ? 'Enable' : 'Disable'}"></button>
+    </div>`).join('');
+}
+
+function toggleEx(id) {
+  const ex = findEx(id);
+  if (ex) { ex.disabled = !ex.disabled; renderLibrary(); }
+}
+
+function findEx(id) {
+  return cfg.exercises.recruitment.find(e=>e.id===id) || cfg.exercises.clients.find(e=>e.id===id);
+}
+
+// ══════════════════════════════════════════
+//  ADD EXERCISE
+// ══════════════════════════════════════════
+function addExercise() {
+  const text = document.getElementById('new-text').value.trim();
+  const cat  = document.getElementById('new-category').value;
+  const inputs = parseInt(document.getElementById('new-inputs').value) || 5;
+  const placeholder = document.getElementById('new-placeholder').value.trim() || 'Answer';
+  if (!text) { toast('Write the exercise text first', true); return; }
+  const list = cfg.exercises[cat];
+  const prefix = cat === 'recruitment' ? 'r' : 'c';
+  const existingNums = list.map(e => parseInt(e.id.replace(prefix,''))).filter(n=>!isNaN(n));
+  const nextNum = existingNums.length > 0 ? Math.max(...existingNums) + 1 : 1;
+  const id = prefix + String(nextNum).padStart(2,'0');
+  list.push({ id, text, inputs, placeholder });
+  document.getElementById('new-text').value = '';
+  document.getElementById('new-placeholder').value = '';
+  toast(`Exercise ${id} added to ${cat}`);
+  renderLibrary();
+}
+
+// ══════════════════════════════════════════
+//  MONTHLY SCHEDULE
+// ══════════════════════════════════════════
+let pickerContext = null; // { monthKey, type }
+
+function renderSchedule() {
+  const grid = document.getElementById('month-grid');
+  const months = getMonthRange();
+  grid.innerHTML = months.map(m => {
+    const sched = cfg.monthly_schedule[m.key] || { recruitment:[], clients:[] };
+    return `<div class="month-card" id="mc-${m.key}">
+      <h4>${m.label}</h4>
+      <div class="month-section">
+        <div class="month-section-label">🎯 Recruitment</div>
+        <div class="chips-wrap" id="chips-r-${m.key}">
+          ${renderChips(m.key, 'recruitment')}
+          <span class="ex-chip-add" onclick="openPicker('${m.key}','recruitment')">+ Add</span>
+        </div>
+      </div>
+      <div class="month-section">
+        <div class="month-section-label">👥 Clients</div>
+        <div class="chips-wrap" id="chips-c-${m.key}">
+          ${renderChips(m.key, 'clients')}
+          <span class="ex-chip-add" onclick="openPicker('${m.key}','clients')">+ Add</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderChips(monthKey, type) {
+  const sched = cfg.monthly_schedule[monthKey] || {};
+  const ids = sched[type] || [];
+  return ids.map(id => {
+    const ex = findEx(id);
+    const label = ex ? id + ' · ' + ex.text.substring(0,32) + '…' : id;
+    return `<span class="ex-chip" onclick="removeChip('${monthKey}','${type}','${id}')">
+      ${esc(label)} <span class="chip-x">✕</span>
+    </span>`;
+  }).join('');
+}
+
+function removeChip(monthKey, type, id) {
+  const sched = cfg.monthly_schedule[monthKey] || {};
+  sched[type] = (sched[type] || []).filter(x => x !== id);
+  cfg.monthly_schedule[monthKey] = sched;
+  refreshChips(monthKey, type);
+}
+
+function refreshChips(monthKey, type) {
+  const prefix = type === 'recruitment' ? 'r' : 'c';
+  const el = document.getElementById(`chips-${prefix}-${monthKey}`);
+  if (el) el.innerHTML = renderChips(monthKey, type) + `<span class="ex-chip-add" onclick="openPicker('${monthKey}','${type}')">+ Add</span>`;
+}
+
+function getMonthRange() {
+  const mNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const now = new Date();
+  const result = [];
+  for (let i = -2; i <= 12; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
+    const key = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
+    result.push({ key, label: mNames[d.getMonth()] + ' ' + d.getFullYear() });
+  }
+  return result;
+}
+
+// ── PICKER ──
+function openPicker(monthKey, type) {
+  pickerContext = { monthKey, type };
+  const list = cfg.exercises[type].filter(e => !e.disabled);
+  const existing = (cfg.monthly_schedule[monthKey] || {})[type] || [];
+  document.getElementById('picker-title').textContent = `Add ${type === 'recruitment' ? 'Recruitment' : 'Client'} Exercise`;
+  document.getElementById('picker-list').innerHTML = list.map(ex => {
+    const already = existing.includes(ex.id);
+    return `<div class="picker-item ${already ? 'already' : ''}" onclick="${already ? '' : `pickEx('${ex.id}')`}" style="${already ? 'opacity:.4;cursor:default' : ''}">
+      <div class="picker-item-id">${ex.id}</div>
+      <div class="picker-item-text">${esc(ex.text)}${already ? ' <b style="color:var(--green)">(already added)</b>' : ''}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('ex-picker').classList.add('open');
+}
+
+function pickEx(id) {
+  if (!pickerContext) return;
+  const { monthKey, type } = pickerContext;
+  cfg.monthly_schedule[monthKey] = cfg.monthly_schedule[monthKey] || { recruitment:[], clients:[] };
+  const list = cfg.monthly_schedule[monthKey][type] || [];
+  if (!list.includes(id)) {
+    list.push(id);
+    cfg.monthly_schedule[monthKey][type] = list;
+  }
+  refreshChips(monthKey, type);
+  closePicker();
+  toast(`Exercise ${id} added`);
+}
+
+function closePicker() {
+  document.getElementById('ex-picker').classList.remove('open');
+  pickerContext = null;
+}
+
+// ══════════════════════════════════════════
+//  EXPORT
+// ══════════════════════════════════════════
+function downloadExercisesJS() {
+  cfg.version = bumpVersion(cfg.version);
+  const js = generateJS(cfg);
+  const blob = new Blob([js], { type: 'text/javascript' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'exercises.js';
+  a.click();
+  toast('exercises.js downloaded — version ' + cfg.version);
+}
+
+function bumpVersion(v) {
+  const parts = (v || '1.0.0').split('.').map(Number);
+  parts[2]++;
+  return parts.join('.');
+}
+
+function generateJS(config) {
+  return `// PARTNERS Planning App — Exercise Library
+// Generated by Admin Panel · v${config.version} · ${new Date().toISOString().split('T')[0]}
+// Edit via admin.html, then replace this file on GitHub Pages.
+
+window.EXERCISES_CONFIG = ${JSON.stringify(config, null, 2)};
+`;
+}
+
+function applyToBrowser() {
+  localStorage.setItem('partners_exercise_config', JSON.stringify(cfg));
+  toast('Config saved to browser — reload index.html to see changes');
+}
+
+function importConfig() {
+  const raw = document.getElementById('import-raw').value.trim();
+  if (!raw) { toast('Paste exercises.js content first', true); return; }
+  try {
+    // Extract the object from the window assignment
+    const match = raw.match(/window\.EXERCISES_CONFIG\s*=\s*(\{[\s\S]*\})\s*;?\s*$/);
+    if (!match) throw new Error('Could not find EXERCISES_CONFIG assignment');
+    cfg = JSON.parse(match[1]);
+    toast('Config loaded — ' + (cfg.exercises.recruitment.length + cfg.exercises.clients.length) + ' exercises');
+    renderLibrary();
+    renderSchedule();
+  } catch (e) {
+    toast('Parse error: ' + e.message, true);
+  }
+}
+
+// ══════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════
+function esc(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function toast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  t.textContent = isError ? '✕ ' + msg : '✓ ' + msg;
+  t.classList.toggle('error', isError);
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>

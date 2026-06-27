@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>PARTNERS | Monthly Planning</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-start: #3D0024;
+  --bg-mid: #2A0018;
+  --bg-end: #1A0010;
+  --red: #AB0534;
+  --red-hover: #c2073c;
+  --red-dim: rgba(171,5,52,0.25);
+  --white: #fff;
+  --muted: rgba(255,255,255,0.55);
+  --card: rgba(255,255,255,0.06);
+  --card-hover: rgba(255,255,255,0.09);
+  --border: rgba(255,255,255,0.1);
+  --green: #22c55e;
+  --amber: #f59e0b;
+  --rose: #ef4444;
+  --font: 'Figtree', system-ui, sans-serif;
+  --radius: 14px;
+  --nav-h: 60px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: #72727C;
+  min-height: 100vh;
+  color: var(--white);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── SETUP OVERLAY ── */
+#setup-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: linear-gradient(135deg, #3D0024, #1A0010);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.setup-box {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 48px 40px;
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+}
+.setup-logo { font-size: 28px; font-weight: 800; letter-spacing: 2px; margin-bottom: 8px; }
+.setup-logo .logo-a { color: var(--red); font-size: 1.05em; vertical-align: -1px; }
+.setup-sub { color: var(--muted); font-size: 13px; margin-bottom: 32px; }
+.setup-box h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+.setup-box p { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+.setup-input {
+  width: 100%; padding: 14px 16px; border-radius: 10px;
+  border: 1px solid var(--border); background: rgba(255,255,255,0.08);
+  color: var(--white); font-family: var(--font); font-size: 16px;
+  outline: none; margin-bottom: 16px;
+  transition: border-color .2s;
+}
+.setup-input:focus { border-color: var(--red); }
+.setup-input::placeholder { color: var(--muted); }
+.btn-primary {
+  width: 100%; padding: 14px; border-radius: 10px;
+  background: var(--red); border: none; color: #fff;
+  font-family: var(--font); font-size: 16px; font-weight: 700;
+  cursor: pointer; transition: background .2s, transform .1s;
+}
+.btn-primary:hover { background: var(--red-hover); }
+.btn-primary:active { transform: scale(.98); }
+
+/* ── HEADER ── */
+#app { display: none; min-height: 100vh; }
+header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(18,18,26,0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px;
+  height: var(--nav-h);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+}
+.h-logo { font-size: 18px; font-weight: 800; letter-spacing: 1.5px; white-space: nowrap; }
+.h-logo .logo-a { color: var(--red); font-size: 1.05em; vertical-align: -1px; }
+.h-meta { display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end; }
+.h-name { color: var(--muted); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+.month-sel {
+  background: var(--red-dim); border: 1px solid var(--red);
+  color: var(--white); font-family: var(--font); font-size: 13px; font-weight: 600;
+  border-radius: 8px; padding: 6px 10px; cursor: pointer; outline: none;
+  transition: background .2s;
+}
+.month-sel:hover { background: var(--red); }
+.month-sel option { background: #21212C; color: #fff; }
+.btn-export {
+  background: rgba(255,255,255,0.08); border: 1px solid var(--border);
+  color: var(--white); font-family: var(--font); font-size: 12px; font-weight: 600;
+  border-radius: 8px; padding: 6px 12px; cursor: pointer; transition: background .2s;
+  white-space: nowrap;
+}
+.btn-export:hover { background: rgba(255,255,255,0.14); }
+
+/* ── MODULE NAV ── */
+#mod-nav {
+  position: sticky; top: var(--nav-h); z-index: 40;
+  background: rgba(14,14,20,0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+#mod-nav::-webkit-scrollbar { display: none; }
+.nav-tab {
+  flex: 0 0 auto; padding: 14px 18px;
+  font-size: 12px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
+  color: var(--muted); border: none; background: none; cursor: pointer;
+  border-bottom: 2px solid transparent; transition: all .2s;
+  white-space: nowrap; font-family: var(--font);
+}
+.nav-tab:hover { color: var(--white); }
+.nav-tab.active { color: var(--white); border-bottom-color: var(--red); }
+.nav-tab .tab-num {
+  display: inline-block; width: 20px; height: 20px; line-height: 20px;
+  border-radius: 50%; background: var(--red-dim); text-align: center;
+  font-size: 10px; margin-right: 6px;
+}
+.nav-tab.active .tab-num { background: var(--red); }
+
+/* ── MAIN CONTENT ── */
+main {
+  max-width: 860px; margin: 0 auto; padding: 28px 20px 100px;
+  background: linear-gradient(135deg, #3D0024 0%, #2A0018 50%, #1A0010 100%);
+  min-height: calc(100vh - 120px);
+  border-radius: 20px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+}
+.module { display: none; }
+.module.active { display: block; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 24px; margin-bottom: 16px;
+}
+.card-title {
+  font-size: 11px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--red); margin-bottom: 16px;
+}
+.card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.card p { color: var(--muted); font-size: 14px; }
+
+/* ── MODULE HEADER ── */
+.mod-header {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 24px;
+}
+.mod-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: var(--red-dim); border: 1px solid var(--red);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.mod-title { font-size: 24px; font-weight: 800; }
+.mod-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+/* ── INPUTS ── */
+textarea, input[type=text], input[type=number] {
+  font-family: var(--font); color: var(--white); outline: none;
+}
+.field-label {
+  font-size: 12px; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; display: block;
+}
+.text-input {
+  width: 100%; padding: 12px 14px; border-radius: 10px;
+  border: 1px solid var(--border); background: rgba(255,255,255,0.06);
+  color: var(--white); font-family: var(--font); font-size: 14px;
+  transition: border-color .2s; resize: none;
+}
+.text-input:focus { border-color: var(--red); background: rgba(255,255,255,0.09); }
+.text-input::placeholder { color: rgba(255,255,255,0.28); }
+.num-input {
+  padding: 10px 12px; border-radius: 8px;
+  border: 1px solid var(--border); background: rgba(255,255,255,0.06);
+  color: var(--white); font-family: var(--font); font-size: 15px; font-weight: 600;
+  width: 80px; text-align: center; transition: border-color .2s;
+}
+.num-input:focus { border-color: var(--red); }
+.num-input::-webkit-inner-spin-button { opacity: .5; }
+
+/* ── SLIDER ── */
+.slider-wrap { position: relative; margin-top: 8px; }
+input[type=range] {
+  width: 100%; -webkit-appearance: none; height: 6px;
+  border-radius: 3px; background: var(--border); outline: none;
+  cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 22px; height: 22px;
+  border-radius: 50%; background: var(--red); border: 2px solid #fff;
+  cursor: pointer; transition: transform .2s;
+}
+input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
+.slider-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 6px; }
+.slider-value {
+  display: inline-block; background: var(--red); color: #fff;
+  font-weight: 700; font-size: 15px; border-radius: 8px;
+  padding: 4px 12px; margin-top: 10px;
+}
+
+/* ── KPI TABLE ── */
+.kpi-table { width: 100%; border-collapse: collapse; }
+.kpi-table th {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .5px; color: var(--muted); padding: 8px 10px;
+  text-align: center; border-bottom: 1px solid var(--border);
+}
+.kpi-table th:first-child { text-align: left; }
+.kpi-table td { padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: middle; }
+.kpi-table tr:last-child td { border-bottom: none; }
+.kpi-name { font-weight: 600; font-size: 14px; }
+.kpi-name small { display: block; font-size: 11px; color: var(--muted); font-weight: 400; }
+.kpi-pct { font-weight: 700; font-size: 14px; text-align: center; }
+.status-dot {
+  width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 4px;
+}
+.status-green { background: var(--green); }
+.status-amber { background: var(--amber); }
+.status-rose  { background: var(--rose); }
+.kpi-reflection {
+  width: 100%; padding: 8px 10px; border-radius: 8px;
+  border: 1px solid var(--border); background: rgba(255,255,255,0.04);
+  color: var(--white); font-family: var(--font); font-size: 13px; resize: none;
+  transition: border-color .2s;
+}
+.kpi-reflection:focus { border-color: var(--red); outline: none; }
+.kpi-reflection::placeholder { color: rgba(255,255,255,0.22); }
+
+/* ── TREND CHART ── */
+.trend-wrap { display: flex; gap: 6px; align-items: flex-end; height: 60px; }
+.trend-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.trend-bar-track { width: 100%; height: 44px; background: rgba(255,255,255,0.05); border-radius: 4px; position: relative; display: flex; align-items: flex-end; overflow: hidden; }
+.trend-bar-fill { width: 100%; background: var(--red); border-radius: 4px; transition: height .5s ease; min-height: 2px; }
+.trend-bar-label { font-size: 10px; color: var(--muted); }
+
+/* ── PERFORMANCE FORMULA ── */
+.funnel-row { display: flex; align-items: center; gap: 0; flex-wrap: wrap; margin: 12px 0; }
+.funnel-step { text-align: center; flex: 1; min-width: 70px; }
+.funnel-step-num {
+  font-size: 20px; font-weight: 800;
+  background: var(--red-dim); border: 1px solid var(--red);
+  border-radius: 10px; padding: 8px 4px; display: block; cursor: default;
+}
+.funnel-step-num.editable {
+  background: rgba(255,255,255,0.06); border-color: var(--border); cursor: text;
+}
+.funnel-step-label { font-size: 10px; color: var(--muted); margin-top: 4px; display: block; }
+.funnel-arrow { color: var(--red); font-size: 18px; flex-shrink: 0; padding: 0 2px; }
+.ratio-badge {
+  font-size: 10px; font-weight: 700; background: var(--red-dim);
+  color: var(--red); border-radius: 4px; padding: 2px 5px; margin-top: 3px;
+  display: inline-block;
+}
+.ratio-ok { background: rgba(34,197,94,.15); color: var(--green); }
+.ratio-low { background: rgba(239,68,68,.15); color: var(--rose); }
+
+/* ── CHECKLIST ── */
+.checklist { list-style: none; }
+.checklist li {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  cursor: pointer; transition: opacity .2s;
+}
+.checklist li:last-child { border-bottom: none; }
+.check-box {
+  width: 22px; height: 22px; border-radius: 6px; flex-shrink: 0;
+  border: 2px solid var(--border); display: flex; align-items: center;
+  justify-content: center; transition: all .2s;
+}
+.checklist li.checked .check-box {
+  background: var(--red); border-color: var(--red);
+}
+.checklist li.checked .check-box::after { content: '✓'; color: #fff; font-size: 13px; font-weight: 800; }
+.checklist li.checked .check-text { color: var(--muted); text-decoration: line-through; }
+.check-text { font-size: 14px; }
+
+/* ── EXERCISES ── */
+.exercise-card {
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px; margin-bottom: 14px;
+  border-left: 3px solid var(--red);
+}
+.exercise-prompt { font-size: 14px; font-weight: 500; margin-bottom: 14px; line-height: 1.5; }
+.exercise-inputs { display: flex; flex-direction: column; gap: 8px; }
+.ex-input-row { display: flex; align-items: center; gap: 10px; }
+.ex-num {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--red-dim); color: var(--muted);
+  font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.ex-input {
+  flex: 1; padding: 9px 12px; border-radius: 8px;
+  border: 1px solid var(--border); background: rgba(255,255,255,0.05);
+  color: var(--white); font-family: var(--font); font-size: 13px;
+  transition: border-color .2s; outline: none;
+}
+.ex-input:focus { border-color: var(--red); background: rgba(255,255,255,0.09); }
+.ex-input::placeholder { color: rgba(255,255,255,0.22); }
+.ex-progress { font-size: 12px; color: var(--muted); margin-top: 10px; }
+.ex-progress b { color: var(--red); }
+.section-label {
+  font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--red);
+  padding: 6px 12px; background: var(--red-dim);
+  border-radius: 6px; display: inline-block; margin-bottom: 14px;
+}
+.no-exercises {
+  text-align: center; color: var(--muted); padding: 32px;
+  font-size: 14px;
+}
+
+/* ── WEEKLY CHECK-IN ── */
+.week-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+.week-tab {
+  flex: 1; min-width: 70px; padding: 10px 6px; text-align: center;
+  border-radius: 10px; border: 1px solid var(--border);
+  background: var(--card); cursor: pointer; font-size: 12px; font-weight: 700;
+  transition: all .2s; font-family: var(--font); color: var(--muted);
+}
+.week-tab:hover { border-color: var(--red); color: var(--white); }
+.week-tab.active { background: var(--red); border-color: var(--red); color: #fff; }
+.week-panel { display: none; }
+.week-panel.active { display: block; }
+.week-kpi-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+.week-kpi-block {
+  flex: 1; min-width: 90px; background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border); border-radius: 10px; padding: 12px;
+  text-align: center;
+}
+.week-kpi-block label { font-size: 11px; color: var(--muted); display: block; margin-bottom: 6px; font-weight: 600; }
+.week-pace {
+  margin-top: 8px; padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: center; gap: 4px;
+  min-height: 20px; flex-wrap: wrap;
+}
+.month-pct-badge {
+  font-size: 11px; color: var(--muted); font-weight: 500;
+  background: rgba(255,255,255,0.06); border-radius: 6px;
+  padding: 3px 8px; border: 1px solid var(--border);
+}
+.month-progress-bar {
+  height: 8px; background: rgba(255,255,255,0.1);
+  border-radius: 4px; margin: 16px 0 4px; overflow: hidden;
+}
+.month-progress-fill {
+  height: 100%; background: var(--red); border-radius: 4px; transition: width .6s ease;
+}
+
+/* ── TAGS / BADGES ── */
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--red-dim); color: var(--red);
+  font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+}
+.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+/* ── PROGRESS RING (M4) ── */
+.hunt-progress {
+  background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 18px;
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;
+}
+.hunt-progress-bar { flex: 1; margin: 0 14px; }
+.hunt-progress-label { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.hunt-bar-track { height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
+.hunt-bar-fill { height: 100%; background: var(--red); border-radius: 4px; transition: width .4s; }
+.hunt-pct { font-size: 22px; font-weight: 800; color: var(--red); }
+
+/* ── EXPORT / PRINT ── */
+@media print {
+  header, #mod-nav, .no-print { display: none !important; }
+  body { background: #fff !important; color: #000 !important; }
+  .card { background: #f9f9f9 !important; border: 1px solid #ddd !important; break-inside: avoid; }
+  .module { display: block !important; }
+  .mod-title { color: #AB0534 !important; }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  main { padding: 20px 14px 90px; }
+  .mod-title { font-size: 20px; }
+  .kpi-table th, .kpi-table td { padding: 6px 6px; font-size: 12px; }
+  .num-input { width: 64px; font-size: 14px; }
+  .funnel-step { min-width: 50px; }
+  .card { padding: 18px 16px; }
+}
+
+/* ── QUOTE CARD ── */
+.quote-card {
+  background: var(--red-dim); border: 1px solid var(--red);
+  border-radius: 12px; padding: 18px 22px; font-style: italic;
+  font-size: 15px; color: rgba(255,255,255,0.85); margin-bottom: 20px;
+  line-height: 1.6;
+}
+.quote-card::before { content: '"'; font-size: 30px; color: var(--red); line-height: .5; vertical-align: middle; margin-right: 4px; }
+
+/* ── AUTOSAVE TOAST ── */
+#toast {
+  position: fixed; bottom: 24px; right: 20px; z-index: 200;
+  background: rgba(14,14,20,0.95); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 18px; font-size: 12px;
+  color: var(--muted); opacity: 0; transition: opacity .3s;
+  pointer-events: none;
+}
+#toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- SETUP OVERLAY -->
+<div id="setup-overlay">
+  <div class="setup-box">
+    <div class="setup-logo">P<span class="logo-a">Λ</span>RTNERS</div>
+    <div class="setup-sub">Financial Advisory</div>
+    <h2>Welcome!</h2>
+    <p>Enter your name to get started. Your data is saved in this browser.</p>
+    <input type="text" class="setup-input" id="setup-name" placeholder="Your full name" maxlength="60">
+    <button class="btn-primary" onclick="finishSetup()">Start planning →</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast">✓ Saved</div>
+
+<!-- MAIN APP -->
+<div id="app">
+  <header>
+    <div class="h-logo">P<span class="logo-a">Λ</span>RTNERS</div>
+    <div class="h-meta">
+      <span class="h-name" id="h-name"></span>
+      <select class="month-sel" id="month-sel" onchange="switchMonth(this.value)"></select>
+      <button class="btn-export no-print" onclick="window.print()">⬇ Export</button>
+    </div>
+  </header>
+
+  <nav id="mod-nav">
+    <button class="nav-tab active" data-mod="m1" onclick="switchModule('m1')">
+      <span class="tab-num">1</span>My Engine
+    </button>
+    <button class="nav-tab" data-mod="m2" onclick="switchModule('m2')">
+      <span class="tab-num">2</span>Scoreboard
+    </button>
+    <button class="nav-tab" data-mod="m3" onclick="switchModule('m3')">
+      <span class="tab-num">3</span>Game Plan
+    </button>
+    <button class="nav-tab" data-mod="m4" onclick="switchModule('m4')">
+      <span class="tab-num">4</span>Opportunity Hunt
+    </button>
+    <button class="nav-tab" data-mod="m5" onclick="switchModule('m5')">
+      <span class="tab-num">5</span>Weekly Check-in
+    </button>
+  </nav>
+
+  <main>
+
+    <!-- ═══════════════════════════════════════
+         MODULE 1 — MY ENGINE
+    ═══════════════════════════════════════ -->
+    <section class="module active" id="m1">
+      <div class="mod-header">
+        <div class="mod-icon">🔥</div>
+        <div>
+          <div class="mod-title">My Engine</div>
+          <div class="mod-sub">Set your intention for the month — fresh start every time</div>
+        </div>
+      </div>
+
+      <div class="quote-card" id="m1-quote"></div>
+
+      <div class="card">
+        <div class="card-title">My WHY this month</div>
+        <label class="field-label" for="m1-why">What is my main motivation? What drives me? Why am I in this business?</label>
+        <textarea class="text-input" id="m1-why" rows="4" placeholder="Write your honest answer here — not what sounds good, but what actually drives you." oninput="save()"></textarea>
+      </div>
+
+      <div class="card">
+        <div class="card-title">My #1 Goal this month</div>
+        <label class="field-label" for="m1-goal">One specific result I will achieve. Not a list — just the most important one.</label>
+        <textarea class="text-input" id="m1-goal" rows="2" placeholder="e.g. Sign 5 new PI clients — write it as a commitment, not a wish." oninput="save()"></textarea>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Energy check</div>
+        <label class="field-label">How charged am I at the start of this month?</label>
+        <input type="range" id="m1-energy" min="1" max="10" value="7" oninput="updateEnergy(this.value); save()">
+        <div class="slider-labels"><span>1 — Low</span><span>10 — On fire</span></div>
+        <div><span class="slider-value" id="m1-energy-val">7 / 10</span></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         MODULE 2 — SCOREBOARD
+    ═══════════════════════════════════════ -->
+    <section class="module" id="m2">
+      <div class="mod-header">
+        <div class="mod-icon">📊</div>
+        <div>
+          <div class="mod-title">Scoreboard</div>
+          <div class="mod-sub">Evaluate last month honestly — numbers don't lie</div>
+        </div>
+      </div>
+
+      <!-- KPI Evaluation Table -->
+      <div class="card">
+        <div class="card-title">KPI — Previous Month Results</div>
+        <div style="overflow-x:auto">
+        <table class="kpi-table" id="kpi-table">
+          <thead>
+            <tr>
+              <th style="text-align:left">KPI</th>
+              <th>Plan</th>
+              <th>Reality</th>
+              <th>%</th>
+              <th>Reflection</th>
+            </tr>
+          </thead>
+          <tbody id="kpi-tbody"></tbody>
+        </table>
+        </div>
+      </div>
+
+      <!-- Trend -->
+      <div class="card">
+        <div class="card-title">3-Month Trend — N-PFA</div>
+        <div class="trend-wrap" id="trend-chart"></div>
+        <p style="font-size:12px;color:var(--muted);margin-top:10px">% of plan achieved. Based on your saved data from previous months.</p>
+      </div>
+
+      <!-- Overall reflection -->
+      <div class="card">
+        <div class="card-title">Monthly Reflection</div>
+        <label class="field-label" for="m2-reflection">What worked well? What will I do differently?</label>
+        <textarea class="text-input" id="m2-reflection" rows="4" placeholder="Be specific. 'I need to call more people' is not enough — write exactly what you will change." oninput="save()"></textarea>
+      </div>
+
+      <!-- Performance Formula -->
+      <div class="card">
+        <div class="card-title">Performance Formula — Clients</div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Update your conversion ratios. Green = at or above target. Red = needs attention.</p>
+        <div class="funnel-row" id="pf-clients"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Performance Formula — Recruiting</div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Track your recruiting funnel — from first call to signed consultant.</p>
+        <div class="funnel-row" id="pf-recruiting"></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         MODULE 3 — GAME PLAN
+    ═══════════════════════════════════════ -->
+    <section class="module" id="m3">
+      <div class="mod-header">
+        <div class="mod-icon">🎯</div>
+        <div>
+          <div class="mod-title">Game Plan</div>
+          <div class="mod-sub">Plan based on your updated performance formula — not wishful thinking</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">KPI Targets — This Month</div>
+        <div style="overflow-x:auto">
+        <table class="kpi-table" id="plan-table">
+          <thead>
+            <tr>
+              <th style="text-align:left">KPI</th>
+              <th>Target</th>
+              <th style="text-align:left;min-width:180px">How will I achieve it?</th>
+            </tr>
+          </thead>
+          <tbody id="plan-tbody"></tbody>
+        </table>
+        </div>
+      </div>
+
+      <!-- Flow -->
+      <div class="card">
+        <div class="card-title">Flow Update</div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px">
+          <div class="week-kpi-block" style="min-width:130px">
+            <label>People in limbo (no appointment)</label>
+            <input type="number" class="num-input" id="m3-flow-limbo" min="0" max="999" oninput="save()" style="width:80px;margin-top:6px">
+          </div>
+          <div class="week-kpi-block" style="min-width:130px">
+            <label>Moved to call list</label>
+            <input type="number" class="num-input" id="m3-flow-call" min="0" max="999" oninput="save()" style="width:80px;margin-top:6px">
+          </div>
+        </div>
+        <label class="field-label" for="m3-flow-note">Notes on flow — who needs follow-up urgently?</label>
+        <textarea class="text-input" id="m3-flow-note" rows="2" placeholder="e.g. Martin K. — waiting 3 weeks, call Monday" oninput="save()"></textarea>
+      </div>
+
+      <!-- Calendar -->
+      <div class="card">
+        <div class="card-title">Calendar Planning</div>
+        <ul class="checklist" id="cal-checklist">
+          <li data-key="days_off" onclick="toggleCheck(this)">
+            <div class="check-box"></div>
+            <span class="check-text">Days off planned and blocked in calendar</span>
+          </li>
+          <li data-key="system" onclick="toggleCheck(this)">
+            <div class="check-box"></div>
+            <span class="check-text">System elements (client meetings, service) scheduled</span>
+          </li>
+          <li data-key="education" onclick="toggleCheck(this)">
+            <div class="check-box"></div>
+            <span class="check-text">Educational / training events noted</span>
+          </li>
+          <li data-key="company" onclick="toggleCheck(this)">
+            <div class="check-box"></div>
+            <span class="check-text">Company events noted</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         MODULE 4 — OPPORTUNITY HUNT
+    ═══════════════════════════════════════ -->
+    <section class="module" id="m4">
+      <div class="mod-header">
+        <div class="mod-icon">💡</div>
+        <div>
+          <div class="mod-title">Opportunity Hunt</div>
+          <div class="mod-sub">Mine your database — names on paper = meetings in calendar</div>
+        </div>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="hunt-progress">
+        <div class="hunt-pct" id="hunt-pct">0%</div>
+        <div class="hunt-progress-bar">
+          <div class="hunt-progress-label">Fields completed this month</div>
+          <div class="hunt-bar-track"><div class="hunt-bar-fill" id="hunt-bar" style="width:0%"></div></div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);text-align:right" id="hunt-count">0 / 0</div>
+      </div>
+
+      <div class="section-label">🎯 Recruitment Call-List</div>
+      <div id="recruit-exercises"></div>
+
+      <hr class="divider">
+      <div class="section-label">👥 Client Call-List</div>
+      <div id="client-exercises"></div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         MODULE 5 — WEEKLY CHECK-IN
+    ═══════════════════════════════════════ -->
+    <section class="module" id="m5">
+      <div class="mod-header">
+        <div class="mod-icon">📅</div>
+        <div>
+          <div class="mod-title">Weekly Check-in</div>
+          <div class="mod-sub">3 minutes every Monday — keeps you on track all month</div>
+        </div>
+      </div>
+
+      <!-- Month progress -->
+      <div class="card" style="padding:16px 20px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span style="font-size:13px;font-weight:600">Month progress</span>
+          <span style="font-size:13px;color:var(--muted)" id="progress-label">Week 1 of 4</span>
+        </div>
+        <div class="month-progress-bar"><div class="month-progress-fill" id="month-progress-fill"></div></div>
+      </div>
+
+      <div class="week-tabs">
+        <button class="week-tab active" data-week="1" onclick="switchWeek(1)">Week 1</button>
+        <button class="week-tab" data-week="2" onclick="switchWeek(2)">Week 2</button>
+        <button class="week-tab" data-week="3" onclick="switchWeek(3)">Week 3</button>
+        <button class="week-tab" data-week="4" onclick="switchWeek(4)">Week 4</button>
+      </div>
+
+      <div id="week-panels"></div>
+    </section>
+
+  </main>
+</div>
+
+<script src="exercises.js"></script>
+<script>
+// ══════════════════════════════════════════
+//  CONSTANTS
+// ══════════════════════════════════════════
+const KPIS = [
+  { id: 'npfa',  label: 'N-PFA',     full: 'New Personal Financial Analysis' },
+  { id: 'spfa',  label: 'S-PFA/SM',  full: 'Service PFA / Service Meeting' },
+  { id: 'refc',  label: 'REF-C',     full: 'Client Referrals' },
+  { id: 'bu',    label: 'BU',        full: 'Bank Units' },
+  { id: 'recrm', label: 'RECR.M.',   full: 'Recruitment Meetings' },
+  { id: 'refr',  label: 'REF-R',     full: 'Recruitment Referrals' },
+  { id: 'ws',    label: 'P. on WS',  full: 'People on Workshop' },
+  { id: 'pi',    label: 'P. on PI',  full: 'People on PI' }
+];
+
+const PF_CLIENTS = [
+  { key: 'called',   label: 'Called',        target: null },
+  { key: 'lp',       label: 'LP',            target: 0.20, ratioLabel: 'LP rate' },
+  { key: 'pfa',      label: 'PFA',           target: 0.50, ratioLabel: 'Show rate' },
+  { key: 'fpp',      label: 'FPP',           target: null },
+  { key: 'paid',     label: 'Paid clients',  target: 0.50, ratioLabel: 'Close rate' },
+  { key: 'ref',      label: 'Referrals',     target: null },
+  { key: 'bu',       label: 'Bank Units',    target: null }
+];
+
+const PF_RECRUITING = [
+  { key: 'rcalled',    label: 'Called',      target: null },
+  { key: 'rpickup',    label: 'Picked up',   target: null },
+  { key: 'rsched',     label: 'Scheduled',   target: null },
+  { key: 'rmeetings',  label: 'Meetings',    target: null },
+  { key: 'rws',        label: 'WS',          target: null },
+  { key: 'rpi',        label: 'PI',          target: null },
+  { key: 'rconsult',   label: 'Consultant',  target: null }
+];
+
+// ══════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════
+let consultantName = '';
+let currentMonth = '';   // "YYYY-MM"
+let state = {};          // { module1:{}, module2:{}, ... }
+let saveTimer = null;
+let currentWeek = 1;
+
+// ══════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════
+function init() {
+  consultantName = localStorage.getItem('partners_name') || '';
+  if (!consultantName) {
+    document.getElementById('setup-overlay').style.display = 'flex';
+    return;
+  }
+  document.getElementById('setup-overlay').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('h-name').textContent = consultantName;
+
+  buildMonthSelector();
+  currentMonth = localStorage.getItem('partners_current_month') || todayMonth();
+  document.getElementById('month-sel').value = currentMonth;
+
+  buildWeekPanels();
+  loadMonth(currentMonth);
+  updateMonthProgress();
+}
+
+function todayMonth() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+}
+
+function buildMonthSelector() {
+  const sel = document.getElementById('month-sel');
+  const months = ['January','February','March','April','May','June',
+                  'July','August','September','October','November','December'];
+  // Show 6 months back + 12 months forward
+  const now = new Date();
+  const entries = [];
+  for (let i = -6; i <= 12; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
+    const val = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
+    const label = months[d.getMonth()] + ' ' + d.getFullYear();
+    entries.push({ val, label });
+  }
+  sel.innerHTML = entries.map(e => `<option value="${e.val}">${e.label}</option>`).join('');
+}
+
+function finishSetup() {
+  const n = document.getElementById('setup-name').value.trim();
+  if (!n) { document.getElementById('setup-name').focus(); return; }
+  localStorage.setItem('partners_name', n);
+  init();
+}
+document.getElementById('setup-name').addEventListener('keydown', e => { if (e.key === 'Enter') finishSetup(); });
+
+// ══════════════════════════════════════════
+//  MODULE NAVIGATION
+// ══════════════════════════════════════════
+function switchModule(id) {
+  document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector(`[data-mod="${id}"]`).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (id === 'm4') updateHuntProgress();
+}
+
+// ══════════════════════════════════════════
+//  MONTH SWITCH
+// ══════════════════════════════════════════
+function switchMonth(val) {
+  currentMonth = val;
+  localStorage.setItem('partners_current_month', val);
+  loadMonth(val);
+  updateMonthProgress();
+}
+
+// ══════════════════════════════════════════
+//  LOAD / SAVE
+// ══════════════════════════════════════════
+function loadMonth(month) {
+  const raw = localStorage.getItem('partners_data_' + month);
+  state = raw ? JSON.parse(raw) : {};
+  renderAll(month);
+}
+
+function save() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    gatherState();
+    localStorage.setItem('partners_data_' + currentMonth, JSON.stringify(state));
+    showToast();
+  }, 600);
+}
+
+function gatherState() {
+  // M1
+  state.m1 = {
+    why: v('m1-why'),
+    goal: v('m1-goal'),
+    energy: v('m1-energy')
+  };
+  // M2
+  state.m2 = state.m2 || {};
+  state.m2.reflection = v('m2-reflection');
+  KPIS.forEach(k => {
+    state.m2[k.id + '_plan']    = v('kpi-plan-' + k.id);
+    state.m2[k.id + '_reality'] = v('kpi-real-' + k.id);
+    state.m2[k.id + '_note']    = v('kpi-note-' + k.id);
+  });
+  PF_CLIENTS.forEach(f => { state.m2['pfc_' + f.key] = v('pfc-' + f.key); });
+  PF_RECRUITING.forEach(f => { state.m2['pfr_' + f.key] = v('pfr-' + f.key); });
+  // M3
+  state.m3 = state.m3 || {};
+  KPIS.forEach(k => {
+    state.m3[k.id + '_target'] = v('plan-target-' + k.id);
+    state.m3[k.id + '_how']    = v('plan-how-' + k.id);
+  });
+  state.m3.flow_limbo = v('m3-flow-limbo');
+  state.m3.flow_call  = v('m3-flow-call');
+  state.m3.flow_note  = v('m3-flow-note');
+  // M4 — gathered inline via exercise inputs
+  // M5
+  state.m5 = state.m5 || {};
+  for (let w = 1; w <= 4; w++) {
+    state.m5['w'+w+'_change'] = v('w' + w + '-change');
+    KPIS.filter(k => !['ws','pi'].includes(k.id)).forEach(k => {
+      state.m5['w'+w+'_'+k.id] = v('w' + w + '-kpi-' + k.id);
+    });
+  }
+}
+
+function v(id) {
+  const el = document.getElementById(id);
+  return el ? el.value : '';
+}
+
+function setVal(id, val) {
+  const el = document.getElementById(id);
+  if (el && val !== undefined && val !== null) el.value = val;
+}
+
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1500);
+}
+
+// ══════════════════════════════════════════
+//  RENDER ALL
+// ══════════════════════════════════════════
+function renderAll(month) {
+  renderM1();
+  renderM2();
+  renderM3();
+  renderM4(month);
+  renderM5();
+}
+
+// ── MODULE 1 ──
+function renderM1() {
+  const m1 = state.m1 || {};
+  // Rotating quote
+  const cfg = getExerciseConfig();
+  const quotes = cfg ? cfg.quotes : ["People do not plan to fail, but they fail to plan. — Jim Heidema"];
+  const idx = new Date().getMonth() % quotes.length;
+  document.getElementById('m1-quote').textContent = quotes[idx];
+  // Fields — always empty (no pre-fill by design)
+  setVal('m1-why', m1.why || '');
+  setVal('m1-goal', m1.goal || '');
+  const energy = m1.energy || '7';
+  setVal('m1-energy', energy);
+  document.getElementById('m1-energy-val').textContent = energy + ' / 10';
+}
+
+function updateEnergy(val) {
+  document.getElementById('m1-energy-val').textContent = val + ' / 10';
+}
+
+// ── MODULE 2 ──
+function renderM2() {
+  const m2 = state.m2 || {};
+  setVal('m2-reflection', m2.reflection || '');
+
+  // KPI table
+  const tbody = document.getElementById('kpi-tbody');
+  tbody.innerHTML = KPIS.map(k => {
+    const plan = m2[k.id + '_plan'] || '';
+    const real = m2[k.id + '_reality'] || '';
+    const note = m2[k.id + '_note'] || '';
+    const pctHtml = pctBadge(plan, real);
+    return `<tr>
+      <td><div class="kpi-name">${k.label}<small>${k.full}</small></div></td>
+      <td><input type="number" class="num-input" id="kpi-plan-${k.id}" value="${plan}" min="0" oninput="refreshKpiRow('${k.id}');save()"></td>
+      <td><input type="number" class="num-input" id="kpi-real-${k.id}" value="${real}" min="0" oninput="refreshKpiRow('${k.id}');save()"></td>
+      <td class="kpi-pct" id="kpi-pct-${k.id}">${pctHtml}</td>
+      <td><textarea class="kpi-reflection" id="kpi-note-${k.id}" rows="1" placeholder="Why?" oninput="save()">${note}</textarea></td>
+    </tr>`;
+  }).join('');
+
+  // Trend (N-PFA last 3 months)
+  renderTrend();
+
+  // Performance formula
+  renderPF('pf-clients', PF_CLIENTS, 'pfc', m2);
+  renderPF('pf-recruiting', PF_RECRUITING, 'pfr', m2);
+}
+
+function refreshKpiRow(id) {
+  const plan = document.getElementById('kpi-plan-' + id)?.value;
+  const real = document.getElementById('kpi-real-' + id)?.value;
+  document.getElementById('kpi-pct-' + id).innerHTML = pctBadge(plan, real);
+}
+
+function pctBadge(plan, real) {
+  if (!plan || !real || Number(plan) === 0) return '<span style="color:var(--muted)">—</span>';
+  const pct = Math.round((Number(real) / Number(plan)) * 100);
+  const cls = pct >= 90 ? 'status-green' : pct >= 70 ? 'status-amber' : 'status-rose';
+  const color = pct >= 90 ? 'var(--green)' : pct >= 70 ? 'var(--amber)' : 'var(--rose)';
+  return `<span class="status-dot ${cls}"></span><span style="color:${color}">${pct}%</span>`;
+}
+
+function renderTrend() {
+  // Get last 3 months N-PFA data
+  const months = [];
+  const now = new Date();
+  for (let i = 2; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i - 1, 1);
+    const key = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
+    const mNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const raw = localStorage.getItem('partners_data_' + key);
+    const data = raw ? JSON.parse(raw) : {};
+    const plan = Number(data.m2?.npfa_plan || 0);
+    const real = Number(data.m2?.npfa_reality || 0);
+    const pct = plan > 0 ? Math.min(Math.round(real/plan*100), 120) : 0;
+    months.push({ label: mNames[d.getMonth()], pct });
+  }
+  const wrap = document.getElementById('trend-chart');
+  wrap.innerHTML = months.map(m => {
+    const h = m.pct > 0 ? Math.max(4, Math.round(m.pct * 0.44)) : 4;
+    const color = m.pct >= 90 ? 'var(--green)' : m.pct >= 70 ? 'var(--amber)' : 'var(--rose)';
+    return `<div class="trend-bar-col">
+      <div class="trend-bar-track">
+        <div class="trend-bar-fill" style="height:${h}px;background:${color}"></div>
+      </div>
+      <div class="trend-bar-label">${m.label}<br>${m.pct ? m.pct+'%' : '—'}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderPF(containerId, steps, prefix, m2) {
+  const wrap = document.getElementById(containerId);
+  wrap.innerHTML = steps.map((s, i) => {
+    const val = m2[prefix + '_' + s.key] || '';
+    let ratioHtml = '';
+    if (s.target !== null && i > 0) {
+      const prev = Number(m2[prefix + '_' + steps[i-1].key] || 0);
+      const cur = Number(val || 0);
+      const ratio = prev > 0 ? (cur / prev) : null;
+      if (ratio !== null) {
+        const ok = ratio >= s.target;
+        ratioHtml = `<div class="ratio-badge ${ok ? 'ratio-ok' : 'ratio-low'}">${Math.round(ratio*100)}% (min ${Math.round(s.target*100)}%)</div>`;
+      } else {
+        ratioHtml = `<div class="ratio-badge">min ${Math.round(s.target*100)}%</div>`;
+      }
+    }
+    return `<div class="funnel-step">
+      <input type="number" class="num-input editable funnel-step-num" id="${prefix}-${s.key}" value="${val}" min="0"
+        style="width:70px;font-size:17px;background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.15)"
+        oninput="renderPF('${containerId}', ${containerId === 'pf-clients' ? 'PF_CLIENTS' : 'PF_RECRUITING'}, '${prefix}', gatherM2State());save()" placeholder="0">
+      <span class="funnel-step-label">${s.label}</span>
+      ${ratioHtml}
+    </div>${i < steps.length-1 ? '<div class="funnel-arrow">→</div>' : ''}`;
+  }).join('');
+}
+
+function gatherM2State() {
+  const s = {};
+  PF_CLIENTS.forEach(f => { s['pfc_' + f.key] = document.getElementById('pfc-' + f.key)?.value || ''; });
+  PF_RECRUITING.forEach(f => { s['pfr_' + f.key] = document.getElementById('pfr-' + f.key)?.value || ''; });
+  s.reflection = v('m2-reflection');
+  KPIS.forEach(k => {
+    s[k.id+'_plan']    = v('kpi-plan-'+k.id);
+    s[k.id+'_reality'] = v('kpi-real-'+k.id);
+    s[k.id+'_note']    = v('kpi-note-'+k.id);
+  });
+  return s;
+}
+
+// ── MODULE 3 ──
+function renderM3() {
+  const m3 = state.m3 || {};
+  // Plan table
+  const tbody = document.getElementById('plan-tbody');
+  tbody.innerHTML = KPIS.map(k => {
+    const target = m3[k.id + '_target'] || '';
+    const how = m3[k.id + '_how'] || '';
+    return `<tr>
+      <td><div class="kpi-name">${k.label}<small>${k.full}</small></div></td>
+      <td><input type="number" class="num-input" id="plan-target-${k.id}" value="${target}" min="0" oninput="save()"></td>
+      <td><input type="text" class="text-input" id="plan-how-${k.id}" value="${how}" placeholder="Specific action..." style="padding:9px 12px;font-size:13px" oninput="save()"></td>
+    </tr>`;
+  }).join('');
+  // Flow
+  setVal('m3-flow-limbo', m3.flow_limbo || '');
+  setVal('m3-flow-call',  m3.flow_call  || '');
+  setVal('m3-flow-note',  m3.flow_note  || '');
+  // Calendar checklist
+  const checks = m3.calendar || {};
+  document.querySelectorAll('#cal-checklist li').forEach(li => {
+    const key = li.dataset.key;
+    if (checks[key]) li.classList.add('checked');
+    else li.classList.remove('checked');
+  });
+}
+
+function toggleCheck(li) {
+  li.classList.toggle('checked');
+  const m3 = state.m3 || {};
+  m3.calendar = m3.calendar || {};
+  m3.calendar[li.dataset.key] = li.classList.contains('checked');
+  state.m3 = m3;
+  save();
+}
+
+// ── MODULE 4 ──
+function renderM4(month) {
+  const cfg = getExerciseConfig();
+  if (!cfg) {
+    document.getElementById('recruit-exercises').innerHTML = '<p class="no-exercises">exercises.js not loaded. Check file path.</p>';
+    return;
+  }
+  const schedule = cfg.monthly_schedule[month] || { recruitment: [], clients: [] };
+  const m4 = state.m4 || {};
+  renderExerciseSection('recruit-exercises', schedule.recruitment, cfg.exercises.recruitment, 'r', m4);
+  renderExerciseSection('client-exercises',  schedule.clients,     cfg.exercises.clients,     'c', m4);
+  setTimeout(updateHuntProgress, 100);
+}
+
+function renderExerciseSection(containerId, ids, library, prefix, m4) {
+  const container = document.getElementById(containerId);
+  if (!ids || ids.length === 0) {
+    container.innerHTML = '<p class="no-exercises">No exercises assigned for this month. Open Admin panel to set them up.</p>';
+    return;
+  }
+  container.innerHTML = ids.map(id => {
+    const ex = library.find(e => e.id === id);
+    if (!ex) return '';
+    const saved = m4[id] || {};
+    const inputs = Array.from({ length: ex.inputs }, (_, i) => {
+      const val = saved['i'+i] || '';
+      return `<div class="ex-input-row">
+        <div class="ex-num">${i+1}</div>
+        <input type="text" class="ex-input" id="ex-${id}-${i}" value="${esc(val)}"
+          placeholder="${ex.placeholder || 'Answer'}"
+          oninput="saveExercise('${id}', ${i}, this.value)">
+      </div>`;
+    }).join('');
+    const filled = Array.from({ length: ex.inputs }, (_, i) => (saved['i'+i] || '').trim()).filter(Boolean).length;
+    return `<div class="exercise-card">
+      <div class="exercise-prompt">${ex.text}</div>
+      <div class="exercise-inputs">${inputs}</div>
+      <div class="ex-progress">Filled: <b>${filled} / ${ex.inputs}</b></div>
+    </div>`;
+  }).join('');
+}
+
+function saveExercise(exId, idx, val) {
+  state.m4 = state.m4 || {};
+  state.m4[exId] = state.m4[exId] || {};
+  state.m4[exId]['i'+idx] = val;
+  // Update progress label
+  const saved = state.m4[exId];
+  const ex = getAllExercises().find(e => e.id === exId);
+  if (ex) {
+    const filled = Array.from({ length: ex.inputs }, (_, i) => (saved['i'+i] || '').trim()).filter(Boolean).length;
+    const progEl = document.querySelector(`#ex-${exId}-0`)?.closest('.exercise-card')?.querySelector('.ex-progress b');
+    if (progEl) progEl.textContent = filled + ' / ' + ex.inputs;
+  }
+  updateHuntProgress();
+  save();
+}
+
+function getAllExercises() {
+  const cfg = getExerciseConfig();
+  if (!cfg) return [];
+  return [...cfg.exercises.recruitment, ...cfg.exercises.clients];
+}
+
+function updateHuntProgress() {
+  const cfg = getExerciseConfig();
+  if (!cfg) return;
+  const month = currentMonth;
+  const schedule = cfg.monthly_schedule[month] || { recruitment: [], clients: [] };
+  const allIds = [...(schedule.recruitment || []), ...(schedule.clients || [])];
+  const m4 = state.m4 || {};
+  let total = 0, filled = 0;
+  allIds.forEach(id => {
+    const ex = getAllExercises().find(e => e.id === id);
+    if (!ex) return;
+    total += ex.inputs;
+    const saved = m4[id] || {};
+    filled += Array.from({ length: ex.inputs }, (_, i) => (saved['i'+i] || '').trim()).filter(Boolean).length;
+  });
+  const pct = total > 0 ? Math.round(filled/total*100) : 0;
+  document.getElementById('hunt-pct').textContent = pct + '%';
+  document.getElementById('hunt-bar').style.width = pct + '%';
+  document.getElementById('hunt-count').textContent = filled + ' / ' + total;
+}
+
+// ── MODULE 5 ──
+function buildWeekPanels() {
+  const wrap = document.getElementById('week-panels');
+  wrap.innerHTML = [1,2,3,4].map(w => `
+    <div class="week-panel ${w===1?'active':''}" id="week-panel-${w}">
+      <div class="card">
+        <div class="card-title" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+          <span>Week ${w} — KPI actuals</span>
+          <span class="month-pct-badge" id="month-pct-badge-${w}"></span>
+        </div>
+        <div class="week-kpi-row">
+          ${KPIS.filter(k => !['ws','pi'].includes(k.id)).map(k => `
+            <div class="week-kpi-block">
+              <label>${k.label}<br><small style="font-size:10px;color:rgba(255,255,255,0.4)">${k.full}</small></label>
+              <input type="number" class="num-input" id="w${w}-kpi-${k.id}" min="0"
+                oninput="refreshWeekPace(${w});save()" placeholder="0">
+              <div class="week-pace" id="w${w}-pace-${k.id}"></div>
+            </div>`).join('')}
+        </div>
+        <hr class="divider" style="margin:14px 0">
+        <label class="field-label" for="w${w}-change">What will I change / focus on next week?</label>
+        <textarea class="text-input" id="w${w}-change" rows="2" placeholder="1 specific action I will take differently..." oninput="save()"></textarea>
+      </div>
+    </div>`).join('');
+}
+
+function renderM5() {
+  const m5 = state.m5 || {};
+  for (let w = 1; w <= 4; w++) {
+    setVal('w'+w+'-change', m5['w'+w+'_change'] || '');
+    KPIS.filter(k => !['ws','pi'].includes(k.id)).forEach(k => {
+      setVal('w'+w+'-kpi-'+k.id, m5['w'+w+'_'+k.id] || '');
+    });
+    refreshWeekPace(w);
+  }
+}
+
+function refreshWeekPace(w) {
+  // Month elapsed info
+  const now = new Date();
+  const [y, m] = currentMonth.split('-').map(Number);
+  const daysInMonth = new Date(y, m, 0).getDate();
+  const isCurrentMonth = now.getFullYear() === y && (now.getMonth()+1) === m;
+  const monthStart = new Date(y, m - 1, 1);
+  const dayOfMonth = isCurrentMonth ? now.getDate() : (monthStart > now ? 0 : daysInMonth);
+  const monthPct = Math.round((dayOfMonth / daysInMonth) * 100);
+
+  // Badge: "Month: 87% done"
+  const badge = document.getElementById('month-pct-badge-' + w);
+  if (badge) badge.textContent = dayOfMonth > 0 ? `Month: ${monthPct}% done` : 'Month not started';
+
+  // Expected pace at end of week w (cumulative target)
+  const weekEndDay = w === 4 ? daysInMonth : Math.min(w * 7, daysInMonth);
+  const weekPct = weekEndDay / daysInMonth;
+
+  KPIS.filter(k => !['ws','pi'].includes(k.id)).forEach(k => {
+    const paceEl = document.getElementById('w' + w + '-pace-' + k.id);
+    if (!paceEl) return;
+
+    const planEl = document.getElementById('kpi-plan-' + k.id);
+    const plan = planEl ? (parseFloat(planEl.value) || 0) : 0;
+
+    // Cumulative: sum weeks 1..w
+    let cumulative = 0;
+    for (let wi = 1; wi <= w; wi++) {
+      const el = document.getElementById('w' + wi + '-kpi-' + k.id);
+      cumulative += el ? (parseFloat(el.value) || 0) : 0;
+    }
+
+    if (plan === 0) {
+      paceEl.innerHTML = `<span style="color:rgba(255,255,255,0.25);font-size:10px">no plan set</span>`;
+      return;
+    }
+
+    const expected = Math.ceil(plan * weekPct);
+    const pct = expected > 0 ? Math.round((cumulative / expected) * 100) : (cumulative > 0 ? 100 : 0);
+    const color = pct >= 90 ? 'var(--green)' : pct >= 70 ? 'var(--amber)' : 'var(--rose)';
+    const dotCls = pct >= 90 ? 'status-green' : pct >= 70 ? 'status-amber' : 'status-rose';
+
+    paceEl.innerHTML = `
+      <span class="status-dot ${dotCls}" style="flex-shrink:0"></span>
+      <span style="color:${color};font-weight:700;font-size:12px">${pct}%</span>
+      <span style="color:rgba(255,255,255,0.35);font-size:11px">&thinsp;${cumulative}/${expected}</span>
+    `;
+  });
+}
+
+function switchWeek(w) {
+  currentWeek = w;
+  document.querySelectorAll('.week-tab').forEach(t => t.classList.toggle('active', Number(t.dataset.week) === w));
+  document.querySelectorAll('.week-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('week-panel-' + w).classList.add('active');
+}
+
+function updateMonthProgress() {
+  const now = new Date();
+  const [y, m] = currentMonth.split('-').map(Number);
+  const daysInMonth = new Date(y, m, 0).getDate();
+  // Compare month start vs today
+  const monthStart = new Date(y, m - 1, 1);
+  const monthEnd   = new Date(y, m, 0);
+  const isCurrentMonth = now.getFullYear() === y && (now.getMonth()+1) === m;
+  const isPast   = monthEnd < now && !isCurrentMonth;
+  const isFuture = monthStart > now;
+
+  let dayOfMonth, labelText;
+  if (isCurrentMonth) {
+    dayOfMonth = now.getDate();
+    const weekNum = Math.min(4, Math.max(1, Math.ceil(dayOfMonth / 7)));
+    labelText = `Week ${weekNum} of 4 · Day ${dayOfMonth}/${daysInMonth}`;
+  } else if (isPast) {
+    dayOfMonth = daysInMonth;
+    labelText = `Completed · Day ${daysInMonth}/${daysInMonth}`;
+  } else {
+    dayOfMonth = 0;
+    const daysUntil = Math.ceil((monthStart - now) / 86400000);
+    labelText = `Starts in ${daysUntil} day${daysUntil !== 1 ? 's' : ''} · Day 0/${daysInMonth}`;
+  }
+
+  const pct = Math.round((dayOfMonth / daysInMonth) * 100);
+  document.getElementById('month-progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = labelText;
+}
+
+// ══════════════════════════════════════════
+//  EXERCISE CONFIG — localStorage takes priority over exercises.js
+//  Admin panel saves to 'partners_exercise_config' → index picks it up immediately.
+// ══════════════════════════════════════════
+function getExerciseConfig() {
+  const override = localStorage.getItem('partners_exercise_config');
+  if (override) {
+    try { return JSON.parse(override); } catch(e) {}
+  }
+  return window.EXERCISES_CONFIG || null;
+}
+
+// ══════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════
+function esc(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ══════════════════════════════════════════
+//  BOOT
+// ══════════════════════════════════════════
+window.addEventListener('load', init);
+</script>
+</body>
+</html>
