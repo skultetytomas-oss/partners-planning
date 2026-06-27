@@ -1,10 +1,11 @@
-// PARTNERS Planning App — Exercise Library
+// PARTNERS Planning App — Exercise Library v2.0
+// Trilingual: EN / SK / BG
 // Edit via admin.html, then replace this file on GitHub Pages.
-// Version bump triggers fresh load in all browsers.
 
 window.EXERCISES_CONFIG = {
-  version: "1.1.0",
+  version: "2.0.0",
 
+  // EN quotes (default + admin.html compatibility)
   quotes: [
     "People do not plan to fail, but they fail to plan. — Jim Heidema",
     "Success is the sum of small efforts, repeated day in and day out. — Robert Collier",
@@ -20,286 +21,405 @@ window.EXERCISES_CONFIG = {
     "A goal without a plan is just a wish. — Antoine de Saint-Exupéry"
   ],
 
+  quotes_sk: [
+    "Ľudia neplánujú zlyhanie, ale zlyhávajú v plánovaní. — Jim Heidema",
+    "Úspech je súčtom malých úsilí, opakovaných deň za dňom. — Robert Collier",
+    "Tajomstvo napredovania je začať. — Mark Twain",
+    "Stanovenie cieľov je prvým krokom k premene neviditeľného na viditeľné. — Tony Robbins",
+    "Rozdiel medzi snom a cieľom je termín.",
+    "Premeškáte 100 % šancí, o ktoré sa nepokúsite. — Wayne Gretzky",
+    "Či si myslíte, že môžete alebo nemôžete — máte pravdu. — Henry Ford",
+    "Tvrdá práca porazí talent, keď talent nepracuje tvrdo. — Tim Notke",
+    "Vaša sieť kontaktov je váš kapitál. — Porter Gale",
+    "Nepozerajte na hodiny; robte to, čo ony. Pokračujte. — Sam Levenson",
+    "Akcia je základným kľúčom k úspechu. — Pablo Picasso",
+    "Cieľ bez plánu je len prianie. — Antoine de Saint-Exupéry"
+  ],
+
+  quotes_bg: [
+    "Хората не планират провал, но се провалят да планират. — Джим Хайдема",
+    "Успехът е сбор от малки усилия, повтаряни ден след ден. — Робърт Колиър",
+    "Тайната на напредъка е да започнеш. — Марк Твен",
+    "Поставянето на цели е първата стъпка към превръщането на невидимото в реално. — Тони Робинс",
+    "Разликата между мечта и цел е краен срок.",
+    "Пропускате 100% от шансовете, за които не опитвате. — Уейн Грецки",
+    "Независимо дали мислите, че можете или не — вие сте прав. — Хенри Форд",
+    "Упоритата работа побеждава таланта, когато талантът не работи упорито. — Тим Нотке",
+    "Вашата мрежа е вашата стойност. — Портър Гейл",
+    "Не гледайте часовника; правете това, което той прави. Продължавайте. — Сам Левенсън",
+    "Действието е основният ключ към всякакъв успех. — Пабло Пикасо",
+    "Цел без план е само желание. — Антоан дьо Сент-Екзюпери"
+  ],
+
   exercises: {
     recruitment: [
       {
         id: "r01",
-        text: "Which of your clients have NOT had a Confirmation Service meeting yet? Who could you invite for an opportunity meeting this month?",
+        text_en: "Which of your clients have NOT had a Confirmation Service meeting yet? Who could you invite for an opportunity meeting this month?",
+        text_sk: "Ktorí z vašich klientov ešte NEMALI servisné stretnutie (Confirmation Service)? Koho by ste mohli pozvať na príležitostné stretnutie tento mesiac?",
+        text_bg: "Кои от вашите клиенти НЕ СА имали все още Потвърдителна Сервизна среща? Кого бихте могли да поканите на среща за възможности този месец?",
         inputs: 6,
-        placeholder: "Name"
+        placeholder_en: "Name", placeholder_sk: "Meno", placeholder_bg: "Име"
       },
       {
         id: "r02",
-        text: "Find 5 people in your database who work directly with clients or customers — bartenders, call centre agents, sales reps, receptionists, etc.",
+        text_en: "Find 5 people in your database who work directly with clients or customers — bartenders, call centre agents, sales reps, receptionists, etc.",
+        text_sk: "Nájdite 5 ľudí vo vašej databáze, ktorí pracujú priamo s klientmi — čašníci, agenti call centra, obchodní zástupcovia, recepčné atď.",
+        text_bg: "Намерете 5 души в базата си данни, които работят директно с клиенти — сервитьори, агенти в кол центъра, търговски представители, рецепционисти и др.",
         inputs: 5,
-        placeholder: "Name / job"
+        placeholder_en: "Name / job", placeholder_sk: "Meno / práca", placeholder_bg: "Име / работа"
       },
       {
         id: "r03",
-        text: "Find 5 people in your database who have worked or currently work abroad.",
+        text_en: "Find 5 people in your database who have worked or currently work abroad.",
+        text_sk: "Nájdite 5 ľudí vo vašej databáze, ktorí pracovali alebo pracujú v zahraničí.",
+        text_bg: "Намерете 5 души в базата си данни, които са работили или работят в чужбина.",
         inputs: 5,
-        placeholder: "Name"
+        placeholder_en: "Name", placeholder_sk: "Meno", placeholder_bg: "Име"
       },
       {
         id: "r04",
-        text: "Find 5 people in your database with a clear business mindset or entrepreneurial attitude.",
+        text_en: "Find 5 people in your database with a clear business mindset or entrepreneurial attitude.",
+        text_sk: "Nájdite 5 ľudí vo vašej databáze s jasným podnikateľským myslením alebo prístupom.",
+        text_bg: "Намерете 5 души в базата си данни с ясно бизнес мислене или предприемачески нагласи.",
         inputs: 5,
-        placeholder: "Name"
+        placeholder_en: "Name", placeholder_sk: "Meno", placeholder_bg: "Име"
       },
       {
         id: "r05",
-        text: "Find 5 sports-active people in your database — athletes, gym regulars, coaches, club members.",
+        text_en: "Find 5 sports-active people in your database — athletes, gym regulars, coaches, club members.",
+        text_sk: "Nájdite 5 športovo aktívnych ľudí vo vašej databáze — atlétov, pravidelných návštevníkov posilňovne, trénerov, členov klubov.",
+        text_bg: "Намерете 5 спортно активни хора в базата си данни — спортисти, редовни посетители на фитнес, треньори, членове на клубове.",
         inputs: 5,
-        placeholder: "Name / sport"
+        placeholder_en: "Name / sport", placeholder_sk: "Meno / šport", placeholder_bg: "Име / спорт"
       },
       {
         id: "r06",
-        text: "Find 5 people matching at least 3 of 5 criteria: 23+ years old · no loan · financial reserve · no children · has work experience.",
+        text_en: "Find 5 people matching at least 3 of 5 criteria: 23+ years old · no loan · financial reserve · no children · has work experience.",
+        text_sk: "Nájdite 5 ľudí spĺňajúcich aspoň 3 z 5 kritérií: 23+ rokov · bez úveru · finančná rezerva · bez detí · má pracovné skúsenosti.",
+        text_bg: "Намерете 5 души, отговарящи на поне 3 от 5 критерия: 23+ години · без кредит · финансов резерв · без деца · има трудов стаж.",
         inputs: 5,
-        placeholder: "Name"
+        placeholder_en: "Name", placeholder_sk: "Meno", placeholder_bg: "Име"
       },
       {
         id: "r07",
-        text: "Choose one regular weekly event you will attend to meet new people — sports club, language course, charity, hobby group, etc. Commit and write when and where.",
+        text_en: "Choose one regular weekly event you will attend to meet new people — sports club, language course, charity, hobby group, etc. Commit and write when and where.",
+        text_sk: "Vyberte jednu pravidelnú týždennú udalosť, ktorú budete navštevovať pre spoznávanie nových ľudí — športový klub, jazykový kurz, záujmová skupina atď. Zapíšte kedy a kde.",
+        text_bg: "Изберете едно редовно седмично събитие, което ще посещавате, за да срещнете нови хора — спортен клуб, езиков курс, хоби група и др. Запишете кога и къде.",
         inputs: 1,
-        placeholder: "Event + day/time + location"
+        placeholder_en: "Event + day/time + location", placeholder_sk: "Udalosť + deň/čas + miesto", placeholder_bg: "Събитие + ден/час + място"
       },
       {
         id: "r08",
-        text: "Write 10 university students you plan to approach for recruiting this month.",
+        text_en: "Write 10 university students you plan to approach for recruiting this month.",
+        text_sk: "Napíšte 10 vysokoškolákov, ktorých plánujete osloviť pre nábor tento mesiac.",
+        text_bg: "Напишете 10 студенти, при които планирате да се обърнете за набиране този месец.",
         inputs: 10,
-        placeholder: "Name / university"
+        placeholder_en: "Name / university", placeholder_sk: "Meno / škola", placeholder_bg: "Име / университет"
       },
       {
         id: "r09",
-        text: "Which clients did you recruit in the past, they stopped — and should be approached again now?",
+        text_en: "Which clients did you recruit in the past, they stopped — and should be approached again now?",
+        text_sk: "Ktorých klientov ste v minulosti naberali, prestali — a mali by ste ich teraz opäť osloviť?",
+        text_bg: "Кои клиенти сте набирали в миналото, но са спрели — и трябва да бъдат подходени отново?",
         inputs: 5,
-        placeholder: "Name"
+        placeholder_en: "Name", placeholder_sk: "Meno", placeholder_bg: "Име"
       },
       {
         id: "r10",
-        text: "Which friends, family members, or relatives did you recruit in the past, they stopped — and you should approach again?",
+        text_en: "Which friends, family members, or relatives did you recruit in the past, they stopped — and you should approach again?",
+        text_sk: "Ktorých priateľov, členov rodiny alebo príbuzných ste v minulosti naberali, prestali — a mali by ste ich opäť osloviť?",
+        text_bg: "Кои приятели, членове на семейството или роднини сте набирали в миналото, но са спрели — и трябва да ги подходите отново?",
         inputs: 5,
-        placeholder: "Name / relationship"
+        placeholder_en: "Name / relationship", placeholder_sk: "Meno / vzťah", placeholder_bg: "Име / връзка"
       },
       {
         id: "r11",
-        text: "Commit to 1 random acquisition per week this month. Write your specific plan — how, where, when, for each of the 4 weeks.",
+        text_en: "Commit to 1 random acquisition per week this month. Write your specific plan — how, where, when, for each of the 4 weeks.",
+        text_sk: "Zaviažte sa k 1 náhodnej akvizícii týždenne tento mesiac. Napíšte konkrétny plán — ako, kde, kedy pre každý z 4 týždňov.",
+        text_bg: "Ангажирайте се с 1 случайно придобиване седмично този месец. Напишете конкретния план — как, къде, кога за всяка от 4-те седмици.",
         inputs: 4,
-        placeholder: "Week plan"
+        placeholder_en: "Week plan", placeholder_sk: "Plán týždňa", placeholder_bg: "Седмичен план"
       },
       {
         id: "r12",
-        text: "Find all people in your database who work or have worked in a bank.",
+        text_en: "Find all people in your database who work or have worked in a bank.",
+        text_sk: "Nájdite všetkých ľudí vo vašej databáze, ktorí pracujú alebo pracovali v banke.",
+        text_bg: "Намерете всички хора в базата си данни, които работят или са работили в банка.",
         inputs: 8,
-        placeholder: "Name / bank"
+        placeholder_en: "Name / bank", placeholder_sk: "Meno / banka", placeholder_bg: "Име / банка"
       },
       {
         id: "r13",
-        text: "Choose 4 coffee places or restaurants where you will go once a week to get to know and potentially recruit capable waiting staff. Schedule all 4 visits now.",
+        text_en: "Choose 4 coffee places or restaurants where you will go once a week to get to know and potentially recruit capable waiting staff. Schedule all 4 visits now.",
+        text_sk: "Vyberte 4 kaviarne alebo reštaurácie, kam pôjdete raz za týždeň spoznať a prípadne nabrať šikovný personál. Naplánujte všetky 4 návštevy teraz.",
+        text_bg: "Изберете 4 кафенета или ресторанти, където ще ходите веднъж седмично, за да се запознаете и евентуално наемете способен персонал. Планирайте всичките 4 посещения сега.",
         inputs: 4,
-        placeholder: "Place + date/week"
+        placeholder_en: "Place + date/week", placeholder_sk: "Miesto + dátum/týždeň", placeholder_bg: "Място + дата/седмица"
       },
       {
         id: "r14",
-        text: "Find all teachers in your database younger than 40. They may have more flexibility now — approach them.",
+        text_en: "Find all teachers in your database younger than 40. They may have more flexibility now — approach them.",
+        text_sk: "Nájdite všetkých učiteľov vo vašej databáze mladších ako 40 rokov. Teraz môžu mať väčšiu flexibilitu — oslovte ich.",
+        text_bg: "Намерете всички учители в базата си данни под 40 години. Сега може да имат повече гъвкавост — подходете ги.",
         inputs: 8,
-        placeholder: "Name / school"
+        placeholder_en: "Name / school", placeholder_sk: "Meno / škola", placeholder_bg: "Име / училище"
       },
       {
         id: "r15",
-        text: "Write the 3 most important qualities you want in your future coworkers. For each quality, name 5 people from your database who have it.",
+        text_en: "Write the 3 most important qualities you want in your future coworkers. For each quality, name 5 people from your database who have it.",
+        text_sk: "Napíšte 3 najdôležitejšie vlastnosti, ktoré chcete vo svojich budúcich spolupracovníkoch. Pre každú vlastnosť menujte 5 ľudí z vašej databázy, ktorí ju majú.",
+        text_bg: "Напишете 3-те най-важни качества, които искате в бъдещите си колеги. За всяко качество посочете 5 души от базата си данни, които го притежават.",
         inputs: 15,
-        placeholder: "Quality → Name"
+        placeholder_en: "Quality → Name", placeholder_sk: "Vlastnosť → Meno", placeholder_bg: "Качество → Име"
       },
       {
         id: "r16",
-        text: "Which 10 TOP people would you really love to have in your team? Write their names and the date you will contact them next.",
+        text_en: "Which 10 TOP people would you really love to have in your team? Write their names and the date you will contact them next.",
+        text_sk: "Ktorých 10 TOP ľudí by ste skutočne chceli mať vo svojom tíme? Napíšte ich mená a dátum, kedy ich budete kontaktovať.",
+        text_bg: "Кои 10 ТОП хора наистина бихте искали да имате в екипа си? Напишете имената им и датата, на която ще ги свържете следващия път.",
         inputs: 10,
-        placeholder: "Name + contact date"
+        placeholder_en: "Name + contact date", placeholder_sk: "Meno + dátum kontaktu", placeholder_bg: "Име + дата за контакт"
       },
       {
         id: "r17",
-        text: "University semester is ending — students will be available for 3–4 months. Who in your database can refer you to capable students? Write 5 people you will ask.",
+        text_en: "University semester is ending — students will be available for 3–4 months. Who in your database can refer you to capable students? Write 5 people you will ask.",
+        text_sk: "Semestr na vysokej škole sa končí — študenti budú dostupní 3–4 mesiace. Kto vo vašej databáze vás môže odporučiť schopným študentom? Napíšte 5 ľudí, ktorých sa opýtate.",
+        text_bg: "Университетският семестър приключва — студентите ще бъдат свободни 3–4 месеца. Кой в базата ви данни може да ви препоръча способни студенти? Напишете 5 души, на които ще се обадите.",
         inputs: 5,
-        placeholder: "Name / connection to students"
+        placeholder_en: "Name / connection to students", placeholder_sk: "Meno / spojenie so študentmi", placeholder_bg: "Име / връзка със студенти"
       },
       {
         id: "r18",
-        text: "Who are the 10 people (clients or friends) who gave you the most referrals for recruiting? Write them and how many they referred.",
+        text_en: "Who are the 10 people (clients or friends) who gave you the most referrals for recruiting? Write them and how many they referred.",
+        text_sk: "Kto sú 10 ľudí (klienti alebo priatelia), ktorí vám dali najviac odporúčaní pre nábor? Napíšte ich a koľko odporučili.",
+        text_bg: "Кои са 10-те хора (клиенти или приятели), дали ви най-много препоръки за набиране? Напишете ги и колко са препоръчали.",
         inputs: 10,
-        placeholder: "Name — # referrals"
+        placeholder_en: "Name — # referrals", placeholder_sk: "Meno — počet odporúčaní", placeholder_bg: "Име — брой препоръки"
       },
       {
         id: "r19",
-        text: "Write 15 people you will invite for a coffee this month to explore their potential motives for joining the business.",
+        text_en: "Write 15 people you will invite for a coffee this month to explore their potential motives for joining the business.",
+        text_sk: "Napíšte 15 ľudí, ktorých pozvete na kávu tento mesiac, aby ste preskúmali ich potenciálne motívy pre vstup do biznisu.",
+        text_bg: "Напишете 15 души, на които ще поканите на кафе този месец, за да проучите потенциалните им мотиви за присъединяване към бизнеса.",
         inputs: 15,
-        placeholder: "Name"
+        placeholder_en: "Name", placeholder_sk: "Meno", placeholder_bg: "Име"
       },
       {
         id: "r20",
-        text: "Create your ideal coworker profile (age, family status, work experience, financial situation, key qualities). Then find 10 people in your database who match it.",
+        text_en: "Create your ideal coworker profile (age, family status, work experience, financial situation, key qualities). Then find 10 people in your database who match it.",
+        text_sk: "Vytvorte profil ideálneho spolupracovníka (vek, rodinný stav, pracovné skúsenosti, finančná situácia, kľúčové vlastnosti). Potom nájdite 10 ľudí vo vašej databáze, ktorí mu zodpovedajú.",
+        text_bg: "Създайте профил на идеалния колега (възраст, семеен статус, трудов стаж, финансово положение, ключови качества). После намерете 10 души в базата си данни, които отговарят на него.",
         inputs: 10,
-        placeholder: "Name"
+        placeholder_en: "Name", placeholder_sk: "Meno", placeholder_bg: "Име"
       },
       {
         id: "r21",
-        text: "How can you use your own success — or the success of your colleagues — to attract new people? Write 10 people you will approach with this message.",
+        text_en: "How can you use your own success — or the success of your colleagues — to attract new people? Write 10 people you will approach with this message.",
+        text_sk: "Ako môžete využiť váš vlastný úspech — alebo úspech vašich kolegov — na získanie nových ľudí? Napíšte 10 ľudí, ktorých oslovíte s týmto posolstvom.",
+        text_bg: "Как можете да използвате собствения си успех — или успеха на колегите си — за привличане на нови хора? Напишете 10 души, към които ще подходите с това послание.",
         inputs: 10,
-        placeholder: "Name"
+        placeholder_en: "Name", placeholder_sk: "Meno", placeholder_bg: "Име"
       },
       {
         id: "r22",
-        text: "Find all people in your database whom you previously recruited but who have NOT yet seen the Startapp presentation.",
+        text_en: "Find all people in your database whom you previously recruited but who have NOT yet seen the Startapp presentation.",
+        text_sk: "Nájdite všetkých ľudí vo vašej databáze, ktorých ste v minulosti naberali, ale ktorí EŠTE NEVIDELI prezentáciu Startapp.",
+        text_bg: "Намерете всички хора в базата си данни, които сте набирали в миналото, но НЕ СА виждали все още презентацията Startapp.",
         inputs: 8,
-        placeholder: "Name"
+        placeholder_en: "Name", placeholder_sk: "Meno", placeholder_bg: "Име"
       }
     ],
 
     clients: [
       {
         id: "c01",
-        text: "Which of your clients does NOT know about Partners Investments (PI) yet? Write at least 5 names and plan when you will bring it up.",
+        text_en: "Which of your clients does NOT know about Partners Investments (PI) yet? Write at least 5 names and plan when you will bring it up.",
+        text_sk: "Ktorí z vašich klientov ešte NEVEDIA o Partners Investments (PI)? Napíšte aspoň 5 mien a naplánujte, kedy to nadhodíte.",
+        text_bg: "Кои от вашите клиенти НЕ ЗНАЯТ все още за Partners Investments (PI)? Напишете поне 5 имена и планирайте кога ще го споменете.",
         inputs: 5,
-        placeholder: "Name"
+        placeholder_en: "Name", placeholder_sk: "Meno", placeholder_bg: "Име"
       },
       {
         id: "c02",
-        text: "Which of your clients gave you fewer than 16 referrals? For each, write how you plan to get more referrals from them.",
+        text_en: "Which of your clients gave you fewer than 16 referrals? For each, write how you plan to get more referrals from them.",
+        text_sk: "Ktorí z vašich klientov vám dali menej ako 16 odporúčaní? Pre každého napíšte, ako plánujete získať od nich viac odporúčaní.",
+        text_bg: "Кои от вашите клиенти са ви дали по-малко от 16 препоръки? За всеки напишете как планирате да получите повече препоръки от тях.",
         inputs: 5,
-        placeholder: "Name — referral plan"
+        placeholder_en: "Name — referral plan", placeholder_sk: "Meno — plán odporúčaní", placeholder_bg: "Име — план за препоръки"
       },
       {
         id: "c03",
-        text: "Select 20 people from your database you would really like to have as clients. For each, write one specific reason why.",
+        text_en: "Select 20 people from your database you would really like to have as clients. For each, write one specific reason why.",
+        text_sk: "Vyberte 20 ľudí z vašej databázy, ktorých by ste skutočne chceli mať ako klientov. Pre každého napíšte jeden konkrétny dôvod prečo.",
+        text_bg: "Изберете 20 души от базата си данни, които наистина бихте искали да имате като клиенти. За всеки напишете една конкретна причина защо.",
         inputs: 20,
-        placeholder: "Name — reason"
+        placeholder_en: "Name — reason", placeholder_sk: "Meno — dôvod", placeholder_bg: "Име — причина"
       },
       {
         id: "c04",
-        text: "Choose 5 doctors from your database (relationship level doesn't matter). Write 2–3 specific ways you could approach each one.",
+        text_en: "Choose 5 doctors from your database (relationship level doesn't matter). Write 2–3 specific ways you could approach each one.",
+        text_sk: "Vyberte 5 lekárov z vašej databázy (úroveň vzťahu nie je dôležitá). Napíšte 2–3 konkrétne spôsoby, ako by ste mohli každého osloviť.",
+        text_bg: "Изберете 5 лекари от базата си данни (нивото на отношенията няма значение). Напишете 2–3 конкретни начина, по които бихте могли да подходите към всеки.",
         inputs: 5,
-        placeholder: "Name — approach"
+        placeholder_en: "Name — approach", placeholder_sk: "Meno — prístup", placeholder_bg: "Име — подход"
       },
       {
         id: "c05",
-        text: "Choose 5 self-employed people from your database — hairdressers, lawyers, mechanics, architects, accountants, IT freelancers, café owners, etc. Relationship level doesn't matter. How could you attract them?",
+        text_en: "Choose 5 self-employed people from your database — hairdressers, lawyers, mechanics, architects, accountants, IT freelancers, café owners, etc. How could you attract them?",
+        text_sk: "Vyberte 5 živnostníkov z vašej databázy — kaderníci, právnici, mechanici, architekti, účtovníci, IT freelanceri, majitelia kaviarní atď. Ako ich môžete pritiahnuť?",
+        text_bg: "Изберете 5 самонаети хора от базата си данни — фризьори, адвокати, механици, архитекти, счетоводители, IT фрийлансъри, собственици на кафенета и др. Как бихте могли да ги привлечете?",
         inputs: 5,
-        placeholder: "Name — approach"
+        placeholder_en: "Name — approach", placeholder_sk: "Meno — prístup", placeholder_bg: "Име — подход"
       },
       {
         id: "c06",
-        text: "Choose 3 clients who referred you the most clients. Write how many. Plan a small thank-you (wine, chocolate, Partners coffee…) and schedule the meeting.",
+        text_en: "Choose 3 clients who referred you the most clients. Write how many. Plan a small thank-you (wine, chocolate, Partners coffee…) and schedule the meeting.",
+        text_sk: "Vyberte 3 klientov, ktorí vám odporučili najviac klientov. Napíšte koľko. Naplánujte malé poďakovanie (víno, čokoláda, Partners káva…) a dohodnite stretnutie.",
+        text_bg: "Изберете 3 клиента, които са ви препоръчали най-много клиенти. Напишете колко. Планирайте малка благодарност (вино, шоколад, Partners кафе…) и насрочете срещата.",
         inputs: 3,
-        placeholder: "Name — # referrals — gift plan"
+        placeholder_en: "Name — # referrals — gift plan", placeholder_sk: "Meno — počet odporúčaní — plán darčeka", placeholder_bg: "Име — брой препоръки — план за подарък"
       },
       {
         id: "c07",
-        text: "Which of your clients have no health issues and could successfully go through MetLife Care medical underwriting? Write their names.",
+        text_en: "Which of your clients have no health issues and could successfully go through MetLife Care medical underwriting? Write their names.",
+        text_sk: "Ktorí z vašich klientov nemajú zdravotné problémy a mohli by úspešne prejsť lekárskym upisovaním MetLife Care? Napíšte ich mená.",
+        text_bg: "Кои от вашите клиенти нямат здравословни проблеми и биха могли успешно да преминат медицинско застраховане MetLife Care? Напишете имената им.",
         inputs: 8,
-        placeholder: "Name"
+        placeholder_en: "Name", placeholder_sk: "Meno", placeholder_bg: "Име"
       },
       {
         id: "c08",
-        text: "Review your flow from the past months. Which potential clients did NOT sign the financial plan? Why not? How can you approach them again?",
+        text_en: "Review your flow from the past months. Which potential clients did NOT sign the financial plan? Why not? How can you approach them again?",
+        text_sk: "Skontrolujte váš tok z posledných mesiacov. Ktorí potenciálni klienti NEPODPÍSALI finančný plán? Prečo? Ako ich môžete osloviť znovu?",
+        text_bg: "Прегледайте потока си от последните месеци. Кои потенциални клиенти НЕ СА подписали финансовия план? Защо? Как можете да ги подходите отново?",
         inputs: 5,
-        placeholder: "Name — why — new approach"
+        placeholder_en: "Name — why — new approach", placeholder_sk: "Meno — prečo — nový prístup", placeholder_bg: "Име — защо — нов подход"
       },
       {
         id: "c09",
-        text: "Find 5 managers, owners, or HR managers of companies you could approach about offering financial education or planning as an employee benefit. How would you get to them?",
+        text_en: "Find 5 managers, owners, or HR managers of companies you could approach about offering financial education or planning as an employee benefit. How would you get to them?",
+        text_sk: "Nájdite 5 manažérov, majiteľov alebo HR manažérov firiem, ktorých môžete osloviť o ponuke finančného vzdelávania ako zamestnaneckej výhody. Ako sa k nim dostanete?",
+        text_bg: "Намерете 5 мениджъри, собственици или HR мениджъри на компании, към които можете да подходите с предложение за финансово образование като служебна придобивка. Как ще стигнете до тях?",
         inputs: 5,
-        placeholder: "Name / company — approach"
+        placeholder_en: "Name / company — approach", placeholder_sk: "Meno / firma — prístup", placeholder_bg: "Име / компания — подход"
       },
       {
         id: "c10",
-        text: "Choose 5 people from your database you have NOT approached as a client — because of fear or some prejudice. Why not? How could you do it now?",
+        text_en: "Choose 5 people from your database you have NOT approached as a client — because of fear or some prejudice. Why not? How could you do it now?",
+        text_sk: "Vyberte 5 ľudí z vašej databázy, ktorých ste NEOSLOVILI ako klienta — kvôli strachu alebo predsudku. Prečo nie? Ako by ste to mohli urobiť teraz?",
+        text_bg: "Изберете 5 души от базата си данни, към които НЕ СТЕ подходили като клиент — поради страх или предразсъдък. Защо не? Как бихте могли да го направите сега?",
         inputs: 5,
-        placeholder: "Name — why not — how to approach"
+        placeholder_en: "Name — why not — how to approach", placeholder_sk: "Meno — prečo nie — ako osloviť", placeholder_bg: "Име — защо не — как да подходите"
       },
       {
         id: "c11",
-        text: "Which of your clients have you NOT thoroughly discussed new housing or other financial goals with? How can you bring it up and offer them a 5–7–10 year portfolio?",
+        text_en: "Which of your clients have you NOT thoroughly discussed new housing or other financial goals with? How can you bring it up and offer them a 5–7–10 year portfolio?",
+        text_sk: "S ktorými klientmi ste PODROBNE NEPREBRAL/A nové bývanie alebo iné finančné ciele? Ako to môžete nadhodiť a ponúknuť im portfólio na 5–7–10 rokov?",
+        text_bg: "С кои от вашите клиенти НЕ СТЕ разговаряли подробно за ново жилище или други финансови цели? Как можете да го повдигнете и да им предложите портфолио за 5–7–10 години?",
         inputs: 5,
-        placeholder: "Name — topic — approach"
+        placeholder_en: "Name — topic — approach", placeholder_sk: "Meno — téma — prístup", placeholder_bg: "Име — тема — подход"
       },
       {
         id: "c12",
-        text: "Which of your clients could benefit from a Credit Guard product? Write their names.",
+        text_en: "Which of your clients could benefit from a Credit Guard product? Write their names.",
+        text_sk: "Ktorí z vašich klientov by mohli mať prospech z produktu Credit Guard? Napíšte ich mená.",
+        text_bg: "Кои от вашите клиенти биха се възползвали от продукт Credit Guard? Напишете имената им.",
         inputs: 8,
-        placeholder: "Name"
+        placeholder_en: "Name", placeholder_sk: "Meno", placeholder_bg: "Име"
       },
       {
         id: "c13",
-        text: "Which clients should you approach about the current promotion or fee structure? Write their names and your specific approach.",
+        text_en: "Which clients should you approach about the current promotion or fee structure? Write their names and your specific approach.",
+        text_sk: "Ktorých klientov by ste mali osloviť ohľadom aktuálnej akcie alebo štruktúry poplatkov? Napíšte ich mená a váš konkrétny prístup.",
+        text_bg: "Кои клиенти трябва да подходите относно текущата промоция или структурата на таксите? Напишете имената им и конкретния ви подход.",
         inputs: 5,
-        placeholder: "Name — approach"
+        placeholder_en: "Name — approach", placeholder_sk: "Meno — prístup", placeholder_bg: "Име — подход"
       },
       {
         id: "c14",
-        text: "Go through your call list from the past year. Who should you call again — didn't answer, told you to call later, or you lost contact? Write 10 names.",
+        text_en: "Go through your call list from the past year. Who should you call again — didn't answer, told you to call later, or you lost contact? Write 10 names.",
+        text_sk: "Prejdite váš call list z minulého roka. Koho by ste mali opäť zavolať — neodpovedali, povedali vám zavolať neskôr, alebo ste stratili kontakt? Napíšte 10 mien.",
+        text_bg: "Прегледайте списъка си за обаждания от миналата година. На кого трябва да се обадите отново — не отговориха, казаха ви да се обадите по-късно или загубихте контакт? Напишете 10 имена.",
         inputs: 10,
-        placeholder: "Name — reason"
+        placeholder_en: "Name — reason", placeholder_sk: "Meno — dôvod", placeholder_bg: "Име — причина"
       },
       {
         id: "c15",
-        text: "Review your flow since the beginning of the year. Which potential clients could you still try to finalize? Write 5 names and the next concrete action.",
+        text_en: "Review your flow since the beginning of the year. Which potential clients could you still try to finalize? Write 5 names and the next concrete action.",
+        text_sk: "Skontrolujte váš tok od začiatku roka. Ktorí potenciálni klienti by sa dali ešte dotiahnuť? Napíšte 5 mien a ďalšiu konkrétnu akciu.",
+        text_bg: "Прегледайте потока си от началото на годината. Кои потенциални клиенти все още бихте могли да финализирате? Напишете 5 имена и следващото конкретно действие.",
         inputs: 5,
-        placeholder: "Name — next action"
+        placeholder_en: "Name — next action", placeholder_sk: "Meno — ďalšia akcia", placeholder_bg: "Име — следващо действие"
       },
       {
         id: "c16",
-        text: "Which of your clients have ONLY the dynamic strategy in Partners Investments and could now start the real estate strategy too?",
+        text_en: "Which of your clients have ONLY the dynamic strategy in Partners Investments and could now start the real estate strategy too?",
+        text_sk: "Ktorí z vašich klientov majú v Partners Investments IBA dynamickú stratégiu a mohli by teraz začať aj s realitnou stratégiou?",
+        text_bg: "Кои от вашите клиенти имат САМО динамичната стратегия в Partners Investments и биха могли сега да стартират и стратегията за недвижими имоти?",
         inputs: 8,
-        placeholder: "Name"
+        placeholder_en: "Name", placeholder_sk: "Meno", placeholder_bg: "Име"
       },
       {
         id: "c17",
-        text: "Which people did you not manage to meet during the year but could meet now (holiday season, Christmas period, etc.)? Write 5 names and how you'll approach them.",
+        text_en: "Which people did you not manage to meet during the year but could meet now (holiday season, Christmas period, etc.)? Write 5 names and how you'll approach them.",
+        text_sk: "Ktorých ľudí sa vám nepodarilo stretnúť počas roka, ale mohli by ste sa s nimi stretnúť teraz (sviatočné obdobie, Vianoce atď.)? Napíšte 5 mien a ako ich oslovíte.",
+        text_bg: "Кои хора не успяхте да срещнете по време на годината, но бихте могли да ги срещнете сега (празничен сезон, Коледа и др.)? Напишете 5 имена и как ще ги подходите.",
         inputs: 5,
-        placeholder: "Name — approach"
+        placeholder_en: "Name — approach", placeholder_sk: "Meno — prístup", placeholder_bg: "Име — подход"
       },
       {
         id: "c18",
-        text: "Which people could not start a Partners Investment regular plan because they couldn't afford the entry fee at the time? Can you approach them now?",
+        text_en: "Which people could not start a Partners Investment regular plan because they couldn't afford the entry fee at the time? Can you approach them now?",
+        text_sk: "Ktorí ľudia nemohli začať pravidelný plán Partners Investment, pretože si vtedy nemohli dovoliť vstupný poplatok? Môžete ich teraz osloviť?",
+        text_bg: "Кои хора не можаха да стартират редовен план Partners Investment, защото не можаха да си позволят входната такса тогава? Можете ли да ги подходите сега?",
         inputs: 5,
-        placeholder: "Name"
+        placeholder_en: "Name", placeholder_sk: "Meno", placeholder_bg: "Име"
       },
       {
         id: "c19",
-        text: "Which of your existing PI clients could you approach about adding another investment strategy to their portfolio?",
+        text_en: "Which of your existing PI clients could you approach about adding another investment strategy to their portfolio?",
+        text_sk: "Ktorých z vašich existujúcich PI klientov môžete osloviť ohľadom pridania ďalšej investičnej stratégie do ich portfólia?",
+        text_bg: "Кои от вашите съществуващи PI клиенти бихте могли да подходите относно добавяне на друга инвестиционна стратегия към портфолиото им?",
         inputs: 8,
-        placeholder: "Name — strategy idea"
+        placeholder_en: "Name — strategy idea", placeholder_sk: "Meno — nápad stratégie", placeholder_bg: "Име — идея за стратегия"
       },
       {
         id: "c20",
-        text: "Which of your clients who do NOT have PI yet could you approach about starting an investment this month?",
+        text_en: "Which of your clients who do NOT have PI yet could you approach about starting an investment this month?",
+        text_sk: "Ktorých z vašich klientov, ktorí EŠTE NEMAJÚ PI, môžete osloviť ohľadom začatia investície tento mesiac?",
+        text_bg: "Кои от вашите клиенти, които НЕ ПРИТЕЖАВАТ все още PI, бихте могли да подходите относно стартиране на инвестиция този месец?",
         inputs: 8,
-        placeholder: "Name"
+        placeholder_en: "Name", placeholder_sk: "Meno", placeholder_bg: "Име"
       },
       {
         id: "c21",
-        text: "Which people previously rejected PI specifically because of the fee — and could you approach them again now that their situation may have changed?",
+        text_en: "Which people previously rejected PI specifically because of the fee — and could you approach them again now that their situation may have changed?",
+        text_sk: "Ktorí ľudia v minulosti odmietli PI konkrétne kvôli poplatku — a môžete ich teraz opäť osloviť, keďže sa ich situácia mohla zmeniť?",
+        text_bg: "Кои хора преди са отхвърлили PI конкретно поради таксата — и бихте ги подходили отново, тъй като ситуацията им може да се е променила?",
         inputs: 5,
-        placeholder: "Name"
+        placeholder_en: "Name", placeholder_sk: "Meno", placeholder_bg: "Име"
       },
       {
         id: "c22",
-        text: "Select all full-time employees in your database who don't yet know what services you offer (no filters — be honest). How many are there? Write 5 names and how you'll approach them.",
+        text_en: "Select all full-time employees in your database who don't yet know what services you offer (no filters — be honest). How many are there? Write 5 names and how you'll approach them.",
+        text_sk: "Vyberte všetkých zamestnancov na plný úväzok vo vašej databáze, ktorí ešte nevedia čo ponúkate (bez filtrov — buďte úprimní). Koľko ich je? Napíšte 5 mien a ako ich oslovíte.",
+        text_bg: "Изберете всички служители на пълно работно време в базата си данни, които все още не знаят какви услуги предлагате (без филтри — бъдете честни). Колко са? Напишете 5 имена и как ще ги подходите.",
         inputs: 5,
-        placeholder: "Name — approach"
+        placeholder_en: "Name — approach", placeholder_sk: "Meno — prístup", placeholder_bg: "Име — подход"
       },
       {
         id: "c23",
-        text: "How will you get to know 15 new full-time employed people this month? Write specific strategies and names if you already have people in mind.",
+        text_en: "How will you get to know 15 new full-time employed people this month? Write specific strategies and names if you already have people in mind.",
+        text_sk: "Ako spoznáte 15 nových ľudí zamestnaných na plný úväzok tento mesiac? Napíšte konkrétne stratégie a mená, ak už niekto prichádza na myseľ.",
+        text_bg: "Как ще се запознаете с 15 нови служители на пълно работно време този месец? Напишете конкретни стратегии и имена, ако вече имате хора наум.",
         inputs: 5,
-        placeholder: "Strategy / name"
+        placeholder_en: "Strategy / name", placeholder_sk: "Stratégia / meno", placeholder_bg: "Стратегия / Име"
       }
     ]
   },
 
   // Monthly exercise schedule — edit via admin panel.
-  // Format: "YYYY-MM": { recruitment: ["r01",...], clients: ["c01",...] }
   monthly_schedule: {
     "2026-07": {
       recruitment: ["r01", "r19", "r20"],

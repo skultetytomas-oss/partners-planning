@@ -32,7 +32,7 @@ body {
   background: #72727C;
   min-height: 100vh;
   color: var(--white);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.6;
 }
 
@@ -107,6 +107,17 @@ header {
 }
 .btn-export:hover { background: rgba(255,255,255,0.14); }
 
+/* ── LANG SWITCHER ── */
+.lang-switcher { display: flex; gap: 4px; }
+.lang-btn {
+  background: rgba(255,255,255,0.07); border: 1px solid var(--border);
+  color: var(--muted); font-family: var(--font); font-size: 11px; font-weight: 700;
+  border-radius: 6px; padding: 4px 9px; cursor: pointer; transition: all .2s;
+  letter-spacing: .3px;
+}
+.lang-btn:hover { background: rgba(255,255,255,0.14); color: var(--white); }
+.lang-btn.active { background: var(--red); border-color: var(--red); color: #fff; }
+
 /* ── MODULE NAV ── */
 #mod-nav {
   position: sticky; top: var(--nav-h); z-index: 40;
@@ -135,7 +146,7 @@ header {
 
 /* ── MAIN CONTENT ── */
 main {
-  max-width: 860px; margin: 0 auto; padding: 28px 20px 100px;
+  max-width: 1100px; margin: 0 auto; padding: 28px 24px 100px;
   background: linear-gradient(135deg, #3D0024 0%, #2A0018 50%, #1A0010 100%);
   min-height: calc(100vh - 120px);
   border-radius: 20px;
@@ -174,22 +185,22 @@ textarea, input[type=text], input[type=number] {
   font-family: var(--font); color: var(--white); outline: none;
 }
 .field-label {
-  font-size: 12px; font-weight: 600; color: var(--muted);
+  font-size: 13px; font-weight: 600; color: var(--muted);
   text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; display: block;
 }
 .text-input {
-  width: 100%; padding: 12px 14px; border-radius: 10px;
+  width: 100%; padding: 14px 16px; border-radius: 10px;
   border: 1px solid var(--border); background: rgba(255,255,255,0.06);
-  color: var(--white); font-family: var(--font); font-size: 14px;
+  color: var(--white); font-family: var(--font); font-size: 15px;
   transition: border-color .2s; resize: none;
 }
 .text-input:focus { border-color: var(--red); background: rgba(255,255,255,0.09); }
 .text-input::placeholder { color: rgba(255,255,255,0.28); }
 .num-input {
-  padding: 10px 12px; border-radius: 8px;
+  padding: 11px 14px; border-radius: 8px;
   border: 1px solid var(--border); background: rgba(255,255,255,0.06);
-  color: var(--white); font-family: var(--font); font-size: 15px; font-weight: 600;
-  width: 80px; text-align: center; transition: border-color .2s;
+  color: var(--white); font-family: var(--font); font-size: 17px; font-weight: 600;
+  width: 88px; text-align: center; transition: border-color .2s;
 }
 .num-input:focus { border-color: var(--red); }
 .num-input::-webkit-inner-spin-button { opacity: .5; }
@@ -207,10 +218,10 @@ input[type=range]::-webkit-slider-thumb {
   cursor: pointer; transition: transform .2s;
 }
 input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
-.slider-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 6px; }
+.slider-labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-top: 6px; }
 .slider-value {
   display: inline-block; background: var(--red); color: #fff;
-  font-weight: 700; font-size: 15px; border-radius: 8px;
+  font-weight: 700; font-size: 16px; border-radius: 8px;
   padding: 4px 12px; margin-top: 10px;
 }
 
@@ -224,7 +235,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
 .kpi-table th:first-child { text-align: left; }
 .kpi-table td { padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: middle; }
 .kpi-table tr:last-child td { border-bottom: none; }
-.kpi-name { font-weight: 600; font-size: 14px; }
+.kpi-name { font-weight: 600; font-size: 15px; }
 .kpi-name small { display: block; font-size: 11px; color: var(--muted); font-weight: 400; }
 .kpi-pct { font-weight: 700; font-size: 14px; text-align: center; }
 .status-dot {
@@ -274,7 +285,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
 .checklist { list-style: none; }
 .checklist li {
   display: flex; align-items: center; gap: 12px;
-  padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
   cursor: pointer; transition: opacity .2s;
 }
 .checklist li:last-child { border-bottom: none; }
@@ -288,7 +299,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
 }
 .checklist li.checked .check-box::after { content: '✓'; color: #fff; font-size: 13px; font-weight: 800; }
 .checklist li.checked .check-text { color: var(--muted); text-decoration: line-through; }
-.check-text { font-size: 14px; }
+.check-text { font-size: 15px; }
 
 /* ── EXERCISES ── */
 .exercise-card {
@@ -296,7 +307,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
   border-radius: 12px; padding: 20px; margin-bottom: 14px;
   border-left: 3px solid var(--red);
 }
-.exercise-prompt { font-size: 14px; font-weight: 500; margin-bottom: 14px; line-height: 1.5; }
+.exercise-prompt { font-size: 15px; font-weight: 500; margin-bottom: 14px; line-height: 1.6; }
 .exercise-inputs { display: flex; flex-direction: column; gap: 8px; }
 .ex-input-row { display: flex; align-items: center; gap: 10px; }
 .ex-num {
@@ -306,14 +317,14 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
   flex-shrink: 0;
 }
 .ex-input {
-  flex: 1; padding: 9px 12px; border-radius: 8px;
+  flex: 1; padding: 10px 14px; border-radius: 8px;
   border: 1px solid var(--border); background: rgba(255,255,255,0.05);
-  color: var(--white); font-family: var(--font); font-size: 13px;
+  color: var(--white); font-family: var(--font); font-size: 14px;
   transition: border-color .2s; outline: none;
 }
 .ex-input:focus { border-color: var(--red); background: rgba(255,255,255,0.09); }
-.ex-input::placeholder { color: rgba(255,255,255,0.22); }
-.ex-progress { font-size: 12px; color: var(--muted); margin-top: 10px; }
+.ex-input::placeholder { color: rgba(255,255,255,0.25); }
+.ex-progress { font-size: 13px; color: var(--muted); margin-top: 10px; }
 .ex-progress b { color: var(--red); }
 .section-label {
   font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
@@ -329,27 +340,27 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
 /* ── WEEKLY CHECK-IN ── */
 .week-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
 .week-tab {
-  flex: 1; min-width: 70px; padding: 10px 6px; text-align: center;
+  flex: 1; min-width: 80px; padding: 12px 6px; text-align: center;
   border-radius: 10px; border: 1px solid var(--border);
-  background: var(--card); cursor: pointer; font-size: 12px; font-weight: 700;
+  background: var(--card); cursor: pointer; font-size: 13px; font-weight: 700;
   transition: all .2s; font-family: var(--font); color: var(--muted);
 }
 .week-tab:hover { border-color: var(--red); color: var(--white); }
 .week-tab.active { background: var(--red); border-color: var(--red); color: #fff; }
 .week-panel { display: none; }
 .week-panel.active { display: block; }
-.week-kpi-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+.week-kpi-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
 .week-kpi-block {
-  flex: 1; min-width: 90px; background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border); border-radius: 10px; padding: 12px;
+  flex: 1; min-width: 110px; background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border); border-radius: 10px; padding: 16px 12px;
   text-align: center;
 }
-.week-kpi-block label { font-size: 11px; color: var(--muted); display: block; margin-bottom: 6px; font-weight: 600; }
+.week-kpi-block label { font-size: 13px; color: var(--muted); display: block; margin-bottom: 8px; font-weight: 600; }
 .week-pace {
   margin-top: 8px; padding-top: 8px;
   border-top: 1px solid rgba(255,255,255,0.08);
   display: flex; align-items: center; justify-content: center; gap: 4px;
-  min-height: 20px; flex-wrap: wrap;
+  min-height: 22px; flex-wrap: wrap;
 }
 .month-pct-badge {
   font-size: 11px; color: var(--muted); font-weight: 500;
@@ -379,7 +390,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
   display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;
 }
 .hunt-progress-bar { flex: 1; margin: 0 14px; }
-.hunt-progress-label { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.hunt-progress-label { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
 .hunt-bar-track { height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
 .hunt-bar-fill { height: 100%; background: var(--red); border-radius: 4px; transition: width .4s; }
 .hunt-pct { font-size: 22px; font-weight: 800; color: var(--red); }
@@ -394,13 +405,15 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
 }
 
 /* ── RESPONSIVE ── */
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   main { padding: 20px 14px 90px; }
   .mod-title { font-size: 20px; }
   .kpi-table th, .kpi-table td { padding: 6px 6px; font-size: 12px; }
-  .num-input { width: 64px; font-size: 14px; }
+  .num-input { width: 68px; font-size: 15px; }
   .funnel-step { min-width: 50px; }
   .card { padding: 18px 16px; }
+  .lang-switcher { gap: 3px; }
+  .lang-btn { padding: 3px 7px; font-size: 10px; }
 }
 
 /* ── QUOTE CARD ── */
@@ -446,26 +459,31 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
     <div class="h-logo">P<span class="logo-a">Λ</span>RTNERS</div>
     <div class="h-meta">
       <span class="h-name" id="h-name"></span>
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" data-lang="sk" onclick="setLang('sk')">SK</button>
+        <button class="lang-btn" data-lang="bg" onclick="setLang('bg')">BG</button>
+      </div>
       <select class="month-sel" id="month-sel" onchange="switchMonth(this.value)"></select>
-      <button class="btn-export no-print" onclick="window.print()">⬇ Export</button>
+      <button class="btn-export no-print" onclick="window.print()" data-i18n="btn_export">⬇ Export</button>
     </div>
   </header>
 
   <nav id="mod-nav">
     <button class="nav-tab active" data-mod="m1" onclick="switchModule('m1')">
-      <span class="tab-num">1</span>My Engine
+      <span class="tab-num">1</span><span data-i18n="tab_m1">My Engine</span>
     </button>
     <button class="nav-tab" data-mod="m2" onclick="switchModule('m2')">
-      <span class="tab-num">2</span>Scoreboard
+      <span class="tab-num">2</span><span data-i18n="tab_m2">Scoreboard</span>
     </button>
     <button class="nav-tab" data-mod="m3" onclick="switchModule('m3')">
-      <span class="tab-num">3</span>Game Plan
+      <span class="tab-num">3</span><span data-i18n="tab_m3">Game Plan</span>
     </button>
     <button class="nav-tab" data-mod="m4" onclick="switchModule('m4')">
-      <span class="tab-num">4</span>Opportunity Hunt
+      <span class="tab-num">4</span><span data-i18n="tab_m4">Opportunity Hunt</span>
     </button>
     <button class="nav-tab" data-mod="m5" onclick="switchModule('m5')">
-      <span class="tab-num">5</span>Weekly Check-in
+      <span class="tab-num">5</span><span data-i18n="tab_m5">Weekly Check-in</span>
     </button>
   </nav>
 
@@ -478,30 +496,30 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
       <div class="mod-header">
         <div class="mod-icon">🔥</div>
         <div>
-          <div class="mod-title">My Engine</div>
-          <div class="mod-sub">Set your intention for the month — fresh start every time</div>
+          <div class="mod-title" data-i18n="m1_title">My Engine</div>
+          <div class="mod-sub" data-i18n="m1_sub">Set your intention for the month — fresh start every time</div>
         </div>
       </div>
 
       <div class="quote-card" id="m1-quote"></div>
 
       <div class="card">
-        <div class="card-title">My WHY this month</div>
-        <label class="field-label" for="m1-why">What is my main motivation? What drives me? Why am I in this business?</label>
-        <textarea class="text-input" id="m1-why" rows="4" placeholder="Write your honest answer here — not what sounds good, but what actually drives you." oninput="save()"></textarea>
+        <div class="card-title" data-i18n="m1_why_title">My WHY this month</div>
+        <label class="field-label" for="m1-why" data-i18n="m1_why_label">What is my main motivation? What drives me? Why am I in this business?</label>
+        <textarea class="text-input" id="m1-why" rows="4" data-ph="m1_why_ph" placeholder="Write your honest answer here — not what sounds good, but what actually drives you." oninput="save()"></textarea>
       </div>
 
       <div class="card">
-        <div class="card-title">My #1 Goal this month</div>
-        <label class="field-label" for="m1-goal">One specific result I will achieve. Not a list — just the most important one.</label>
-        <textarea class="text-input" id="m1-goal" rows="2" placeholder="e.g. Sign 5 new PI clients — write it as a commitment, not a wish." oninput="save()"></textarea>
+        <div class="card-title" data-i18n="m1_goal_title">My #1 Goal this month</div>
+        <label class="field-label" for="m1-goal" data-i18n="m1_goal_label">One specific result I will achieve. Not a list — just the most important one.</label>
+        <textarea class="text-input" id="m1-goal" rows="2" data-ph="m1_goal_ph" placeholder="e.g. Sign 5 new PI clients — write it as a commitment, not a wish." oninput="save()"></textarea>
       </div>
 
       <div class="card">
-        <div class="card-title">Energy check</div>
-        <label class="field-label">How charged am I at the start of this month?</label>
+        <div class="card-title" data-i18n="m1_energy_title">Energy check</div>
+        <label class="field-label" data-i18n="m1_energy_label">How charged am I at the start of this month?</label>
         <input type="range" id="m1-energy" min="1" max="10" value="7" oninput="updateEnergy(this.value); save()">
-        <div class="slider-labels"><span>1 — Low</span><span>10 — On fire</span></div>
+        <div class="slider-labels"><span data-i18n="m1_energy_low">1 — Low</span><span data-i18n="m1_energy_high">10 — On fire</span></div>
         <div><span class="slider-value" id="m1-energy-val">7 / 10</span></div>
       </div>
     </section>
@@ -513,23 +531,22 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
       <div class="mod-header">
         <div class="mod-icon">📊</div>
         <div>
-          <div class="mod-title">Scoreboard</div>
-          <div class="mod-sub">Evaluate last month honestly — numbers don't lie</div>
+          <div class="mod-title" data-i18n="m2_title">Scoreboard</div>
+          <div class="mod-sub" data-i18n="m2_sub">Evaluate last month honestly — numbers don't lie</div>
         </div>
       </div>
 
-      <!-- KPI Evaluation Table -->
       <div class="card">
-        <div class="card-title">KPI — Previous Month Results</div>
+        <div class="card-title" id="m2-kpi-section-title" data-i18n="m2_kpi_section">KPI — Previous Month Results</div>
         <div style="overflow-x:auto">
         <table class="kpi-table" id="kpi-table">
           <thead>
             <tr>
-              <th style="text-align:left">KPI</th>
-              <th>Plan</th>
-              <th>Reality</th>
+              <th style="text-align:left" data-i18n="th_kpi">KPI</th>
+              <th data-i18n="th_plan">Plan</th>
+              <th data-i18n="th_reality">Reality</th>
               <th>%</th>
-              <th>Reflection</th>
+              <th data-i18n="th_reflection">Reflection</th>
             </tr>
           </thead>
           <tbody id="kpi-tbody"></tbody>
@@ -537,30 +554,27 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
         </div>
       </div>
 
-      <!-- Trend -->
       <div class="card">
-        <div class="card-title">3-Month Trend — N-PFA</div>
+        <div class="card-title" data-i18n="m2_trend_title">3-Month Trend — N-PFA</div>
         <div class="trend-wrap" id="trend-chart"></div>
-        <p style="font-size:12px;color:var(--muted);margin-top:10px">% of plan achieved. Based on your saved data from previous months.</p>
+        <p style="font-size:13px;color:var(--muted);margin-top:10px" data-i18n="m2_trend_note">% of plan achieved. Based on your saved data from previous months.</p>
       </div>
 
-      <!-- Overall reflection -->
       <div class="card">
-        <div class="card-title">Monthly Reflection</div>
-        <label class="field-label" for="m2-reflection">What worked well? What will I do differently?</label>
-        <textarea class="text-input" id="m2-reflection" rows="4" placeholder="Be specific. 'I need to call more people' is not enough — write exactly what you will change." oninput="save()"></textarea>
+        <div class="card-title" data-i18n="m2_reflection_title">Monthly Reflection</div>
+        <label class="field-label" for="m2-reflection" data-i18n="m2_reflection_label">What worked well? What will I do differently?</label>
+        <textarea class="text-input" id="m2-reflection" rows="4" data-ph="m2_reflection_ph" placeholder="Be specific. 'I need to call more people' is not enough — write exactly what you will change." oninput="save()"></textarea>
       </div>
 
-      <!-- Performance Formula -->
       <div class="card">
-        <div class="card-title">Performance Formula — Clients</div>
-        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Update your conversion ratios. Green = at or above target. Red = needs attention.</p>
+        <div class="card-title" data-i18n="m2_pfc_title">Performance Formula — Clients</div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px" data-i18n="m2_pfc_note">Update your conversion ratios. Green = at or above target. Red = needs attention.</p>
         <div class="funnel-row" id="pf-clients"></div>
       </div>
 
       <div class="card">
-        <div class="card-title">Performance Formula — Recruiting</div>
-        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Track your recruiting funnel — from first call to signed consultant.</p>
+        <div class="card-title" data-i18n="m2_pfr_title">Performance Formula — Recruiting</div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px" data-i18n="m2_pfr_note">Track your recruiting funnel — from first call to signed consultant.</p>
         <div class="funnel-row" id="pf-recruiting"></div>
       </div>
     </section>
@@ -572,20 +586,20 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
       <div class="mod-header">
         <div class="mod-icon">🎯</div>
         <div>
-          <div class="mod-title">Game Plan</div>
-          <div class="mod-sub">Plan based on your updated performance formula — not wishful thinking</div>
+          <div class="mod-title" data-i18n="m3_title">Game Plan</div>
+          <div class="mod-sub" data-i18n="m3_sub">Plan based on your updated performance formula — not wishful thinking</div>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-title">KPI Targets — This Month</div>
+        <div class="card-title" data-i18n="m3_kpi_section">KPI Targets — This Month</div>
         <div style="overflow-x:auto">
         <table class="kpi-table" id="plan-table">
           <thead>
             <tr>
-              <th style="text-align:left">KPI</th>
-              <th>Target</th>
-              <th style="text-align:left;min-width:180px">How will I achieve it?</th>
+              <th style="text-align:left" data-i18n="th_kpi">KPI</th>
+              <th data-i18n="th_target">Target</th>
+              <th style="text-align:left;min-width:180px" data-i18n="th_how">How will I achieve it?</th>
             </tr>
           </thead>
           <tbody id="plan-tbody"></tbody>
@@ -593,42 +607,40 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
         </div>
       </div>
 
-      <!-- Flow -->
       <div class="card">
-        <div class="card-title">Flow Update</div>
+        <div class="card-title" data-i18n="m3_flow_title">Flow Update</div>
         <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px">
-          <div class="week-kpi-block" style="min-width:130px">
-            <label>People in limbo (no appointment)</label>
-            <input type="number" class="num-input" id="m3-flow-limbo" min="0" max="999" oninput="save()" style="width:80px;margin-top:6px">
+          <div class="week-kpi-block" style="min-width:150px">
+            <label data-i18n="m3_flow_limbo">People in limbo (no appointment)</label>
+            <input type="number" class="num-input" id="m3-flow-limbo" min="0" max="999" oninput="save()" style="width:88px;margin-top:6px">
           </div>
-          <div class="week-kpi-block" style="min-width:130px">
-            <label>Moved to call list</label>
-            <input type="number" class="num-input" id="m3-flow-call" min="0" max="999" oninput="save()" style="width:80px;margin-top:6px">
+          <div class="week-kpi-block" style="min-width:150px">
+            <label data-i18n="m3_flow_call">Moved to call list</label>
+            <input type="number" class="num-input" id="m3-flow-call" min="0" max="999" oninput="save()" style="width:88px;margin-top:6px">
           </div>
         </div>
-        <label class="field-label" for="m3-flow-note">Notes on flow — who needs follow-up urgently?</label>
-        <textarea class="text-input" id="m3-flow-note" rows="2" placeholder="e.g. Martin K. — waiting 3 weeks, call Monday" oninput="save()"></textarea>
+        <label class="field-label" for="m3-flow-note" data-i18n="m3_flow_note_label">Notes on flow — who needs follow-up urgently?</label>
+        <textarea class="text-input" id="m3-flow-note" rows="2" data-ph="m3_flow_note_ph" placeholder="e.g. Martin K. — waiting 3 weeks, call Monday" oninput="save()"></textarea>
       </div>
 
-      <!-- Calendar -->
       <div class="card">
-        <div class="card-title">Calendar Planning</div>
+        <div class="card-title" data-i18n="m3_cal_title">Calendar Planning</div>
         <ul class="checklist" id="cal-checklist">
           <li data-key="days_off" onclick="toggleCheck(this)">
             <div class="check-box"></div>
-            <span class="check-text">Days off planned and blocked in calendar</span>
+            <span class="check-text" data-i18n="m3_cal_days_off">Days off planned and blocked in calendar</span>
           </li>
           <li data-key="system" onclick="toggleCheck(this)">
             <div class="check-box"></div>
-            <span class="check-text">System elements (client meetings, service) scheduled</span>
+            <span class="check-text" data-i18n="m3_cal_system">System elements (client meetings, service) scheduled</span>
           </li>
           <li data-key="education" onclick="toggleCheck(this)">
             <div class="check-box"></div>
-            <span class="check-text">Educational / training events noted</span>
+            <span class="check-text" data-i18n="m3_cal_education">Educational / training events noted</span>
           </li>
           <li data-key="company" onclick="toggleCheck(this)">
             <div class="check-box"></div>
-            <span class="check-text">Company events noted</span>
+            <span class="check-text" data-i18n="m3_cal_company">Company events noted</span>
           </li>
         </ul>
       </div>
@@ -641,26 +653,25 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
       <div class="mod-header">
         <div class="mod-icon">💡</div>
         <div>
-          <div class="mod-title">Opportunity Hunt</div>
-          <div class="mod-sub">Mine your database — names on paper = meetings in calendar</div>
+          <div class="mod-title" data-i18n="m4_title">Opportunity Hunt</div>
+          <div class="mod-sub" data-i18n="m4_sub">Mine your database — names on paper = meetings in calendar</div>
         </div>
       </div>
 
-      <!-- Progress bar -->
       <div class="hunt-progress">
         <div class="hunt-pct" id="hunt-pct">0%</div>
         <div class="hunt-progress-bar">
-          <div class="hunt-progress-label">Fields completed this month</div>
+          <div class="hunt-progress-label" data-i18n="m4_hunt_label">Fields completed this month</div>
           <div class="hunt-bar-track"><div class="hunt-bar-fill" id="hunt-bar" style="width:0%"></div></div>
         </div>
         <div style="font-size:12px;color:var(--muted);text-align:right" id="hunt-count">0 / 0</div>
       </div>
 
-      <div class="section-label">🎯 Recruitment Call-List</div>
+      <div class="section-label" id="m4-recruit-label">🎯 Recruitment Call-List</div>
       <div id="recruit-exercises"></div>
 
       <hr class="divider">
-      <div class="section-label">👥 Client Call-List</div>
+      <div class="section-label" id="m4-client-label">👥 Client Call-List</div>
       <div id="client-exercises"></div>
     </section>
 
@@ -671,27 +682,20 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
       <div class="mod-header">
         <div class="mod-icon">📅</div>
         <div>
-          <div class="mod-title">Weekly Check-in</div>
-          <div class="mod-sub">3 minutes every Monday — keeps you on track all month</div>
+          <div class="mod-title" data-i18n="m5_title">Weekly Check-in</div>
+          <div class="mod-sub" data-i18n="m5_sub">3 minutes every Monday — keeps you on track all month</div>
         </div>
       </div>
 
-      <!-- Month progress -->
       <div class="card" style="padding:16px 20px">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-          <span style="font-size:13px;font-weight:600">Month progress</span>
+          <span style="font-size:14px;font-weight:600" data-i18n="m5_month_progress">Month progress</span>
           <span style="font-size:13px;color:var(--muted)" id="progress-label">Week 1 of 4</span>
         </div>
         <div class="month-progress-bar"><div class="month-progress-fill" id="month-progress-fill"></div></div>
       </div>
 
-      <div class="week-tabs">
-        <button class="week-tab active" data-week="1" onclick="switchWeek(1)">Week 1</button>
-        <button class="week-tab" data-week="2" onclick="switchWeek(2)">Week 2</button>
-        <button class="week-tab" data-week="3" onclick="switchWeek(3)">Week 3</button>
-        <button class="week-tab" data-week="4" onclick="switchWeek(4)">Week 4</button>
-      </div>
-
+      <div class="week-tabs" id="week-tabs"></div>
       <div id="week-panels"></div>
     </section>
 
@@ -701,45 +705,333 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
 <script src="exercises.js"></script>
 <script>
 // ══════════════════════════════════════════
+//  TRANSLATIONS
+// ══════════════════════════════════════════
+const T = {
+  en: {
+    btn_export: '⬇ Export',
+    tab_m1: 'My Engine', tab_m2: 'Scoreboard', tab_m3: 'Game Plan',
+    tab_m4: 'Opportunity Hunt', tab_m5: 'Weekly Check-in',
+    m1_title: 'My Engine',
+    m1_sub: 'Set your intention for the month — fresh start every time',
+    m1_why_title: 'My WHY this month',
+    m1_why_label: 'What is my main motivation? What drives me? Why am I in this business?',
+    m1_why_ph: 'Write your honest answer here — not what sounds good, but what actually drives you.',
+    m1_goal_title: 'My #1 Goal this month',
+    m1_goal_label: 'One specific result I will achieve. Not a list — just the most important one.',
+    m1_goal_ph: 'e.g. Sign 5 new PI clients — write it as a commitment, not a wish.',
+    m1_energy_title: 'Energy check',
+    m1_energy_label: 'How charged am I at the start of this month?',
+    m1_energy_low: '1 — Low', m1_energy_high: '10 — On fire',
+    m2_title: 'Scoreboard',
+    m2_sub: "Evaluate last month honestly — numbers don't lie",
+    m2_kpi_section: 'KPI — Previous Month Results',
+    th_kpi: 'KPI', th_plan: 'Plan', th_reality: 'Reality', th_reflection: 'Reflection',
+    th_target: 'Target', th_how: 'How will I achieve it?',
+    m2_trend_title: '3-Month Trend — N-PFA',
+    m2_trend_note: '% of plan achieved. Based on your saved data from previous months.',
+    m2_reflection_title: 'Monthly Reflection',
+    m2_reflection_label: 'What worked well? What will I do differently?',
+    m2_reflection_ph: "Be specific. 'I need to call more people' is not enough — write exactly what you will change.",
+    m2_pfc_title: 'Performance Formula — Clients',
+    m2_pfc_note: 'Update your conversion ratios. Green = at or above target. Red = needs attention.',
+    m2_pfr_title: 'Performance Formula — Recruiting',
+    m2_pfr_note: 'Track your recruiting funnel — from first call to signed consultant.',
+    m3_title: 'Game Plan',
+    m3_sub: 'Plan based on your updated performance formula — not wishful thinking',
+    m3_kpi_section: 'KPI Targets — This Month',
+    m3_flow_title: 'Flow Update',
+    m3_flow_limbo: 'People in limbo (no appointment)',
+    m3_flow_call: 'Moved to call list',
+    m3_flow_note_label: 'Notes on flow — who needs follow-up urgently?',
+    m3_flow_note_ph: 'e.g. Martin K. — waiting 3 weeks, call Monday',
+    m3_cal_title: 'Calendar Planning',
+    m3_cal_days_off: 'Days off planned and blocked in calendar',
+    m3_cal_system: 'System elements (client meetings, service) scheduled',
+    m3_cal_education: 'Educational / training events noted',
+    m3_cal_company: 'Company events noted',
+    m4_title: 'Opportunity Hunt',
+    m4_sub: 'Mine your database — names on paper = meetings in calendar',
+    m4_hunt_label: 'Fields completed this month',
+    m4_recruit_label: '🎯 Recruitment Call-List',
+    m4_client_label: '👥 Client Call-List',
+    m4_no_exercises: 'No exercises assigned for this month. Open Admin panel to set them up.',
+    m4_ex_filled: 'Filled:',
+    m4_not_loaded: 'exercises.js not loaded. Check file path.',
+    m5_title: 'Weekly Check-in',
+    m5_sub: '3 minutes every Monday — keeps you on track all month',
+    m5_month_progress: 'Month progress',
+    m5_week_kpi_title: 'Week {w} — KPI actuals',
+    m5_change_label: 'What will I change / focus on next week?',
+    m5_change_ph: '1 specific action I will take differently...',
+    w_tab: 'Week {n}',
+    m5_week_of_4: 'Week {w} of 4 · Day {d}/{t}',
+    m5_completed: 'Completed · Day {d}/{t}',
+    m5_starts_in: 'Starts in {n} day{s} · Day 0/{t}',
+    m5_month_done: 'Month: {n}% done',
+    m5_month_not_started: 'Month not started',
+    m5_no_plan: 'no plan set',
+    kpi_npfa: 'New Personal Financial Analysis',
+    kpi_spfa: 'Service PFA / Service Meeting',
+    kpi_refc: 'Client Referrals',
+    kpi_bu: 'Bank Units',
+    kpi_recrm: 'Recruitment Meetings',
+    kpi_refr: 'Recruitment Referrals',
+    kpi_ws: 'People on Workshop',
+    kpi_pi: 'People on PI',
+    pfc_called: 'Called', pfc_lp: 'LP', pfc_pfa: 'PFA', pfc_fpp: 'FPP',
+    pfc_paid: 'Paid clients', pfc_ref: 'Referrals', pfc_bu_label: 'Bank Units',
+    pfr_called: 'Called', pfr_pickup: 'Picked up', pfr_sched: 'Scheduled',
+    pfr_meetings: 'Meetings', pfr_ws: 'WS', pfr_pi: 'PI', pfr_consult: 'Consultant',
+    ratio_lp_rate: 'LP rate', ratio_show_rate: 'Show rate', ratio_close_rate: 'Close rate',
+    kpi_why_ph: 'Why?', plan_how_ph: 'Specific action...',
+    months_long: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    months_short: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+  },
+  sk: {
+    btn_export: '⬇ Export',
+    tab_m1: 'Môj Motor', tab_m2: 'Výsledkovka', tab_m3: 'Herný Plán',
+    tab_m4: 'Príležitostný Lov', tab_m5: 'Týždenný Check-in',
+    m1_title: 'Môj Motor',
+    m1_sub: 'Nastavte zámer na mesiac — nový začiatok každý mesiac',
+    m1_why_title: 'Moje PREČO tento mesiac',
+    m1_why_label: 'Aká je moja hlavná motivácia? Čo ma ženie? Prečo som v tomto biznise?',
+    m1_why_ph: 'Napíšte úprimnú odpoveď — nie to, čo znie dobre, ale čo vás skutočne pohýna.',
+    m1_goal_title: 'Môj #1 Cieľ tento mesiac',
+    m1_goal_label: 'Jeden konkrétny výsledok, ktorý dosiahnem. Nie zoznam — len ten najdôležitejší.',
+    m1_goal_ph: 'napr. Podpíšem 5 nových PI klientov — napíšte to ako záväzok, nie prianie.',
+    m1_energy_title: 'Energetická kontrola',
+    m1_energy_label: 'Aký nabitý som na začiatku tohto mesiaca?',
+    m1_energy_low: '1 — Nízka', m1_energy_high: '10 — V ohni',
+    m2_title: 'Výsledkovka',
+    m2_sub: 'Vyhodnoťte minulý mesiac čestne — čísla neklamú',
+    m2_kpi_section: 'KPI — Výsledky Minulého Mesiaca',
+    th_kpi: 'KPI', th_plan: 'Plán', th_reality: 'Realita', th_reflection: 'Reflexia',
+    th_target: 'Cieľ', th_how: 'Ako to dosiahnem?',
+    m2_trend_title: 'Trend 3 mesiace — N-PFA',
+    m2_trend_note: '% z plánu dosiahnuté. Na základe uložených dát z predchádzajúcich mesiacov.',
+    m2_reflection_title: 'Mesačná Reflexia',
+    m2_reflection_label: 'Čo fungovalo dobre? Čo urobím inak?',
+    m2_reflection_ph: 'Buďte konkrétni. „Musím viac telefonovať" nestačí — napíšte presne, čo zmeníte.',
+    m2_pfc_title: 'Výkonnostný Vzorec — Klienti',
+    m2_pfc_note: 'Aktualizujte konverzné pomery. Zelená = na cieli alebo vyššie. Červená = treba riešiť.',
+    m2_pfr_title: 'Výkonnostný Vzorec — Nábor',
+    m2_pfr_note: 'Sledujte náborový lievik — od prvého hovoru po podpísaného konzultanta.',
+    m3_title: 'Herný Plán',
+    m3_sub: 'Plánujte na základe vášho aktualizovaného výkonnostného vzorca — nie zbožného myslenia',
+    m3_kpi_section: 'KPI Ciele — Tento Mesiac',
+    m3_flow_title: 'Aktualizácia Flow',
+    m3_flow_limbo: 'Ľudia v limbe (bez termínu)',
+    m3_flow_call: 'Presunutí na call list',
+    m3_flow_note_label: 'Poznámky k flow — kto potrebuje urgentné sledovanie?',
+    m3_flow_note_ph: 'napr. Martin K. — čaká 3 týždne, zavolajte v pondelok',
+    m3_cal_title: 'Plánovanie Kalendára',
+    m3_cal_days_off: 'Dni voľna naplánované a blokované v kalendári',
+    m3_cal_system: 'Systémové prvky (stretnutia s klientmi, servis) naplánované',
+    m3_cal_education: 'Vzdelávacie / tréningové udalosti zaznamenané',
+    m3_cal_company: 'Firemné udalosti zaznamenané',
+    m4_title: 'Príležitostný Lov',
+    m4_sub: 'Ťažte z databázy — mená na papieri = stretnutia v kalendári',
+    m4_hunt_label: 'Vyplnené polia tento mesiac',
+    m4_recruit_label: '🎯 Nábor — Zoznam Hovorov',
+    m4_client_label: '👥 Klienti — Zoznam Hovorov',
+    m4_no_exercises: 'Žiadne cvičenia priradené pre tento mesiac. Otvorte Admin panel na nastavenie.',
+    m4_ex_filled: 'Vyplnené:',
+    m4_not_loaded: 'exercises.js sa nenačítal. Skontrolujte cestu k súboru.',
+    m5_title: 'Týždenný Check-in',
+    m5_sub: '3 minúty každý pondelok — drží vás na správnej ceste celý mesiac',
+    m5_month_progress: 'Priebeh mesiaca',
+    m5_week_kpi_title: 'Týždeň {w} — KPI skutočnosť',
+    m5_change_label: 'Čo zmením / na čo sa zameriam budúci týždeň?',
+    m5_change_ph: '1 konkrétna akcia, ktorú urobím inak...',
+    w_tab: 'Týždeň {n}',
+    m5_week_of_4: 'Týždeň {w} zo 4 · Deň {d}/{t}',
+    m5_completed: 'Dokončené · Deň {d}/{t}',
+    m5_starts_in: 'Začína za {n} deň/dní · Deň 0/{t}',
+    m5_month_done: 'Mesiac: {n}% hotový',
+    m5_month_not_started: 'Mesiac nezačal',
+    m5_no_plan: 'plán nie je nastavený',
+    kpi_npfa: 'Nová Osobná Finančná Analýza',
+    kpi_spfa: 'Servisná PFA / Servisné Stretnutie',
+    kpi_refc: 'Klientske Odporúčania',
+    kpi_bu: 'Bankové Jednotky',
+    kpi_recrm: 'Náborové Stretnutia',
+    kpi_refr: 'Náborové Odporúčania',
+    kpi_ws: 'Ľudia na Workshope',
+    kpi_pi: 'Ľudia na PI',
+    pfc_called: 'Zavolali', pfc_lp: 'LP', pfc_pfa: 'PFA', pfc_fpp: 'FPP',
+    pfc_paid: 'Platení klienti', pfc_ref: 'Odporúčania', pfc_bu_label: 'Bankové Jednotky',
+    pfr_called: 'Zavolali', pfr_pickup: 'Zdvihli', pfr_sched: 'Naplánované',
+    pfr_meetings: 'Stretnutia', pfr_ws: 'WS', pfr_pi: 'PI', pfr_consult: 'Konzultant',
+    ratio_lp_rate: 'LP miera', ratio_show_rate: 'Show miera', ratio_close_rate: 'Close miera',
+    kpi_why_ph: 'Prečo?', plan_how_ph: 'Konkrétna akcia...',
+    months_long: ['Január','Február','Marec','Apríl','Máj','Jún','Júl','August','September','Október','November','December'],
+    months_short: ['Jan','Feb','Mar','Apr','Máj','Jún','Júl','Aug','Sep','Okt','Nov','Dec']
+  },
+  bg: {
+    btn_export: '⬇ Експорт',
+    tab_m1: 'Моят Двигател', tab_m2: 'Табло', tab_m3: 'Игров План',
+    tab_m4: 'Лов на Възможности', tab_m5: 'Седмичен Check-in',
+    m1_title: 'Моят Двигател',
+    m1_sub: 'Задайте намерението си за месеца — нов старт всеки път',
+    m1_why_title: 'Моето ЗАЩО за този месец',
+    m1_why_label: 'Каква е основната ми мотивация? Какво ме движи? Защо съм в този бизнес?',
+    m1_why_ph: 'Напишете честния си отговор — не това, което звучи добре, а което наистина ви движи.',
+    m1_goal_title: 'Моята #1 Цел за месеца',
+    m1_goal_label: 'Един конкретен резултат, който ще постигна. Не списък — само най-важното.',
+    m1_goal_ph: 'напр. Подписвам 5 нови PI клиенти — напишете го като ангажимент, не като желание.',
+    m1_energy_title: 'Енергиен Check',
+    m1_energy_label: 'Колко зареден съм в началото на месеца?',
+    m1_energy_low: '1 — Ниска', m1_energy_high: '10 — Горя',
+    m2_title: 'Табло с Резултати',
+    m2_sub: 'Оценете миналия месец честно — числата не лъжат',
+    m2_kpi_section: 'KPI — Резултати от Предишния Месец',
+    th_kpi: 'KPI', th_plan: 'План', th_reality: 'Реалност', th_reflection: 'Рефлексия',
+    th_target: 'Цел', th_how: 'Как ще го постигна?',
+    m2_trend_title: 'Тренд 3 месеца — N-PFA',
+    m2_trend_note: '% от плана постигнати. Въз основа на данните от предходните месеци.',
+    m2_reflection_title: 'Месечна Рефлексия',
+    m2_reflection_label: 'Какво проработи добре? Какво ще правя по различен начин?',
+    m2_reflection_ph: 'Бъдете конкретни. „Трябва да се обаждам повече" не е достатъчно — напишете точно какво ще промените.',
+    m2_pfc_title: 'Формула на Ефективността — Клиенти',
+    m2_pfc_note: 'Актуализирайте коефициентите на конверсия. Зелено = на цел или по-горе. Червено = трябва внимание.',
+    m2_pfr_title: 'Формула на Ефективността — Набиране',
+    m2_pfr_note: 'Проследявайте набирателния фунел — от първото обаждане до подписания консултант.',
+    m3_title: 'Игров План',
+    m3_sub: 'Планирайте на база актуализираната формула на ефективността — не мечти',
+    m3_kpi_section: 'KPI Цели — Този Месец',
+    m3_flow_title: 'Актуализация на Flow',
+    m3_flow_limbo: 'Хора в неопределеност (без среща)',
+    m3_flow_call: 'Преместени в call list',
+    m3_flow_note_label: 'Бележки за flow — кой се нуждае от спешно проследяване?',
+    m3_flow_note_ph: 'напр. Мартин К. — чака 3 седмици, обадете се в понеделник',
+    m3_cal_title: 'Планиране на Календар',
+    m3_cal_days_off: 'Почивните дни са планирани и блокирани в календара',
+    m3_cal_system: 'Системните елементи (срещи с клиенти, сервиз) са насрочени',
+    m3_cal_education: 'Образователни / обучителни събития са отбелязани',
+    m3_cal_company: 'Фирмените събития са отбелязани',
+    m4_title: 'Лов на Възможности',
+    m4_sub: 'Работете с базата данни — имена на хартия = срещи в календара',
+    m4_hunt_label: 'Попълнени полета този месец',
+    m4_recruit_label: '🎯 Набиране — Списък с Обаждания',
+    m4_client_label: '👥 Клиенти — Списък с Обаждания',
+    m4_no_exercises: 'Няма упражнения за този месец. Отворете Административния панел за настройка.',
+    m4_ex_filled: 'Попълнени:',
+    m4_not_loaded: 'exercises.js не е зареден. Проверете пътя до файла.',
+    m5_title: 'Седмичен Check-in',
+    m5_sub: '3 минути всеки понеделник — поддържа ви на правилен курс целия месец',
+    m5_month_progress: 'Напредък на месеца',
+    m5_week_kpi_title: 'Седмица {w} — KPI реалност',
+    m5_change_label: 'Какво ще сменя / на какво ще се фокусирам следващата седмица?',
+    m5_change_ph: '1 конкретно действие, което ще предприема по различен начин...',
+    w_tab: 'Седмица {n}',
+    m5_week_of_4: 'Седмица {w} от 4 · Ден {d}/{t}',
+    m5_completed: 'Завършен · Ден {d}/{t}',
+    m5_starts_in: 'Започва след {n} ден/дни · Ден 0/{t}',
+    m5_month_done: 'Месец: {n}% готово',
+    m5_month_not_started: 'Месецът не е започнал',
+    m5_no_plan: 'планът не е зададен',
+    kpi_npfa: 'Нов Персонален Финансов Анализ',
+    kpi_spfa: 'Сервизна PFA / Сервизна Среща',
+    kpi_refc: 'Клиентски Препоръки',
+    kpi_bu: 'Банкови Единици',
+    kpi_recrm: 'Срещи по Набиране',
+    kpi_refr: 'Препоръки за Набиране',
+    kpi_ws: 'Хора на Уоркшоп',
+    kpi_pi: 'Хора на PI',
+    pfc_called: 'Обадени', pfc_lp: 'LP', pfc_pfa: 'PFA', pfc_fpp: 'FPP',
+    pfc_paid: 'Платени клиенти', pfc_ref: 'Препоръки', pfc_bu_label: 'Банкови Единици',
+    pfr_called: 'Обадени', pfr_pickup: 'Вдигнали', pfr_sched: 'Насрочени',
+    pfr_meetings: 'Срещи', pfr_ws: 'WS', pfr_pi: 'PI', pfr_consult: 'Консултант',
+    ratio_lp_rate: 'LP дял', ratio_show_rate: 'Show дял', ratio_close_rate: 'Close дял',
+    kpi_why_ph: 'Защо?', plan_how_ph: 'Конкретно действие...',
+    months_long: ['Януари','Февруари','Март','Април','Май','Юни','Юли','Август','Септември','Октомври','Ноември','Декември'],
+    months_short: ['Яну','Фев','Мар','Апр','Май','Юни','Юли','Авг','Сеп','Окт','Ное','Дек']
+  }
+};
+
+// ── Translation helper ──
+let currentLang = 'en';
+
+function t(key, vars) {
+  let str = (T[currentLang] || T.en)[key];
+  if (str === undefined) str = T.en[key];
+  if (str === undefined) str = key;
+  if (vars) Object.entries(vars).forEach(([k,v]) => { str = str.replace('{'+k+'}', v); });
+  return str;
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('partners_lang', lang);
+  applyLang();
+}
+
+function applyLang() {
+  // Static data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = t(el.dataset.i18n);
+  });
+  // Placeholder attrs
+  document.querySelectorAll('[data-ph]').forEach(el => {
+    el.placeholder = t(el.dataset.ph);
+  });
+  // Lang button active state
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === currentLang);
+  });
+  // Section labels in M4
+  const rl = document.getElementById('m4-recruit-label');
+  const cl = document.getElementById('m4-client-label');
+  if (rl) rl.textContent = t('m4_recruit_label');
+  if (cl) cl.textContent = t('m4_client_label');
+  // Rebuild dynamic sections
+  buildMonthSelector();
+  buildWeekPanels();
+  renderAll(currentMonth);
+  updateMonthProgress();
+}
+
+// ══════════════════════════════════════════
 //  CONSTANTS
 // ══════════════════════════════════════════
 const KPIS = [
-  { id: 'npfa',  label: 'N-PFA',     full: 'New Personal Financial Analysis' },
-  { id: 'spfa',  label: 'S-PFA/SM',  full: 'Service PFA / Service Meeting' },
-  { id: 'refc',  label: 'REF-C',     full: 'Client Referrals' },
-  { id: 'bu',    label: 'BU',        full: 'Bank Units' },
-  { id: 'recrm', label: 'RECR.M.',   full: 'Recruitment Meetings' },
-  { id: 'refr',  label: 'REF-R',     full: 'Recruitment Referrals' },
-  { id: 'ws',    label: 'P. on WS',  full: 'People on Workshop' },
-  { id: 'pi',    label: 'P. on PI',  full: 'People on PI' }
+  { id: 'npfa',  label: 'N-PFA',     key: 'kpi_npfa' },
+  { id: 'spfa',  label: 'S-PFA/SM',  key: 'kpi_spfa' },
+  { id: 'refc',  label: 'REF-C',     key: 'kpi_refc' },
+  { id: 'bu',    label: 'BU',        key: 'kpi_bu' },
+  { id: 'recrm', label: 'RECR.M.',   key: 'kpi_recrm' },
+  { id: 'refr',  label: 'REF-R',     key: 'kpi_refr' },
+  { id: 'ws',    label: 'P. on WS',  key: 'kpi_ws' },
+  { id: 'pi',    label: 'P. on PI',  key: 'kpi_pi' }
 ];
 
 const PF_CLIENTS = [
-  { key: 'called',   label: 'Called',        target: null },
-  { key: 'lp',       label: 'LP',            target: 0.20, ratioLabel: 'LP rate' },
-  { key: 'pfa',      label: 'PFA',           target: 0.50, ratioLabel: 'Show rate' },
-  { key: 'fpp',      label: 'FPP',           target: null },
-  { key: 'paid',     label: 'Paid clients',  target: 0.50, ratioLabel: 'Close rate' },
-  { key: 'ref',      label: 'Referrals',     target: null },
-  { key: 'bu',       label: 'Bank Units',    target: null }
+  { key: 'called',  labelKey: 'pfc_called',   target: null },
+  { key: 'lp',      labelKey: 'pfc_lp',       target: 0.20, ratioKey: 'ratio_lp_rate' },
+  { key: 'pfa',     labelKey: 'pfc_pfa',      target: 0.50, ratioKey: 'ratio_show_rate' },
+  { key: 'fpp',     labelKey: 'pfc_fpp',      target: null },
+  { key: 'paid',    labelKey: 'pfc_paid',     target: 0.50, ratioKey: 'ratio_close_rate' },
+  { key: 'ref',     labelKey: 'pfc_ref',      target: null },
+  { key: 'bu',      labelKey: 'pfc_bu_label', target: null }
 ];
 
 const PF_RECRUITING = [
-  { key: 'rcalled',    label: 'Called',      target: null },
-  { key: 'rpickup',    label: 'Picked up',   target: null },
-  { key: 'rsched',     label: 'Scheduled',   target: null },
-  { key: 'rmeetings',  label: 'Meetings',    target: null },
-  { key: 'rws',        label: 'WS',          target: null },
-  { key: 'rpi',        label: 'PI',          target: null },
-  { key: 'rconsult',   label: 'Consultant',  target: null }
+  { key: 'rcalled',    labelKey: 'pfr_called',   target: null },
+  { key: 'rpickup',    labelKey: 'pfr_pickup',   target: null },
+  { key: 'rsched',     labelKey: 'pfr_sched',    target: null },
+  { key: 'rmeetings',  labelKey: 'pfr_meetings', target: null },
+  { key: 'rws',        labelKey: 'pfr_ws',       target: null },
+  { key: 'rpi',        labelKey: 'pfr_pi',       target: null },
+  { key: 'rconsult',   labelKey: 'pfr_consult',  target: null }
 ];
 
 // ══════════════════════════════════════════
 //  STATE
 // ══════════════════════════════════════════
 let consultantName = '';
-let currentMonth = '';   // "YYYY-MM"
-let state = {};          // { module1:{}, module2:{}, ... }
+let currentMonth = '';
+let state = {};
 let saveTimer = null;
 let currentWeek = 1;
 
@@ -747,6 +1039,18 @@ let currentWeek = 1;
 //  INIT
 // ══════════════════════════════════════════
 function init() {
+  currentLang = localStorage.getItem('partners_lang') || 'en';
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === currentLang);
+  });
+  // Apply static translations on load
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = t(el.dataset.i18n);
+  });
+  document.querySelectorAll('[data-ph]').forEach(el => {
+    el.placeholder = t(el.dataset.ph);
+  });
+
   consultantName = localStorage.getItem('partners_name') || '';
   if (!consultantName) {
     document.getElementById('setup-overlay').style.display = 'flex';
@@ -772,9 +1076,8 @@ function todayMonth() {
 
 function buildMonthSelector() {
   const sel = document.getElementById('month-sel');
-  const months = ['January','February','March','April','May','June',
-                  'July','August','September','October','November','December'];
-  // Show 6 months back + 12 months forward
+  if (!sel) return;
+  const months = t('months_long');
   const now = new Date();
   const entries = [];
   for (let i = -6; i <= 12; i++) {
@@ -783,7 +1086,9 @@ function buildMonthSelector() {
     const label = months[d.getMonth()] + ' ' + d.getFullYear();
     entries.push({ val, label });
   }
+  const prev = sel.value || currentMonth;
   sel.innerHTML = entries.map(e => `<option value="${e.val}">${e.label}</option>`).join('');
+  if (prev) sel.value = prev;
 }
 
 function finishSetup() {
@@ -835,13 +1140,11 @@ function save() {
 }
 
 function gatherState() {
-  // M1
   state.m1 = {
     why: v('m1-why'),
     goal: v('m1-goal'),
     energy: v('m1-energy')
   };
-  // M2
   state.m2 = state.m2 || {};
   state.m2.reflection = v('m2-reflection');
   KPIS.forEach(k => {
@@ -851,7 +1154,6 @@ function gatherState() {
   });
   PF_CLIENTS.forEach(f => { state.m2['pfc_' + f.key] = v('pfc-' + f.key); });
   PF_RECRUITING.forEach(f => { state.m2['pfr_' + f.key] = v('pfr-' + f.key); });
-  // M3
   state.m3 = state.m3 || {};
   KPIS.forEach(k => {
     state.m3[k.id + '_target'] = v('plan-target-' + k.id);
@@ -860,8 +1162,6 @@ function gatherState() {
   state.m3.flow_limbo = v('m3-flow-limbo');
   state.m3.flow_call  = v('m3-flow-call');
   state.m3.flow_note  = v('m3-flow-note');
-  // M4 — gathered inline via exercise inputs
-  // M5
   state.m5 = state.m5 || {};
   for (let w = 1; w <= 4; w++) {
     state.m5['w'+w+'_change'] = v('w' + w + '-change');
@@ -901,12 +1201,13 @@ function renderAll(month) {
 // ── MODULE 1 ──
 function renderM1() {
   const m1 = state.m1 || {};
-  // Rotating quote
   const cfg = getExerciseConfig();
-  const quotes = cfg ? cfg.quotes : ["People do not plan to fail, but they fail to plan. — Jim Heidema"];
+  const langKey = currentLang !== 'en' ? 'quotes_' + currentLang : null;
+  const quotes = cfg
+    ? (langKey && cfg[langKey] ? cfg[langKey] : cfg.quotes)
+    : ["People do not plan to fail, but they fail to plan. — Jim Heidema"];
   const idx = new Date().getMonth() % quotes.length;
   document.getElementById('m1-quote').textContent = quotes[idx];
-  // Fields — always empty (no pre-fill by design)
   setVal('m1-why', m1.why || '');
   setVal('m1-goal', m1.goal || '');
   const energy = m1.energy || '7';
@@ -923,7 +1224,6 @@ function renderM2() {
   const m2 = state.m2 || {};
   setVal('m2-reflection', m2.reflection || '');
 
-  // KPI table
   const tbody = document.getElementById('kpi-tbody');
   tbody.innerHTML = KPIS.map(k => {
     const plan = m2[k.id + '_plan'] || '';
@@ -931,18 +1231,15 @@ function renderM2() {
     const note = m2[k.id + '_note'] || '';
     const pctHtml = pctBadge(plan, real);
     return `<tr>
-      <td><div class="kpi-name">${k.label}<small>${k.full}</small></div></td>
+      <td><div class="kpi-name">${k.label}<small>${t(k.key)}</small></div></td>
       <td><input type="number" class="num-input" id="kpi-plan-${k.id}" value="${plan}" min="0" oninput="refreshKpiRow('${k.id}');save()"></td>
       <td><input type="number" class="num-input" id="kpi-real-${k.id}" value="${real}" min="0" oninput="refreshKpiRow('${k.id}');save()"></td>
       <td class="kpi-pct" id="kpi-pct-${k.id}">${pctHtml}</td>
-      <td><textarea class="kpi-reflection" id="kpi-note-${k.id}" rows="1" placeholder="Why?" oninput="save()">${note}</textarea></td>
+      <td><textarea class="kpi-reflection" id="kpi-note-${k.id}" rows="1" placeholder="${t('kpi_why_ph')}" oninput="save()">${note}</textarea></td>
     </tr>`;
   }).join('');
 
-  // Trend (N-PFA last 3 months)
   renderTrend();
-
-  // Performance formula
   renderPF('pf-clients', PF_CLIENTS, 'pfc', m2);
   renderPF('pf-recruiting', PF_RECRUITING, 'pfr', m2);
 }
@@ -962,19 +1259,18 @@ function pctBadge(plan, real) {
 }
 
 function renderTrend() {
-  // Get last 3 months N-PFA data
-  const months = [];
+  const shorts = t('months_short');
   const now = new Date();
+  const months = [];
   for (let i = 2; i >= 0; i--) {
     const d = new Date(now.getFullYear(), now.getMonth() - i - 1, 1);
     const key = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
-    const mNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     const raw = localStorage.getItem('partners_data_' + key);
     const data = raw ? JSON.parse(raw) : {};
     const plan = Number(data.m2?.npfa_plan || 0);
     const real = Number(data.m2?.npfa_reality || 0);
     const pct = plan > 0 ? Math.min(Math.round(real/plan*100), 120) : 0;
-    months.push({ label: mNames[d.getMonth()], pct });
+    months.push({ label: shorts[d.getMonth()], pct });
   }
   const wrap = document.getElementById('trend-chart');
   wrap.innerHTML = months.map(m => {
@@ -998,18 +1294,20 @@ function renderPF(containerId, steps, prefix, m2) {
       const prev = Number(m2[prefix + '_' + steps[i-1].key] || 0);
       const cur = Number(val || 0);
       const ratio = prev > 0 ? (cur / prev) : null;
+      const ratioLabel = s.ratioKey ? t(s.ratioKey) : '';
       if (ratio !== null) {
         const ok = ratio >= s.target;
         ratioHtml = `<div class="ratio-badge ${ok ? 'ratio-ok' : 'ratio-low'}">${Math.round(ratio*100)}% (min ${Math.round(s.target*100)}%)</div>`;
       } else {
-        ratioHtml = `<div class="ratio-badge">min ${Math.round(s.target*100)}%</div>`;
+        ratioHtml = `<div class="ratio-badge">${ratioLabel} min ${Math.round(s.target*100)}%</div>`;
       }
     }
+    const pfRef = containerId === 'pf-clients' ? 'PF_CLIENTS' : 'PF_RECRUITING';
     return `<div class="funnel-step">
       <input type="number" class="num-input editable funnel-step-num" id="${prefix}-${s.key}" value="${val}" min="0"
         style="width:70px;font-size:17px;background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.15)"
-        oninput="renderPF('${containerId}', ${containerId === 'pf-clients' ? 'PF_CLIENTS' : 'PF_RECRUITING'}, '${prefix}', gatherM2State());save()" placeholder="0">
-      <span class="funnel-step-label">${s.label}</span>
+        oninput="renderPF('${containerId}', ${pfRef}, '${prefix}', gatherM2State());save()" placeholder="0">
+      <span class="funnel-step-label">${t(s.labelKey)}</span>
       ${ratioHtml}
     </div>${i < steps.length-1 ? '<div class="funnel-arrow">→</div>' : ''}`;
   }).join('');
@@ -1031,22 +1329,19 @@ function gatherM2State() {
 // ── MODULE 3 ──
 function renderM3() {
   const m3 = state.m3 || {};
-  // Plan table
   const tbody = document.getElementById('plan-tbody');
   tbody.innerHTML = KPIS.map(k => {
     const target = m3[k.id + '_target'] || '';
     const how = m3[k.id + '_how'] || '';
     return `<tr>
-      <td><div class="kpi-name">${k.label}<small>${k.full}</small></div></td>
+      <td><div class="kpi-name">${k.label}<small>${t(k.key)}</small></div></td>
       <td><input type="number" class="num-input" id="plan-target-${k.id}" value="${target}" min="0" oninput="save()"></td>
-      <td><input type="text" class="text-input" id="plan-how-${k.id}" value="${how}" placeholder="Specific action..." style="padding:9px 12px;font-size:13px" oninput="save()"></td>
+      <td><input type="text" class="text-input" id="plan-how-${k.id}" value="${esc(how)}" placeholder="${t('plan_how_ph')}" style="padding:10px 14px;font-size:14px" oninput="save()"></td>
     </tr>`;
   }).join('');
-  // Flow
   setVal('m3-flow-limbo', m3.flow_limbo || '');
   setVal('m3-flow-call',  m3.flow_call  || '');
   setVal('m3-flow-note',  m3.flow_note  || '');
-  // Calendar checklist
   const checks = m3.calendar || {};
   document.querySelectorAll('#cal-checklist li').forEach(li => {
     const key = li.dataset.key;
@@ -1068,7 +1363,7 @@ function toggleCheck(li) {
 function renderM4(month) {
   const cfg = getExerciseConfig();
   if (!cfg) {
-    document.getElementById('recruit-exercises').innerHTML = '<p class="no-exercises">exercises.js not loaded. Check file path.</p>';
+    document.getElementById('recruit-exercises').innerHTML = `<p class="no-exercises">${t('m4_not_loaded')}</p>`;
     return;
   }
   const schedule = cfg.monthly_schedule[month] || { recruitment: [], clients: [] };
@@ -1081,27 +1376,30 @@ function renderM4(month) {
 function renderExerciseSection(containerId, ids, library, prefix, m4) {
   const container = document.getElementById(containerId);
   if (!ids || ids.length === 0) {
-    container.innerHTML = '<p class="no-exercises">No exercises assigned for this month. Open Admin panel to set them up.</p>';
+    container.innerHTML = `<p class="no-exercises">${t('m4_no_exercises')}</p>`;
     return;
   }
   container.innerHTML = ids.map(id => {
     const ex = library.find(e => e.id === id);
     if (!ex) return '';
     const saved = m4[id] || {};
+    // Pick text and placeholder for current language
+    const exText = ex['text_' + currentLang] || ex.text_en || ex.text || '';
+    const exPh   = ex['placeholder_' + currentLang] || ex.placeholder_en || ex.placeholder || t('m4_ex_filled');
     const inputs = Array.from({ length: ex.inputs }, (_, i) => {
       const val = saved['i'+i] || '';
       return `<div class="ex-input-row">
         <div class="ex-num">${i+1}</div>
         <input type="text" class="ex-input" id="ex-${id}-${i}" value="${esc(val)}"
-          placeholder="${ex.placeholder || 'Answer'}"
+          placeholder="${esc(exPh)}"
           oninput="saveExercise('${id}', ${i}, this.value)">
       </div>`;
     }).join('');
     const filled = Array.from({ length: ex.inputs }, (_, i) => (saved['i'+i] || '').trim()).filter(Boolean).length;
     return `<div class="exercise-card">
-      <div class="exercise-prompt">${ex.text}</div>
+      <div class="exercise-prompt">${exText}</div>
       <div class="exercise-inputs">${inputs}</div>
-      <div class="ex-progress">Filled: <b>${filled} / ${ex.inputs}</b></div>
+      <div class="ex-progress">${t('m4_ex_filled')} <b>${filled} / ${ex.inputs}</b></div>
     </div>`;
   }).join('');
 }
@@ -1110,7 +1408,6 @@ function saveExercise(exId, idx, val) {
   state.m4 = state.m4 || {};
   state.m4[exId] = state.m4[exId] || {};
   state.m4[exId]['i'+idx] = val;
-  // Update progress label
   const saved = state.m4[exId];
   const ex = getAllExercises().find(e => e.id === exId);
   if (ex) {
@@ -1131,8 +1428,7 @@ function getAllExercises() {
 function updateHuntProgress() {
   const cfg = getExerciseConfig();
   if (!cfg) return;
-  const month = currentMonth;
-  const schedule = cfg.monthly_schedule[month] || { recruitment: [], clients: [] };
+  const schedule = cfg.monthly_schedule[currentMonth] || { recruitment: [], clients: [] };
   const allIds = [...(schedule.recruitment || []), ...(schedule.clients || [])];
   const m4 = state.m4 || {};
   let total = 0, filled = 0;
@@ -1151,26 +1447,35 @@ function updateHuntProgress() {
 
 // ── MODULE 5 ──
 function buildWeekPanels() {
+  // Week tabs
+  const tabs = document.getElementById('week-tabs');
+  if (tabs) {
+    tabs.innerHTML = [1,2,3,4].map(n => `
+      <button class="week-tab ${n===1?'active':''}" data-week="${n}" onclick="switchWeek(${n})">${t('w_tab', {n})}</button>
+    `).join('');
+  }
+
   const wrap = document.getElementById('week-panels');
+  if (!wrap) return;
   wrap.innerHTML = [1,2,3,4].map(w => `
     <div class="week-panel ${w===1?'active':''}" id="week-panel-${w}">
       <div class="card">
         <div class="card-title" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-          <span>Week ${w} — KPI actuals</span>
+          <span>${t('m5_week_kpi_title', {w})}</span>
           <span class="month-pct-badge" id="month-pct-badge-${w}"></span>
         </div>
         <div class="week-kpi-row">
           ${KPIS.filter(k => !['ws','pi'].includes(k.id)).map(k => `
             <div class="week-kpi-block">
-              <label>${k.label}<br><small style="font-size:10px;color:rgba(255,255,255,0.4)">${k.full}</small></label>
+              <label>${k.label}<br><small style="font-size:10px;color:rgba(255,255,255,0.4)">${t(k.key)}</small></label>
               <input type="number" class="num-input" id="w${w}-kpi-${k.id}" min="0"
                 oninput="refreshWeekPace(${w});save()" placeholder="0">
               <div class="week-pace" id="w${w}-pace-${k.id}"></div>
             </div>`).join('')}
         </div>
         <hr class="divider" style="margin:14px 0">
-        <label class="field-label" for="w${w}-change">What will I change / focus on next week?</label>
-        <textarea class="text-input" id="w${w}-change" rows="2" placeholder="1 specific action I will take differently..." oninput="save()"></textarea>
+        <label class="field-label" for="w${w}-change">${t('m5_change_label')}</label>
+        <textarea class="text-input" id="w${w}-change" rows="2" placeholder="${t('m5_change_ph')}" oninput="save()"></textarea>
       </div>
     </div>`).join('');
 }
@@ -1187,7 +1492,6 @@ function renderM5() {
 }
 
 function refreshWeekPace(w) {
-  // Month elapsed info
   const now = new Date();
   const [y, m] = currentMonth.split('-').map(Number);
   const daysInMonth = new Date(y, m, 0).getDate();
@@ -1196,11 +1500,9 @@ function refreshWeekPace(w) {
   const dayOfMonth = isCurrentMonth ? now.getDate() : (monthStart > now ? 0 : daysInMonth);
   const monthPct = Math.round((dayOfMonth / daysInMonth) * 100);
 
-  // Badge: "Month: 87% done"
   const badge = document.getElementById('month-pct-badge-' + w);
-  if (badge) badge.textContent = dayOfMonth > 0 ? `Month: ${monthPct}% done` : 'Month not started';
+  if (badge) badge.textContent = dayOfMonth > 0 ? t('m5_month_done', {n: monthPct}) : t('m5_month_not_started');
 
-  // Expected pace at end of week w (cumulative target)
   const weekEndDay = w === 4 ? daysInMonth : Math.min(w * 7, daysInMonth);
   const weekPct = weekEndDay / daysInMonth;
 
@@ -1211,7 +1513,6 @@ function refreshWeekPace(w) {
     const planEl = document.getElementById('kpi-plan-' + k.id);
     const plan = planEl ? (parseFloat(planEl.value) || 0) : 0;
 
-    // Cumulative: sum weeks 1..w
     let cumulative = 0;
     for (let wi = 1; wi <= w; wi++) {
       const el = document.getElementById('w' + wi + '-kpi-' + k.id);
@@ -1219,7 +1520,7 @@ function refreshWeekPace(w) {
     }
 
     if (plan === 0) {
-      paceEl.innerHTML = `<span style="color:rgba(255,255,255,0.25);font-size:10px">no plan set</span>`;
+      paceEl.innerHTML = `<span style="color:rgba(255,255,255,0.25);font-size:10px">${t('m5_no_plan')}</span>`;
       return;
     }
 
@@ -1230,7 +1531,7 @@ function refreshWeekPace(w) {
 
     paceEl.innerHTML = `
       <span class="status-dot ${dotCls}" style="flex-shrink:0"></span>
-      <span style="color:${color};font-weight:700;font-size:12px">${pct}%</span>
+      <span style="color:${color};font-weight:700;font-size:13px">${pct}%</span>
       <span style="color:rgba(255,255,255,0.35);font-size:11px">&thinsp;${cumulative}/${expected}</span>
     `;
   });
@@ -1238,7 +1539,7 @@ function refreshWeekPace(w) {
 
 function switchWeek(w) {
   currentWeek = w;
-  document.querySelectorAll('.week-tab').forEach(t => t.classList.toggle('active', Number(t.dataset.week) === w));
+  document.querySelectorAll('.week-tab').forEach(tb => tb.classList.toggle('active', Number(tb.dataset.week) === w));
   document.querySelectorAll('.week-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('week-panel-' + w).classList.add('active');
 }
@@ -1247,25 +1548,24 @@ function updateMonthProgress() {
   const now = new Date();
   const [y, m] = currentMonth.split('-').map(Number);
   const daysInMonth = new Date(y, m, 0).getDate();
-  // Compare month start vs today
   const monthStart = new Date(y, m - 1, 1);
   const monthEnd   = new Date(y, m, 0);
   const isCurrentMonth = now.getFullYear() === y && (now.getMonth()+1) === m;
   const isPast   = monthEnd < now && !isCurrentMonth;
-  const isFuture = monthStart > now;
 
   let dayOfMonth, labelText;
   if (isCurrentMonth) {
     dayOfMonth = now.getDate();
     const weekNum = Math.min(4, Math.max(1, Math.ceil(dayOfMonth / 7)));
-    labelText = `Week ${weekNum} of 4 · Day ${dayOfMonth}/${daysInMonth}`;
+    labelText = t('m5_week_of_4', { w: weekNum, d: dayOfMonth, t: daysInMonth });
   } else if (isPast) {
     dayOfMonth = daysInMonth;
-    labelText = `Completed · Day ${daysInMonth}/${daysInMonth}`;
+    labelText = t('m5_completed', { d: daysInMonth, t: daysInMonth });
   } else {
     dayOfMonth = 0;
     const daysUntil = Math.ceil((monthStart - now) / 86400000);
-    labelText = `Starts in ${daysUntil} day${daysUntil !== 1 ? 's' : ''} · Day 0/${daysInMonth}`;
+    const s = daysUntil !== 1 ? 's' : '';
+    labelText = t('m5_starts_in', { n: daysUntil, s, t: daysInMonth });
   }
 
   const pct = Math.round((dayOfMonth / daysInMonth) * 100);
@@ -1274,8 +1574,7 @@ function updateMonthProgress() {
 }
 
 // ══════════════════════════════════════════
-//  EXERCISE CONFIG — localStorage takes priority over exercises.js
-//  Admin panel saves to 'partners_exercise_config' → index picks it up immediately.
+//  EXERCISE CONFIG
 // ══════════════════════════════════════════
 function getExerciseConfig() {
   const override = localStorage.getItem('partners_exercise_config');
