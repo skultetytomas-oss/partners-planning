@@ -426,7 +426,7 @@ function renderExList(containerId, list) {
     <div class="ex-row" id="exrow-${ex.id}">
       <div class="ex-id">${ex.id}</div>
       <div class="ex-text-col">
-        <div class="ex-text">${esc(ex.text)}</div>
+        <div class="ex-text">${esc(ex.text_en || ex.text || '')}</div>
         <div class="ex-meta">${ex.placeholder || 'Answer'} · ${ex.inputs} fields</div>
       </div>
       <div class="ex-inputs-badge">${ex.inputs} inputs</div>
@@ -499,7 +499,7 @@ function renderChips(monthKey, type) {
   const ids = sched[type] || [];
   return ids.map(id => {
     const ex = findEx(id);
-    const label = ex ? id + ' · ' + ex.text.substring(0,32) + '…' : id;
+    const label = ex ? id + ' · ' + (ex.text_en || ex.text || '').substring(0,32) + '…' : id;
     return `<span class="ex-chip" onclick="removeChip('${monthKey}','${type}','${id}')">
       ${esc(label)} <span class="chip-x">✕</span>
     </span>`;
@@ -541,7 +541,7 @@ function openPicker(monthKey, type) {
     const already = existing.includes(ex.id);
     return `<div class="picker-item ${already ? 'already' : ''}" onclick="${already ? '' : `pickEx('${ex.id}')`}" style="${already ? 'opacity:.4;cursor:default' : ''}">
       <div class="picker-item-id">${ex.id}</div>
-      <div class="picker-item-text">${esc(ex.text)}${already ? ' <b style="color:var(--green)">(already added)</b>' : ''}</div>
+      <div class="picker-item-text">${esc(ex.text_en || ex.text || '')}${already ? ' <b style="color:var(--green)">(already added)</b>' : ''}</div>
     </div>`;
   }).join('');
   document.getElementById('ex-picker').classList.add('open');
