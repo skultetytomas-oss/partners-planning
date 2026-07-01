@@ -146,7 +146,7 @@ header {
 
 /* ── MAIN CONTENT ── */
 main {
-  max-width: 1100px; margin: 0 auto; padding: 28px 24px 100px;
+  max-width: 1440px; margin: 0 auto; padding: 28px 24px 100px;
   background: linear-gradient(135deg, #3D0024 0%, #2A0018 50%, #1A0010 100%);
   min-height: calc(100vh - 120px);
   border-radius: 20px;
@@ -254,11 +254,16 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
 .kpi-reflection::placeholder { color: rgba(255,255,255,0.22); }
 
 /* ── TREND CHART ── */
+.trend-kpi-tabs { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
+.trend-kpi-tab { padding: 3px 9px; border-radius: 6px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: var(--muted); font-size: 11px; font-weight: 700; cursor: pointer; transition: all .2s; font-family: var(--font); }
+.trend-kpi-tab:hover { background: rgba(255,255,255,0.12); color: var(--white); }
+.trend-kpi-tab.active { background: var(--red); border-color: var(--red); color: #fff; }
 .trend-wrap { display: flex; gap: 6px; align-items: flex-end; height: 60px; }
 .trend-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .trend-bar-track { width: 100%; height: 44px; background: rgba(255,255,255,0.05); border-radius: 4px; position: relative; display: flex; align-items: flex-end; overflow: hidden; }
 .trend-bar-fill { width: 100%; background: var(--red); border-radius: 4px; transition: height .5s ease; min-height: 2px; }
 .trend-bar-label { font-size: 10px; color: var(--muted); }
+
 
 /* ── PERFORMANCE FORMULA ── */
 .funnel-row { display: flex; align-items: center; gap: 0; flex-wrap: wrap; margin: 12px 0; }
@@ -399,9 +404,26 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
 @media print {
   header, #mod-nav, .no-print { display: none !important; }
   body { background: #fff !important; color: #000 !important; }
-  .card { background: #f9f9f9 !important; border: 1px solid #ddd !important; break-inside: avoid; }
+  main { max-width: 100% !important; box-shadow: none !important; border-radius: 0 !important; background: #fff !important; }
+  .card { background: #f9f9f9 !important; border: 1px solid #ddd !important; break-inside: avoid; color: #000 !important; }
   .module { display: block !important; }
   .mod-title { color: #AB0534 !important; }
+  .mod-sub, .field-label, .card-title { color: #333 !important; }
+  textarea { display: none !important; }
+  .print-text-div {
+    display: block !important;
+    white-space: pre-wrap !important;
+    padding: 10px 14px !important;
+    border-radius: 6px !important;
+    border: 1px solid #ccc !important;
+    background: #fff !important;
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+    color: #111 !important;
+    word-break: break-word !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
 }
 
 /* ── RESPONSIVE ── */
@@ -506,7 +528,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
       <div class="card">
         <div class="card-title" data-i18n="m1_why_title">My WHY this month</div>
         <label class="field-label" for="m1-why" data-i18n="m1_why_label">What is my main motivation? What drives me? Why am I in this business?</label>
-        <textarea class="text-input" id="m1-why" rows="4" data-ph="m1_why_ph" placeholder="Write your honest answer here — not what sounds good, but what actually drives you." oninput="save()"></textarea>
+        <textarea class="text-input" id="m1-why" style="min-height:130px;height:auto;resize:vertical" data-ph="m1_why_ph" placeholder="Write your honest answer here — not what sounds good, but what actually drives you." oninput="save()"></textarea>
       </div>
 
       <div class="card">
@@ -555,7 +577,8 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
       </div>
 
       <div class="card">
-        <div class="card-title" data-i18n="m2_trend_title">3-Month Trend — N-PFA</div>
+        <div class="card-title" id="trend-title">3-Month Trend — N-PFA</div>
+        <div class="trend-kpi-tabs" id="trend-kpi-tabs"></div>
         <div class="trend-wrap" id="trend-chart"></div>
         <p style="font-size:13px;color:var(--muted);margin-top:10px" data-i18n="m2_trend_note">% of plan achieved. Based on your saved data from previous months.</p>
       </div>
@@ -563,7 +586,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
       <div class="card">
         <div class="card-title" data-i18n="m2_reflection_title">Monthly Reflection</div>
         <label class="field-label" for="m2-reflection" data-i18n="m2_reflection_label">What worked well? What will I do differently?</label>
-        <textarea class="text-input" id="m2-reflection" rows="4" data-ph="m2_reflection_ph" placeholder="Be specific. 'I need to call more people' is not enough — write exactly what you will change." oninput="save()"></textarea>
+        <textarea class="text-input" id="m2-reflection" style="min-height:160px;height:auto;resize:vertical" data-ph="m2_reflection_ph" placeholder="Be specific. 'I need to call more people' is not enough — write exactly what you will change." oninput="save()"></textarea>
       </div>
 
       <div class="card">
@@ -705,6 +728,68 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
 <script src="exercises.js"></script>
 <script>
 // ══════════════════════════════════════════
+//  SHAREPOINT SYNC — Power Automate
+//  Vyplňte URL po nasadení PA flow.
+//  Nechajte prázdne ak sync nechcete.
+// ══════════════════════════════════════════
+const SHAREPOINT_SYNC_URL = '';   // ← SEM vložte URL z Power Automate HTTP triggera
+const SYNC_TOKEN = 'partners2026'; // ← Zmeňte na vlastný tajný token (rovnaký ako v PA flow)
+
+let syncTimer = null;
+
+function scheduleSyncToSharePoint() {
+  if (!SHAREPOINT_SYNC_URL) return;
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(doSyncToSharePoint, 4000); // 4s po poslednom save
+}
+
+async function doSyncToSharePoint() {
+  if (!SHAREPOINT_SYNC_URL || !consultantName || !currentMonth) return;
+
+  // Zozbieraj aktuálny stav
+  gatherState();
+
+  const kpis = {};
+  KPIS.forEach(k => {
+    kpis[k.id] = {
+      plan:    Number(state.m2?.[k.id + '_plan']    || 0),
+      reality: Number(state.m2?.[k.id + '_reality'] || 0),
+      target:  Number(state.m3?.[k.id + '_target']  || 0)
+    };
+  });
+
+  const weekly = {};
+  ['w1','w2','w3','w4'].forEach(w => {
+    weekly[w] = {};
+    KPIS.filter(k => !['ws','pi'].includes(k.id)).forEach(k => {
+      weekly[w][k.id] = Number(state.m5?.[w + '_' + k.id] || 0);
+    });
+  });
+
+  const payload = {
+    token:      SYNC_TOKEN,
+    consultant: consultantName,
+    month:      currentMonth,
+    timestamp:  new Date().toISOString(),
+    energy:     Number(state.m1?.energy || 0),
+    goal:       state.m1?.goal || '',
+    kpis,
+    weekly
+  };
+
+  try {
+    await fetch(SHAREPOINT_SYNC_URL, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload)
+    });
+    console.log('[PARTNERS] Sync OK →', currentMonth);
+  } catch(e) {
+    console.warn('[PARTNERS] Sync failed (offline?):', e.message);
+  }
+}
+
+// ══════════════════════════════════════════
 //  TRANSLATIONS
 // ══════════════════════════════════════════
 const T = {
@@ -728,7 +813,7 @@ const T = {
     m2_kpi_section: 'KPI — Previous Month Results',
     th_kpi: 'KPI', th_plan: 'Plan', th_reality: 'Reality', th_reflection: 'Reflection',
     th_target: 'Target', th_how: 'How will I achieve it?',
-    m2_trend_title: '3-Month Trend — N-PFA',
+    m2_trend_prefix: '3-Month Trend — ',
     m2_trend_note: '% of plan achieved. Based on your saved data from previous months.',
     m2_reflection_title: 'Monthly Reflection',
     m2_reflection_label: 'What worked well? What will I do differently?',
@@ -808,7 +893,7 @@ const T = {
     m2_kpi_section: 'KPI — Výsledky Minulého Mesiaca',
     th_kpi: 'KPI', th_plan: 'Plán', th_reality: 'Realita', th_reflection: 'Reflexia',
     th_target: 'Cieľ', th_how: 'Ako to dosiahnem?',
-    m2_trend_title: 'Trend 3 mesiace — N-PFA',
+    m2_trend_prefix: 'Trend 3 mesiace — ',
     m2_trend_note: '% z plánu dosiahnuté. Na základe uložených dát z predchádzajúcich mesiacov.',
     m2_reflection_title: 'Mesačná Reflexia',
     m2_reflection_label: 'Čo fungovalo dobre? Čo urobím inak?',
@@ -888,7 +973,7 @@ const T = {
     m2_kpi_section: 'KPI — Резултати от Предишния Месец',
     th_kpi: 'KPI', th_plan: 'План', th_reality: 'Реалност', th_reflection: 'Рефлексия',
     th_target: 'Цел', th_how: 'Как ще го постигна?',
-    m2_trend_title: 'Тренд 3 месеца — N-PFA',
+    m2_trend_prefix: 'Тренд 3 месеца — ',
     m2_trend_note: '% от плана постигнати. Въз основа на данните от предходните месеци.',
     m2_reflection_title: 'Месечна Рефлексия',
     m2_reflection_label: 'Какво проработи добре? Какво ще правя по различен начин?',
@@ -1034,6 +1119,7 @@ let currentMonth = '';
 let state = {};
 let saveTimer = null;
 let currentWeek = 1;
+let trendKPI = 'npfa';
 
 // ══════════════════════════════════════════
 //  INIT
@@ -1136,6 +1222,7 @@ function save() {
     gatherState();
     localStorage.setItem('partners_data_' + currentMonth, JSON.stringify(state));
     showToast();
+    scheduleSyncToSharePoint(); // ← automatický sync do SharePointu
   }, 600);
 }
 
@@ -1258,7 +1345,26 @@ function pctBadge(plan, real) {
   return `<span class="status-dot ${cls}"></span><span style="color:${color}">${pct}%</span>`;
 }
 
+function renderTrendTabs() {
+  const tabs = document.getElementById('trend-kpi-tabs');
+  if (!tabs) return;
+  tabs.innerHTML = KPIS.map(k =>
+    `<button class="trend-kpi-tab ${k.id === trendKPI ? 'active' : ''}" onclick="setTrendKPI('${k.id}')">${k.label}</button>`
+  ).join('');
+}
+
+function setTrendKPI(id) {
+  trendKPI = id;
+  renderTrendTabs();
+  renderTrend();
+}
+
 function renderTrend() {
+  renderTrendTabs();
+  const kpi = KPIS.find(k => k.id === trendKPI) || KPIS[0];
+  const title = document.getElementById('trend-title');
+  if (title) title.textContent = t('m2_trend_prefix') + kpi.label;
+
   const shorts = t('months_short');
   const now = new Date();
   const months = [];
@@ -1267,8 +1373,8 @@ function renderTrend() {
     const key = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
     const raw = localStorage.getItem('partners_data_' + key);
     const data = raw ? JSON.parse(raw) : {};
-    const plan = Number(data.m2?.npfa_plan || 0);
-    const real = Number(data.m2?.npfa_reality || 0);
+    const plan = Number(data.m2?.[trendKPI + '_plan'] || 0);
+    const real = Number(data.m2?.[trendKPI + '_reality'] || 0);
     const pct = plan > 0 ? Math.min(Math.round(real/plan*100), 120) : 0;
     months.push({ label: shorts[d.getMonth()], pct });
   }
@@ -1336,7 +1442,7 @@ function renderM3() {
     return `<tr>
       <td><div class="kpi-name">${k.label}<small>${t(k.key)}</small></div></td>
       <td><input type="number" class="num-input" id="plan-target-${k.id}" value="${target}" min="0" oninput="save()"></td>
-      <td><input type="text" class="text-input" id="plan-how-${k.id}" value="${esc(how)}" placeholder="${t('plan_how_ph')}" style="padding:10px 14px;font-size:14px" oninput="save()"></td>
+      <td><textarea class="text-input" id="plan-how-${k.id}" placeholder="${t('plan_how_ph')}" style="padding:10px 14px;font-size:14px;resize:vertical;min-height:86px;height:auto;overflow-y:auto" oninput="save()">${esc(how)}</textarea></td>
     </tr>`;
   }).join('');
   setVal('m3-flow-limbo', m3.flow_limbo || '');
@@ -1590,6 +1696,32 @@ function getExerciseConfig() {
 function esc(str) {
   return String(str || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
+
+// ══════════════════════════════════════════
+//  PRINT / EXPORT
+// ══════════════════════════════════════════
+window.addEventListener('beforeprint', () => {
+  // Show all modules so they all print
+  document.querySelectorAll('.module').forEach(m => m.style.display = 'block');
+  // Replace textareas with visible divs (browsers clip textarea content in print)
+  document.querySelectorAll('textarea').forEach(ta => {
+    const div = document.createElement('div');
+    div.className = 'print-text-div';
+    div.textContent = ta.value || '';
+    // Inline style as fallback in case @media print doesn't apply in time
+    div.style.cssText = 'white-space:pre-wrap;padding:10px 14px;border-radius:6px;border:1px solid #ccc;background:#fff;font-size:13px;line-height:1.6;color:#111;word-break:break-word;overflow:visible;height:auto;display:block;margin:4px 0;';
+    ta.parentNode.insertBefore(div, ta.nextSibling);
+    ta.style.display = 'none';
+  });
+});
+
+window.addEventListener('afterprint', () => {
+  // Restore modules to original state (only active visible)
+  document.querySelectorAll('.module').forEach(m => m.style.display = '');
+  // Restore textareas
+  document.querySelectorAll('.print-text-div').forEach(d => d.remove());
+  document.querySelectorAll('textarea').forEach(ta => ta.style.display = '');
+});
 
 // ══════════════════════════════════════════
 //  BOOT
