@@ -310,13 +310,27 @@ label.fl { font-size: 11px; font-weight: 600; color: var(--muted); text-transfor
               <input type="number" id="new-inputs" value="5" min="1" max="25" placeholder="5">
             </div>
             <div>
-              <label class="fl">Placeholder text</label>
+              <label class="fl">Placeholder (EN)</label>
               <input type="text" id="new-placeholder" placeholder="e.g. Name">
             </div>
           </div>
-          <label class="fl">Exercise text / prompt</label>
-          <textarea id="new-text" rows="4" placeholder="Write the exercise prompt here — be specific and action-oriented..."></textarea>
-          <button class="btn btn-red" onclick="addExercise()" style="width:180px">Add to Library →</button>
+          <div class="form-row" style="margin-top:4px">
+            <div>
+              <label class="fl">Placeholder (SK)</label>
+              <input type="text" id="new-placeholder-sk" placeholder="napr. Meno">
+            </div>
+            <div>
+              <label class="fl">Placeholder (BG)</label>
+              <input type="text" id="new-placeholder-bg" placeholder="напр. Име">
+            </div>
+          </div>
+          <label class="fl" style="margin-top:12px">Exercise text — EN <span style="color:var(--red)">*</span></label>
+          <textarea id="new-text" rows="3" placeholder="Write the exercise prompt here — be specific and action-oriented..."></textarea>
+          <label class="fl" style="margin-top:8px">Exercise text — SK <span style="color:var(--muted);font-size:11px">(optional, defaults to EN)</span></label>
+          <textarea id="new-text-sk" rows="3" placeholder="Napíšte text cvičenia po slovensky..."></textarea>
+          <label class="fl" style="margin-top:8px">Exercise text — BG <span style="color:var(--muted);font-size:11px">(optional, defaults to EN)</span></label>
+          <textarea id="new-text-bg" rows="3" placeholder="Напишете текста на упражнението на български..."></textarea>
+          <button class="btn btn-red" onclick="addExercise()" style="width:180px;margin-top:12px">Add to Library →</button>
         </div>
       </div>
     </div>
@@ -447,19 +461,27 @@ function findEx(id) {
 //  ADD EXERCISE
 // ══════════════════════════════════════════
 function addExercise() {
-  const text = document.getElementById('new-text').value.trim();
+  const text_en = document.getElementById('new-text').value.trim();
+  const text_sk = document.getElementById('new-text-sk').value.trim() || text_en;
+  const text_bg = document.getElementById('new-text-bg').value.trim() || text_en;
   const cat  = document.getElementById('new-category').value;
   const inputs = parseInt(document.getElementById('new-inputs').value) || 5;
-  const placeholder = document.getElementById('new-placeholder').value.trim() || 'Answer';
-  if (!text) { toast('Write the exercise text first', true); return; }
+  const placeholder_en = document.getElementById('new-placeholder').value.trim() || 'Answer';
+  const placeholder_sk = document.getElementById('new-placeholder-sk').value.trim() || placeholder_en;
+  const placeholder_bg = document.getElementById('new-placeholder-bg').value.trim() || placeholder_en;
+  if (!text_en) { toast('Write the exercise text (EN) first', true); return; }
   const list = cfg.exercises[cat];
   const prefix = cat === 'recruitment' ? 'r' : 'c';
   const existingNums = list.map(e => parseInt(e.id.replace(prefix,''))).filter(n=>!isNaN(n));
   const nextNum = existingNums.length > 0 ? Math.max(...existingNums) + 1 : 1;
   const id = prefix + String(nextNum).padStart(2,'0');
-  list.push({ id, text, inputs, placeholder });
+  list.push({ id, text_en, text_sk, text_bg, inputs, placeholder_en, placeholder_sk, placeholder_bg });
   document.getElementById('new-text').value = '';
+  document.getElementById('new-text-sk').value = '';
+  document.getElementById('new-text-bg').value = '';
   document.getElementById('new-placeholder').value = '';
+  document.getElementById('new-placeholder-sk').value = '';
+  document.getElementById('new-placeholder-bg').value = '';
   toast(`Exercise ${id} added to ${cat}`);
   renderLibrary();
 }
