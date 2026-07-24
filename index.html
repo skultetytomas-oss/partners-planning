@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>PARTNERS | Monthly Planning</title>
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#AB0534">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="PARTNERS">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -106,6 +114,13 @@ header {
   white-space: nowrap;
 }
 .btn-export:hover { background: var(--red-hover); }
+.btn-secondary {
+  background: #f0f2f5; border: 1px solid var(--border);
+  color: var(--text); font-family: var(--font); font-size: 12px; font-weight: 700;
+  border-radius: 8px; padding: 7px 12px; cursor: pointer; transition: all .2s;
+  white-space: nowrap; display: inline-flex; align-items: center; gap: 4px;
+}
+.btn-secondary:hover { background: var(--border); }
 
 /* ── LANG SWITCHER ── */
 .lang-switcher { display: flex; gap: 3px; background: #f0f2f5; border-radius: 8px; padding: 3px; }
@@ -361,10 +376,10 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
 }
 .week-kpi-block label { font-size: 13px; color: var(--muted); display: block; margin-bottom: 8px; font-weight: 600; }
 .week-pace {
-  margin-top: 8px; padding-top: 8px;
+  margin-top: 10px; padding-top: 10px;
   border-top: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center; gap: 4px;
-  min-height: 22px; flex-wrap: wrap;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  min-height: 72px;
 }
 .month-pct-badge {
   font-size: 11px; color: var(--muted); font-weight: 500;
@@ -486,7 +501,10 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
         <button class="lang-btn" data-lang="bg" onclick="setLang('bg')">BG</button>
       </div>
       <select class="month-sel" id="month-sel" onchange="switchMonth(this.value)"></select>
+      <button class="btn-secondary no-print" onclick="exportJSON()" data-i18n="btn_backup"></button>
+      <label class="btn-secondary no-print"><span data-i18n="btn_restore"></span><input type="file" id="import-file" accept=".json" style="display:none" onchange="importJSON(event)"></label>
       <button class="btn-export no-print" onclick="window.print()" data-i18n="btn_export">⬇ Export</button>
+      <a href="team.html" class="btn-secondary no-print" style="text-decoration:none" title="Team dashboard">👥 Team</a>
     </div>
   </header>
 
@@ -724,6 +742,10 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
   </main>
 </div>
 
+<!-- Firebase SDK (compat) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
 <script src="exercises.js"></script>
 <script>
 // ══════════════════════════════════════════
@@ -794,6 +816,8 @@ async function doSyncToSharePoint() {
 const T = {
   en: {
     btn_export: '⬇ Export',
+    btn_backup: '💾 Backup',
+    btn_restore: '📂 Restore',
     tab_m1: 'My Engine', tab_m2: 'Scoreboard', tab_m3: 'Game Plan',
     tab_m4: 'Opportunity Hunt', tab_m5: 'Weekly Check-in',
     m1_title: 'My Engine',
@@ -874,6 +898,8 @@ const T = {
   },
   sk: {
     btn_export: '⬇ Export',
+    btn_backup: '💾 Záloha',
+    btn_restore: '📂 Obnoviť',
     tab_m1: 'Môj Motor', tab_m2: 'Výsledkovka', tab_m3: 'Herný Plán',
     tab_m4: 'Príležitostný Lov', tab_m5: 'Týždenný Check-in',
     m1_title: 'Môj Motor',
@@ -954,6 +980,8 @@ const T = {
   },
   bg: {
     btn_export: '⬇ Експорт',
+    btn_backup: '💾 Резервно',
+    btn_restore: '📂 Възстанови',
     tab_m1: 'Моят Двигател', tab_m2: 'Табло', tab_m3: 'Игров План',
     tab_m4: 'Лов на Възможности', tab_m5: 'Седмичен Check-in',
     m1_title: 'Моят Двигател',
@@ -1114,16 +1142,143 @@ const PF_RECRUITING = [
 //  STATE
 // ══════════════════════════════════════════
 let consultantName = '';
+
+// ── Consultant ID (persistent UUID pre Firebase) ──
+let consultantId = localStorage.getItem('partners_id');
+if (!consultantId) {
+  consultantId = Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
+  localStorage.setItem('partners_id', consultantId);
+}
 let currentMonth = '';
 let state = {};
 let saveTimer = null;
 let currentWeek = 1;
 let trendKPI = 'npfa';
 
+// ── WEEK COUNT PER MONTH (manually set) ──
+function getWeekCount(monthStr) {
+  const lookup = {
+    '2026-07': 5,
+    '2026-08': 4,
+    '2026-09': 5,
+    '2026-10': 4,
+    '2026-11': 4,
+    '2026-12': 5,
+  };
+  if (lookup[monthStr] !== undefined) return lookup[monthStr];
+  // fallback: 4 weeks for Feb, 5 for all other months
+  const [y, mo] = monthStr.split('-').map(Number);
+  return new Date(y, mo, 0).getDate() <= 28 ? 4 : 5;
+}
+
+// ── JSON BACKUP / RESTORE ──
+function exportJSON() {
+  const data = {};
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith('partners_')) data[key] = localStorage.getItem(key);
+  }
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'partners_zaloha_' + new Date().toISOString().slice(0, 10) + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      let count = 0;
+      Object.entries(data).forEach(([key, val]) => {
+        if (key.startsWith('partners_')) { localStorage.setItem(key, val); count++; }
+      });
+      alert('Obnovené: ' + count + ' záznamov. Stránka sa načíta znova.');
+      location.reload();
+    } catch (err) {
+      alert('Chyba: súbor nie je platná záloha PARTNERS.');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+// ══════════════════════════════════════════
+//  FIREBASE INTEGRATION
+// ══════════════════════════════════════════
+let db = null;
+let fbSyncTimer = null;
+
+function initFirebase() {
+  if (typeof FIREBASE_ENABLED === 'undefined' || !FIREBASE_ENABLED) return;
+  try {
+    if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+    db = firebase.firestore();
+    console.log('✅ Firebase connected');
+  } catch(e) {
+    console.warn('⚠️ Firebase init error:', e.message);
+    db = null;
+  }
+}
+
+function scheduleSyncToFirebase() {
+  if (!db) return;
+  clearTimeout(fbSyncTimer);
+  fbSyncTimer = setTimeout(doSyncToFirebase, 3000);
+}
+
+async function doSyncToFirebase() {
+  if (!db || !consultantName || !currentMonth) return;
+  try {
+    const docId = consultantId + '_' + currentMonth;
+    await db.collection('plans').doc(docId).set({
+      name: consultantName,
+      consultantId,
+      month: currentMonth,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      stateJson: JSON.stringify(state)
+    }, { merge: true });
+  } catch(e) {
+    console.warn('⚠️ Firebase sync failed:', e.message);
+  }
+}
+
+async function loadFromFirebase(month) {
+  if (!db || !consultantId) return null;
+  try {
+    const docId = consultantId + '_' + month;
+    const doc = await db.collection('plans').doc(docId).get();
+    if (doc.exists) {
+      const data = doc.data();
+      if (data.stateJson) return JSON.parse(data.stateJson);
+    }
+    return null;
+  } catch(e) {
+    console.warn('⚠️ Firebase load failed:', e.message);
+    return null;
+  }
+}
+
+// ── PWA — Service Worker registration ──────
+function registerServiceWorker() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/partners-planning/sw.js')
+      .then(reg => console.log('✅ SW registered:', reg.scope))
+      .catch(err => console.warn('⚠️ SW registration failed:', err));
+  }
+}
+
 // ══════════════════════════════════════════
 //  INIT
 // ══════════════════════════════════════════
 function init() {
+  initFirebase();
+  registerServiceWorker();
   currentLang = localStorage.getItem('partners_lang') || 'en';
   document.querySelectorAll('.lang-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.lang === currentLang);
@@ -1209,10 +1364,19 @@ function switchMonth(val) {
 // ══════════════════════════════════════════
 //  LOAD / SAVE
 // ══════════════════════════════════════════
-function loadMonth(month) {
+async function loadMonth(month) {
+  // 1. Okamžite načítaj z localStorage (žiadna odozva)
   const raw = localStorage.getItem('partners_data_' + month);
   state = raw ? JSON.parse(raw) : {};
   renderAll(month);
+
+  // 2. Skús Firebase na pozadí — ak existujú novšie dáta, obnov
+  const fbState = await loadFromFirebase(month);
+  if (fbState) {
+    state = fbState;
+    localStorage.setItem('partners_data_' + month, JSON.stringify(state));
+    renderAll(month);
+  }
 }
 
 function save() {
@@ -1222,6 +1386,7 @@ function save() {
     localStorage.setItem('partners_data_' + currentMonth, JSON.stringify(state));
     showToast();
     scheduleSyncToSharePoint(); // ← automatický sync do SharePointu
+    scheduleSyncToFirebase();   // ← Firebase sync
   }, 600);
 }
 
@@ -1249,7 +1414,8 @@ function gatherState() {
   state.m3.flow_call  = v('m3-flow-call');
   state.m3.flow_note  = v('m3-flow-note');
   state.m5 = state.m5 || {};
-  for (let w = 1; w <= 4; w++) {
+  const _wc = getWeekCount(currentMonth);
+  for (let w = 1; w <= _wc; w++) {
     state.m5['w'+w+'_change'] = v('w' + w + '-change');
     KPIS.filter(k => !['ws','pi'].includes(k.id)).forEach(k => {
       state.m5['w'+w+'_'+k.id] = v('w' + w + '-kpi-' + k.id);
@@ -1552,17 +1718,20 @@ function updateHuntProgress() {
 
 // ── MODULE 5 ──
 function buildWeekPanels() {
+  const numWeeks = getWeekCount(currentMonth);
+  const weekNums = Array.from({length: numWeeks}, (_, i) => i + 1);
+
   // Week tabs
   const tabs = document.getElementById('week-tabs');
   if (tabs) {
-    tabs.innerHTML = [1,2,3,4].map(n => `
+    tabs.innerHTML = weekNums.map(n => `
       <button class="week-tab ${n===1?'active':''}" data-week="${n}" onclick="switchWeek(${n})">${t('w_tab', {n})}</button>
     `).join('');
   }
 
   const wrap = document.getElementById('week-panels');
   if (!wrap) return;
-  wrap.innerHTML = [1,2,3,4].map(w => `
+  wrap.innerHTML = weekNums.map(w => `
     <div class="week-panel ${w===1?'active':''}" id="week-panel-${w}">
       <div class="card">
         <div class="card-title" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
@@ -1587,7 +1756,8 @@ function buildWeekPanels() {
 
 function renderM5() {
   const m5 = state.m5 || {};
-  for (let w = 1; w <= 4; w++) {
+  const numWeeks = getWeekCount(currentMonth);
+  for (let w = 1; w <= numWeeks; w++) {
     setVal('w'+w+'-change', m5['w'+w+'_change'] || '');
     KPIS.filter(k => !['ws','pi'].includes(k.id)).forEach(k => {
       setVal('w'+w+'-kpi-'+k.id, m5['w'+w+'_'+k.id] || '');
@@ -1608,7 +1778,8 @@ function refreshWeekPace(w) {
   const badge = document.getElementById('month-pct-badge-' + w);
   if (badge) badge.textContent = dayOfMonth > 0 ? t('m5_month_done', {n: monthPct}) : t('m5_month_not_started');
 
-  const weekEndDay = w === 4 ? daysInMonth : Math.min(w * 7, daysInMonth);
+  const numWeeks = getWeekCount(currentMonth);
+  const weekEndDay = w === numWeeks ? daysInMonth : Math.min(w * 7, daysInMonth);
   const weekPct = weekEndDay / daysInMonth;
 
   KPIS.filter(k => !['ws','pi'].includes(k.id)).forEach(k => {
@@ -1637,9 +1808,10 @@ function refreshWeekPace(w) {
     const dotCls = pct >= 90 ? 'status-green' : pct >= 70 ? 'status-amber' : 'status-rose';
 
     paceEl.innerHTML = `
-      <span class="status-dot ${dotCls}" style="flex-shrink:0"></span>
-      <span style="color:${color};font-weight:700;font-size:13px">${pct}%</span>
-      <span style="color:var(--muted);font-size:11px">&thinsp;${cumulative}/${expected}</span>
+      <span style="color:${color};font-weight:800;font-size:26px;line-height:1">
+        <span class="status-dot ${dotCls}" style="width:9px;height:9px;vertical-align:2px"></span>${pct}%
+      </span>
+      <span style="color:var(--muted);font-size:26px;font-weight:800;line-height:1">${cumulative}&thinsp;/&thinsp;${expected}</span>
     `;
   });
 }
