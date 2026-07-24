@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PARTNERS | Team Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #AB0534;
+  --text: #1a1a1a;
+  --muted: #6b7280;
+  --card: #ffffff;
+  --border: #e5e7eb;
+  --bg: #f0f2f5;
+  --green: #16a34a;
+  --amber: #d97706;
+  --rose: #dc2626;
+  --font: 'Figtree', system-ui, sans-serif;
+  --radius: 14px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* ── Header ── */
+.header {
+  background: #fff; border-bottom: 1px solid var(--border);
+  padding: 0 24px; height: 60px;
+  display: flex; align-items: center; gap: 14px;
+  position: sticky; top: 0; z-index: 100;
+}
+.logo { color: var(--red); font-size: 19px; font-weight: 800; letter-spacing: -0.5px; white-space: nowrap; }
+.logo span { color: var(--text); }
+.header-sep { flex: 1; }
+.month-sel {
+  font-family: var(--font); font-size: 14px; font-weight: 600;
+  padding: 7px 12px; border: 1px solid var(--border);
+  border-radius: 8px; background: #f9fafb; color: var(--text);
+  cursor: pointer; outline: none;
+}
+.btn {
+  font-family: var(--font); font-size: 13px; font-weight: 700;
+  border: none; border-radius: 8px; padding: 7px 14px;
+  cursor: pointer; white-space: nowrap;
+}
+.btn-primary { background: var(--red); color: #fff; }
+.btn-primary:hover { opacity: 0.88; }
+.btn-back { background: #f0f2f5; color: var(--text); border: 1px solid var(--border); }
+.btn-back:hover { background: var(--border); }
+
+/* ── Main ── */
+main { padding: 24px; max-width: 1400px; margin: 0 auto; }
+
+/* ── Status bar ── */
+.status-bar {
+  background: #fff; border: 1px solid var(--border); border-radius: 10px;
+  padding: 10px 16px; margin-bottom: 20px;
+  font-size: 13px; color: var(--muted);
+  display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+}
+.ok { color: var(--green); font-weight: 700; }
+.err { color: var(--rose); font-weight: 700; }
+.warn { color: var(--amber); font-weight: 700; }
+
+/* ── No Firebase warning ── */
+.no-firebase-banner {
+  background: #fffbeb; border: 1px solid #fbbf24;
+  border-radius: 12px; padding: 16px 20px; margin-bottom: 20px;
+  font-size: 14px; line-height: 1.6;
+}
+.no-firebase-banner strong { color: #92400e; }
+.no-firebase-banner code { background: #fef3c7; padding: 1px 6px; border-radius: 4px; font-size: 13px; font-family: monospace; }
+.no-firebase-banner a { color: var(--red); }
+
+/* ── Summary cards ── */
+.section-title { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 10px; }
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+@media (max-width: 900px) { .summary-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 500px) { .summary-grid { grid-template-columns: repeat(2, 1fr); } }
+.s-card {
+  background: #fff; border: 1px solid var(--border);
+  border-radius: 12px; padding: 12px; text-align: center;
+}
+.s-kpi { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+.s-pct { font-size: 24px; font-weight: 800; line-height: 1; }
+.s-nums { font-size: 11px; color: var(--muted); margin-top: 3px; }
+.c-green { color: var(--green); }
+.c-amber { color: var(--amber); }
+.c-red   { color: var(--rose); }
+.c-none  { color: #d1d5db; }
+
+/* ── Table ── */
+.table-card {
+  background: #fff; border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+}
+.table-header {
+  padding: 14px 20px; border-bottom: 1px solid var(--border);
+  font-size: 15px; font-weight: 700;
+  display: flex; align-items: center; gap: 8px;
+}
+.table-header small { font-size: 12px; color: var(--muted); font-weight: 400; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 700px; }
+thead th {
+  background: #f9fafb; padding: 9px 10px;
+  font-size: 10px; font-weight: 700; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border);
+  text-align: center; white-space: nowrap;
+}
+thead th:first-child { text-align: left; min-width: 160px; }
+thead th:last-child { min-width: 80px; }
+tbody tr { border-bottom: 1px solid var(--border); }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: #fafafa; }
+tbody td { padding: 9px 10px; text-align: center; vertical-align: middle; }
+tbody td:first-child { text-align: left; }
+.c-name { font-weight: 600; font-size: 14px; }
+.c-updated { font-size: 10px; color: var(--muted); display: block; font-weight: 400; margin-top: 1px; }
+.cell-pct { font-size: 13px; font-weight: 700; }
+.cell-nums { font-size: 11px; color: var(--muted); margin-top: 1px; }
+.overall-pct { font-size: 17px; font-weight: 800; }
+
+/* ── Loading ── */
+.loading-state { text-align: center; padding: 56px 24px; color: var(--muted); font-size: 14px; }
+.spinner {
+  width: 34px; height: 34px;
+  border: 3px solid var(--border); border-top-color: var(--red);
+  border-radius: 50%; animation: spin .7s linear infinite;
+  margin: 0 auto 14px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Sort controls ── */
+.sort-row { display: flex; gap: 8px; align-items: center; padding: 10px 16px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.sort-row span { font-size: 12px; color: var(--muted); }
+.sort-btn {
+  font-family: var(--font); font-size: 11px; font-weight: 600;
+  padding: 4px 10px; border: 1px solid var(--border);
+  border-radius: 6px; cursor: pointer; background: #f9fafb; color: var(--text);
+}
+.sort-btn.active { background: var(--red); color: #fff; border-color: var(--red); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">PΛ<span>RTNERS | Team</span></div>
+  <div class="header-sep"></div>
+  <select class="month-sel" id="month-sel" onchange="loadData()"></select>
+  <button class="btn btn-primary" onclick="loadData()">↻ Refresh</button>
+  <a href="index.html"><button class="btn btn-back">← Môj plán</button></a>
+</div>
+
+<main>
+
+  <div id="no-firebase-banner" class="no-firebase-banner" style="display:none">
+    <strong>⚠️ Firebase nie je nakonfigurovaný.</strong><br>
+    Vyplňte hodnoty v súbore <code>firebase-config.js</code> (všetky <code>YOUR_*</code> polia) a nahrajte ho na GitHub.
+    <a href="https://console.firebase.google.com" target="_blank">Firebase Console →</a>
+  </div>
+
+  <div class="status-bar">
+    <span id="status-text">Inicializácia…</span>
+  </div>
+
+  <div id="summary-section" style="display:none">
+    <div class="section-title">Tímový priemer — plnenie KPI</div>
+    <div class="summary-grid" id="summary-grid"></div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-header">
+      👥 Konzultanti
+      <small id="consultant-count"></small>
+    </div>
+    <div class="sort-row" id="sort-row" style="display:none">
+      <span>Zoradiť:</span>
+      <button class="sort-btn active" onclick="sortBy('name')">Meno</button>
+      <button class="sort-btn" onclick="sortBy('overall')">Plnenie</button>
+      <button class="sort-btn" onclick="sortBy('updated')">Naposledy aktívny</button>
+    </div>
+    <div class="table-wrap">
+      <div id="table-container">
+        <div class="loading-state">
+          <div class="spinner"></div>
+          Načítavam dáta z Firebase…
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script>
+// ══════════════════════════════════════════
+//  PARTNERS Team Dashboard
+// ══════════════════════════════════════════
+
+const KPIS = [
+  { id: 'npfa',  label: 'N-PFA'   },
+  { id: 'spfa',  label: 'S-PFA'   },
+  { id: 'refc',  label: 'REF-C'   },
+  { id: 'bu',    label: 'BU'      },
+  { id: 'recrm', label: 'RECR.M.' },
+  { id: 'refr',  label: 'REF-R'   },
+  { id: 'ws',    label: 'WS'      },
+  { id: 'pi',    label: 'PI'      }
+];
+
+let db = null;
+let currentRows = [];
+let currentSort = 'name';
+
+// ── Firebase init ──────────────────────────
+function initFirebase() {
+  if (!FIREBASE_ENABLED) {
+    document.getElementById('no-firebase-banner').style.display = 'block';
+    document.getElementById('status-text').innerHTML = '<span class="warn">⚠ Firebase nie je nakonfigurovaný — vyplňte firebase-config.js</span>';
+    document.getElementById('table-container').innerHTML = '<div class="loading-state">Nakonfigurujte firebase-config.js</div>';
+    return false;
+  }
+  try {
+    if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+    db = firebase.firestore();
+    return true;
+  } catch(e) {
+    document.getElementById('status-text').innerHTML = '<span class="err">Chyba Firebase: ' + e.message + '</span>';
+    document.getElementById('table-container').innerHTML = '<div class="loading-state">Chyba pri inicializácii Firebase.<br>' + e.message + '</div>';
+    return false;
+  }
+}
+
+// ── Month selector ─────────────────────────
+function buildMonthSelector() {
+  const sel = document.getElementById('month-sel');
+  const months = ['Január','Február','Marec','Apríl','Máj','Jún','Júl','August','September','Október','November','December'];
+  const now = new Date();
+  const entries = [];
+  for (let i = -3; i <= 6; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
+    const val = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
+    entries.push({ val, label: months[d.getMonth()] + ' ' + d.getFullYear() });
+  }
+  const today = todayMonth();
+  sel.innerHTML = entries.map(e => `<option value="${e.val}"${e.val === today ? ' selected' : ''}>${e.label}</option>`).join('');
+}
+
+function todayMonth() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+}
+
+// ── Load data from Firestore ───────────────
+async function loadData() {
+  if (!db) return;
+  const month = document.getElementById('month-sel').value;
+  document.getElementById('status-text').textContent = 'Načítavam…';
+  document.getElementById('table-container').innerHTML = '<div class="loading-state"><div class="spinner"></div>Načítavam dáta z Firebase…</div>';
+  document.getElementById('summary-section').style.display = 'none';
+  document.getElementById('sort-row').style.display = 'none';
+
+  try {
+    const snap = await db.collection('plans').where('month', '==', month).get();
+    const rows = [];
+    snap.forEach(doc => {
+      const d = doc.data();
+      let state = {};
+      try { state = JSON.parse(d.stateJson || '{}'); } catch(e) {}
+
+      // Compute overall pct for sorting
+      const m2 = state.m2 || {};
+      let tPlan = 0, tReal = 0;
+      KPIS.filter(k => !['ws','pi'].includes(k.id)).forEach(k => {
+        const pl = parseFloat(m2[k.id + '_plan'] || 0);
+        const re = parseFloat(m2[k.id + '_reality'] || 0);
+        if (pl > 0) { tPlan += pl; tReal += re; }
+      });
+      const overallPct = tPlan > 0 ? Math.round((tReal / tPlan) * 100) : null;
+
+      rows.push({
+        name: d.name || 'Neznámy',
+        consultantId: d.consultantId || '',
+        updatedAt: d.updatedAt ? d.updatedAt.toDate() : null,
+        state,
+        overallPct
+      });
+    });
+
+    currentRows = rows;
+    applySort();
+
+    document.getElementById('status-text').innerHTML =
+      '<span class="ok">✓ Aktuálne</span> &nbsp;·&nbsp; ' +
+      rows.length + ' konzultantov &nbsp;·&nbsp; ' +
+      new Date().toLocaleTimeString('sk', { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('consultant-count').textContent = '(' + rows.length + ')';
+    if (rows.length > 0) document.getElementById('sort-row').style.display = 'flex';
+
+  } catch(e) {
+    document.getElementById('status-text').innerHTML = '<span class="err">Chyba: ' + e.message + '</span>';
+    document.getElementById('table-container').innerHTML =
+      '<div class="loading-state">Nepodarilo sa načítať dáta.<br><small>' + e.message + '</small></div>';
+  }
+}
+
+// ── Sort ───────────────────────────────────
+function sortBy(key) {
+  currentSort = key;
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  applySort();
+}
+
+function applySort() {
+  const rows = [...currentRows];
+  if (currentSort === 'name') {
+    rows.sort((a, b) => a.name.localeCompare(b.name, 'sk'));
+  } else if (currentSort === 'overall') {
+    rows.sort((a, b) => {
+      if (a.overallPct === null && b.overallPct === null) return 0;
+      if (a.overallPct === null) return 1;
+      if (b.overallPct === null) return -1;
+      return b.overallPct - a.overallPct;
+    });
+  } else if (currentSort === 'updated') {
+    rows.sort((a, b) => {
+      if (!a.updatedAt && !b.updatedAt) return 0;
+      if (!a.updatedAt) return 1;
+      if (!b.updatedAt) return -1;
+      return b.updatedAt - a.updatedAt;
+    });
+  }
+  renderDashboard(rows);
+}
+
+// ── Render ─────────────────────────────────
+function renderDashboard(rows) {
+  const month = document.getElementById('month-sel').value;
+
+  if (rows.length === 0) {
+    document.getElementById('table-container').innerHTML =
+      '<div class="loading-state">Žiadne dáta pre ' + month + '<br><small>Konzultanti ešte nezadali plán pre tento mesiac.</small></div>';
+    document.getElementById('summary-section').style.display = 'none';
+    return;
+  }
+
+  // ── Summary cards ──────────────────
+  const agg = {};
+  KPIS.forEach(k => { agg[k.id] = { plan: 0, real: 0, n: 0 }; });
+  rows.forEach(r => {
+    const m2 = r.state.m2 || {};
+    KPIS.forEach(k => {
+      const pl = parseFloat(m2[k.id + '_plan'] || 0);
+      const re = parseFloat(m2[k.id + '_reality'] || 0);
+      if (pl > 0 || re > 0) { agg[k.id].plan += pl; agg[k.id].real += re; agg[k.id].n++; }
+    });
+  });
+
+  document.getElementById('summary-grid').innerHTML = KPIS.map(k => {
+    const a = agg[k.id];
+    const pct = a.plan > 0 ? Math.round((a.real / a.plan) * 100) : null;
+    const cls = pct === null ? 'c-none' : pct >= 90 ? 'c-green' : pct >= 70 ? 'c-amber' : 'c-red';
+    const avgR = a.n > 0 ? Math.round(a.real / a.n) : 0;
+    const avgP = a.n > 0 ? Math.round(a.plan / a.n) : 0;
+    return `<div class="s-card">
+      <div class="s-kpi">${k.label}</div>
+      <div class="s-pct ${cls}">${pct !== null ? pct + '%' : '—'}</div>
+      <div class="s-nums">∅ ${avgR}&thinsp;/&thinsp;${avgP}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('summary-section').style.display = 'block';
+
+  // ── Table ──────────────────────────
+  const thead = `<thead><tr>
+    <th style="text-align:left">Meno</th>
+    ${KPIS.map(k => `<th>${k.label}</th>`).join('')}
+    <th>Celkovo</th>
+  </tr></thead>`;
+
+  const tbody = '<tbody>' + rows.map(r => {
+    const m2 = r.state.m2 || {};
+    const updStr = r.updatedAt
+      ? r.updatedAt.toLocaleDateString('sk', { day: '2-digit', month: '2-digit' }) + ' ' +
+        r.updatedAt.toLocaleTimeString('sk', { hour: '2-digit', minute: '2-digit' })
+      : '';
+
+    const cells = KPIS.map(k => {
+      const pl = parseFloat(m2[k.id + '_plan'] || 0);
+      const re = parseFloat(m2[k.id + '_reality'] || 0);
+      if (pl === 0 && re === 0) return '<td><span class="c-none">—</span></td>';
+      const pct = pl > 0 ? Math.round((re / pl) * 100) : null;
+      const cls = pct === null ? 'c-none' : pct >= 90 ? 'c-green' : pct >= 70 ? 'c-amber' : 'c-red';
+      return `<td>
+        <div class="cell-pct ${cls}">${pct !== null ? pct + '%' : '?%'}</div>
+        <div class="cell-nums">${re}&thinsp;/&thinsp;${pl}</div>
+      </td>`;
+    }).join('');
+
+    const oCls = r.overallPct === null ? 'c-none' : r.overallPct >= 90 ? 'c-green' : r.overallPct >= 70 ? 'c-amber' : 'c-red';
+    const oStr = r.overallPct !== null ? r.overallPct + '%' : '—';
+
+    return `<tr>
+      <td>
+        <span class="c-name">${r.name}</span>
+        <span class="c-updated">${updStr}</span>
+      </td>
+      ${cells}
+      <td><span class="overall-pct ${oCls}">${oStr}</span></td>
+    </tr>`;
+  }).join('') + '</tbody>';
+
+  document.getElementById('table-container').innerHTML = `<table>${thead}${tbody}</table>`;
+}
+
+// ── Bootstrap ──────────────────────────────
+buildMonthSelector();
+if (initFirebase()) {
+  loadData();
+}
+</script>
+</body>
+</html>
