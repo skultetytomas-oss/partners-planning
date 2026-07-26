@@ -1403,6 +1403,9 @@ async function loadMonth(month) {
     state = fbState;
     localStorage.setItem('partners_data_' + month, JSON.stringify(state));
     renderAll(month);
+  } else if (raw) {
+    // Lokálne dáta existujú, ale Firebase je prázdny — pošli ich (prvý sync)
+    doSyncToFirebase();
   }
 }
 
