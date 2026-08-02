@@ -1,10 +1,10 @@
 // ══════════════════════════════════════════
 //  PARTNERS — Service Worker (PWA)
 //  Cache-first pre app shell, network-only
-//  pre Firebase a Google Fonts.
+//  pre Firebase, Google Fonts a admin.html.
 // ══════════════════════════════════════════
 
-const CACHE_NAME = 'partners-v2';
+const CACHE_NAME = 'partners-v3';
 
 const CACHE_ASSETS = [
   '/partners-planning/',
@@ -47,8 +47,10 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const url = e.request.url;
 
-  // Network-only: Firebase / Google APIs / Fonts (musia byť online)
+  // Network-only: Firebase / Google APIs / Fonts / admin panel
+  // (admin.html sa nikdy nemá cachovať — musí byť vždy aktuálny)
   if (
+    url.includes('/partners-planning/admin.html') ||
     url.includes('firestore.googleapis.com') ||
     url.includes('firebase.googleapis.com') ||
     url.includes('identitytoolkit.googleapis.com') ||
