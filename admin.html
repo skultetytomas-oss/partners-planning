@@ -241,6 +241,17 @@ label.fl { font-size: 11px; font-weight: 600; color: var(--muted); text-transfor
 .picker-item-id { font-size: 11px; font-weight: 700; color: var(--red); flex-shrink: 0; width: 28px; }
 .picker-item-text { font-size: 12px; line-height: 1.4; }
 
+/* ── TRANSLATE BUTTON ── */
+.btn-translate {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(255,255,255,0.07); border: 1px solid var(--border);
+  color: var(--white); border-radius: 8px; padding: 7px 14px;
+  font-size: 12px; font-weight: 700; cursor: pointer; font-family: var(--font);
+  transition: all .2s;
+}
+.btn-translate:hover:not(:disabled) { background: rgba(255,255,255,0.13); border-color: rgba(255,255,255,0.25); }
+.btn-translate:disabled { opacity: .5; cursor: not-allowed; }
+
 /* ── EDIT MODAL ── */
 #ex-editor { max-height: 90vh; max-width: 640px; }
 .edit-field { margin-bottom: 14px; }
@@ -322,6 +333,15 @@ label.fl { font-size: 11px; font-weight: 600; color: var(--muted); text-transfor
         <label>Text — EN <span style="color:var(--red)">*</span></label>
         <textarea id="edit-text-en" rows="3" placeholder="Exercise prompt in English..."></textarea>
       </div>
+
+      <div style="margin-bottom:16px">
+        <button class="btn-translate" id="btn-translate" onclick="autoTranslate()" title="Preloží EN text do SK a BG">
+          <span id="translate-icon">🌐</span>
+          <span id="translate-label">Preložiť do SK + BG</span>
+        </button>
+        <span id="translate-status" style="font-size:11px;color:var(--muted);margin-left:10px;display:none"></span>
+      </div>
+
       <div class="edit-field">
         <label>Text — SK <span style="color:var(--muted);font-size:10px">(optional, defaults to EN)</span></label>
         <textarea id="edit-text-sk" rows="3" placeholder="Text cvičenia po slovensky..."></textarea>
@@ -663,6 +683,53 @@ function saveEdit() {
 function closeEdit() {
   document.getElementById('editor-overlay').classList.remove('open');
   editingId = null;
+}
+
+// ══════════════════════════════════════════
+//  AUTO-TRANSLATE (MyMemory API)
+// ══════════════════════════════════════════
+async function autoTranslate() {
+  const text = document.getElementById('edit-text-en').value.trim();
+  if (!text) { toast('Najprv napíšte text v EN poli', true); return; }
+
+  const btn    = document.getElementById('btn-translate');
+  const label  = document.getElementById('translate-label');
+  const icon   = document.getElementById('translate-icon');
+  const status = document.getElementById('translate-status');
+
+  btn.disabled = true;
+  icon.textContent = '⏳';
+  label.textContent = 'Prekladám...';
+  status.style.display = 'none';
+
+  async function translate(text, langpair) {
+    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${langpair}`;
+    const r = await fetch(url);
+    const d = await r.json();
+    if (d.responseStatus !== 200) throw new Error(d.responseDetails || 'Translation error');
+    return d.responseData.translatedText;
+  }
+
+  try {
+    const [sk, bg] = await Promise.all([
+      translate(text, 'en|sk'),
+      translate(text, 'en|bg'),
+    ]);
+    document.getElementById('edit-text-sk').value = sk;
+    document.getElementById('edit-text-bg').value = bg;
+    status.textContent = '✓ Preložené';
+    status.style.color = 'var(--green)';
+    status.style.display = 'inline';
+    setTimeout(() => { status.style.display = 'none'; }, 3000);
+  } catch(e) {
+    status.textContent = '✕ Chyba prekladu — skúste znova';
+    status.style.color = '#ff7676';
+    status.style.display = 'inline';
+  } finally {
+    btn.disabled = false;
+    icon.textContent = '🌐';
+    label.textContent = 'Preložiť do SK + BG';
+  }
 }
 
 // Close modals on overlay click
