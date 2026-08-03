@@ -268,7 +268,8 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
 .kpi-reflection::placeholder { color: #b0b7c3; }
 
 /* ── TREND CHART ── */
-.trend-kpi-tabs { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
+.trend-kpi-tabs { display: flex; flex-wrap: nowrap; gap: 5px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+.trend-kpi-tabs::-webkit-scrollbar { display: none; }
 .trend-kpi-tab { padding: 3px 9px; border-radius: 6px; border: 1px solid var(--border); background: #f0f2f5; color: var(--muted); font-size: 11px; font-weight: 700; cursor: pointer; transition: all .2s; font-family: var(--font); }
 .trend-kpi-tab:hover { background: #e5e7eb; color: var(--text); }
 .trend-kpi-tab.active { background: var(--red); border-color: var(--red); color: #fff; }
@@ -919,7 +920,7 @@ const T = {
     pfr_called: 'Called', pfr_pickup: 'Picked up', pfr_sched: 'Scheduled',
     pfr_meetings: 'Meetings', pfr_ws: 'WS', pfr_pi: 'PI', pfr_consult: 'Consultant',
     ratio_lp_rate: 'LP rate', ratio_show_rate: 'Show rate', ratio_close_rate: 'Close rate',
-    kpi_why_ph: 'Why?', plan_how_ph: 'Specific action...',
+    kpi_why_ph: 'Thanks to what did you achieve it / What would you do differently if you did not achieve it?', plan_how_ph: 'Specific action...',
     months_long: ['January','February','March','April','May','June','July','August','September','October','November','December'],
     months_short: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
   },
@@ -1001,7 +1002,7 @@ const T = {
     pfr_called: 'Zavolali', pfr_pickup: 'Zdvihli', pfr_sched: 'Naplánované',
     pfr_meetings: 'Stretnutia', pfr_ws: 'WS', pfr_pi: 'PI', pfr_consult: 'Konzultant',
     ratio_lp_rate: 'LP miera', ratio_show_rate: 'Show miera', ratio_close_rate: 'Close miera',
-    kpi_why_ph: 'Prečo?', plan_how_ph: 'Konkrétna akcia...',
+    kpi_why_ph: 'Vďaka čomu si to dosiahol / Čo by si robil inak, keby si to nedosiahol?', plan_how_ph: 'Konkrétna akcia...',
     months_long: ['Január','Február','Marec','Apríl','Máj','Jún','Júl','August','September','Október','November','December'],
     months_short: ['Jan','Feb','Mar','Apr','Máj','Jún','Júl','Aug','Sep','Okt','Nov','Dec']
   },
@@ -1083,7 +1084,7 @@ const T = {
     pfr_called: 'Обадени', pfr_pickup: 'Вдигнали', pfr_sched: 'Насрочени',
     pfr_meetings: 'Срещи', pfr_ws: 'WS', pfr_pi: 'PI', pfr_consult: 'Консултант',
     ratio_lp_rate: 'LP дял', ratio_show_rate: 'Show дял', ratio_close_rate: 'Close дял',
-    kpi_why_ph: 'Защо?', plan_how_ph: 'Конкретно действие...',
+    kpi_why_ph: 'Благодарение на какво го постигна / Какво би направил по-различно, ако не го беше постигнал?', plan_how_ph: 'Конкретно действие...',
     months_long: ['Януари','Февруари','Март','Април','Май','Юни','Юли','Август','Септември','Октомври','Ноември','Декември'],
     months_short: ['Яну','Фев','Мар','Апр','Май','Юни','Юли','Авг','Сеп','Окт','Ное','Дек']
   }
@@ -1598,20 +1599,37 @@ function renderPF(containerId, steps, prefix, m2) {
       const ratioLabel = s.ratioKey ? t(s.ratioKey) : '';
       if (ratio !== null) {
         const ok = ratio >= s.target;
-        ratioHtml = `<div class="ratio-badge ${ok ? 'ratio-ok' : 'ratio-low'}">${Math.round(ratio*100)}% (min ${Math.round(s.target*100)}%)</div>`;
+        ratioHtml = `<div class="ratio-badge ${ok ? 'ratio-ok' : 'ratio-low'}" id="pf-ratio-${prefix}-${s.key}">${Math.round(ratio*100)}% (min ${Math.round(s.target*100)}%)</div>`;
       } else {
-        ratioHtml = `<div class="ratio-badge">${ratioLabel} min ${Math.round(s.target*100)}%</div>`;
+        ratioHtml = `<div class="ratio-badge" id="pf-ratio-${prefix}-${s.key}">${ratioLabel} min ${Math.round(s.target*100)}%</div>`;
       }
     }
     const pfRef = containerId === 'pf-clients' ? 'PF_CLIENTS' : 'PF_RECRUITING';
     return `<div class="funnel-step">
       <input type="number" class="num-input editable funnel-step-num" id="${prefix}-${s.key}" value="${val}" min="0"
         style="width:70px;font-size:17px;background:#f9fafb;border-color:var(--border)"
-        oninput="renderPF('${containerId}', ${pfRef}, '${prefix}', gatherM2State());save()" placeholder="0">
+        oninput="updatePFRatios('${containerId}', ${pfRef}, '${prefix}');save()" placeholder="0">
       <span class="funnel-step-label">${t(s.labelKey)}</span>
       ${ratioHtml}
     </div>${i < steps.length-1 ? '<div class="funnel-arrow">→</div>' : ''}`;
   }).join('');
+}
+
+// ── Aktualizuje len ratio-badgey bez re-renderu inputov (fix: cursor nevyskakuje) ──
+function updatePFRatios(containerId, steps, prefix) {
+  steps.forEach((s, i) => {
+    if (s.target === null || i === 0) return;
+    const el = document.getElementById('pf-ratio-' + prefix + '-' + s.key);
+    if (!el) return;
+    const prev = Number(document.getElementById(prefix + '-' + steps[i-1].key)?.value || 0);
+    const cur  = Number(document.getElementById(prefix + '-' + s.key)?.value || 0);
+    const ratio = prev > 0 ? (cur / prev) : null;
+    if (ratio !== null) {
+      const ok = ratio >= s.target;
+      el.className = 'ratio-badge ' + (ok ? 'ratio-ok' : 'ratio-low');
+      el.textContent = Math.round(ratio * 100) + '% (min ' + Math.round(s.target * 100) + '%)';
+    }
+  });
 }
 
 function gatherM2State() {
