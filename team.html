@@ -283,7 +283,10 @@ async function loadData() {
       KPIS.filter(k => !['ws','pi'].includes(k.id)).forEach(k => {
         const pl = parseFloat(m2[k.id + '_plan'] || 0);
         const re = parseFloat(m2[k.id + '_reality'] || 0);
-        if (pl > 0) { tPlan += pl; tReal += re; }
+        // FIX (2026-08-21): kritérium zjednotené s riadkom 365 (agregácia
+        // do KPI súhrnných kariet), aby "Celkovo %" v riadku konzultanta
+        // a súhrnné karty nad tabuľkou počítali z rovnakej množiny záznamov.
+        if (pl > 0 || re > 0) { tPlan += pl; tReal += re; }
       });
       const overallPct = tPlan > 0 ? Math.round((tReal / tPlan) * 100) : null;
 

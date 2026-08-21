@@ -807,13 +807,17 @@ async function doSyncToSharePoint() {
     };
   });
 
+  // FIX (2026-08-21): dynamický počet týždňov namiesto natvrdo w1-w4 —
+  // v mesiacoch s 5 týždňami sa predtým w5 dáta do SharePointu vôbec neposlali.
   const weekly = {};
-  ['w1','w2','w3','w4'].forEach(w => {
+  const _syncWc = getWeekCount(currentMonth);
+  for (let _w = 1; _w <= _syncWc; _w++) {
+    const w = 'w' + _w;
     weekly[w] = {};
     KPIS.filter(k => !['ws','pi'].includes(k.id)).forEach(k => {
       weekly[w][k.id] = Number(state.m5?.[w + '_' + k.id] || 0);
     });
-  });
+  }
 
   const payload = {
     token:      SYNC_TOKEN,
@@ -901,7 +905,7 @@ const T = {
     m5_change_label: 'What will I change / focus on next week?',
     m5_change_ph: '1 specific action I will take differently...',
     w_tab: 'Week {n}',
-    m5_week_of_4: 'Week {w} of 4 · Day {d}/{t}',
+    m5_week_of_n: 'Week {w} of {n} · Day {d}/{t}',
     m5_completed: 'Completed · Day {d}/{t}',
     m5_starts_in: 'Starts in {n} day{s} · Day 0/{t}',
     m5_month_done: 'Month: {n}% done',
@@ -983,7 +987,7 @@ const T = {
     m5_change_label: 'Čo zmením / na čo sa zameriam budúci týždeň?',
     m5_change_ph: '1 konkrétna akcia, ktorú urobím inak...',
     w_tab: 'Týždeň {n}',
-    m5_week_of_4: 'Týždeň {w} zo 4 · Deň {d}/{t}',
+    m5_week_of_n: 'Týždeň {w} z {n} · Deň {d}/{t}',
     m5_completed: 'Dokončené · Deň {d}/{t}',
     m5_starts_in: 'Začína za {n} deň/dní · Deň 0/{t}',
     m5_month_done: 'Mesiac: {n}% hotový',
@@ -1065,7 +1069,7 @@ const T = {
     m5_change_label: 'Какво ще сменя / на какво ще се фокусирам следващата седмица?',
     m5_change_ph: '1 конкретно действие, което ще предприема по различен начин...',
     w_tab: 'Седмица {n}',
-    m5_week_of_4: 'Седмица {w} от 4 · Ден {d}/{t}',
+    m5_week_of_n: 'Седмица {w} от {n} · Ден {d}/{t}',
     m5_completed: 'Завършен · Ден {d}/{t}',
     m5_starts_in: 'Започва след {n} ден/дни · Ден 0/{t}',
     m5_month_done: 'Месец: {n}% готово',
@@ -1385,6 +1389,14 @@ function switchModule(id) {
 function switchMonth(val) {
   currentMonth = val;
   localStorage.setItem('partners_current_month', val);
+  // FIX (2026-08-21): pri prepnutí mesiaca sa musia prestavať week-panely
+  // podľa getWeekCount() NOVÉHO mesiaca — inak zostávajú v DOM staré
+  // input polia z predošlého mesiaca. To spôsobovalo, že gatherState()
+  // pri ukladaní čítalo neexistujúce/duch inputy ako prázdne hodnoty
+  // a prepisovalo nimi už uložené dáta v state.m5 (tichá strata dát
+  // pri prepnutí medzi mesiacom s 5 a 4 týždňami). buildWeekPanels()
+  // sa musí zavolať PRED loadMonth(), rovnako ako v init().
+  buildWeekPanels();
   loadMonth(val);
   updateMonthProgress();
 }
@@ -1883,8 +1895,10 @@ function updateMonthProgress() {
   let dayOfMonth, labelText;
   if (isCurrentMonth) {
     dayOfMonth = now.getDate();
-    const weekNum = Math.min(4, Math.max(1, Math.ceil(dayOfMonth / 7)));
-    labelText = t('m5_week_of_4', { w: weekNum, d: dayOfMonth, t: daysInMonth });
+    // FIX (2026-08-21): dynamický počet týždňov namiesto natvrdo "of 4"
+    const _numWeeks = getWeekCount(currentMonth);
+    const weekNum = Math.min(_numWeeks, Math.max(1, Math.ceil(dayOfMonth / 7)));
+    labelText = t('m5_week_of_n', { w: weekNum, n: _numWeeks, d: dayOfMonth, t: daysInMonth });
   } else if (isPast) {
     dayOfMonth = daysInMonth;
     labelText = t('m5_completed', { d: daysInMonth, t: daysInMonth });

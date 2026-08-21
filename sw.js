@@ -4,7 +4,11 @@
 //  pre Firebase, Google Fonts a admin.html.
 // ══════════════════════════════════════════
 
-const CACHE_NAME = 'partners-v3';
+// FIX (2026-08-21): bump verzie cache je NUTNÝ pri každom nasadení
+// opravy do index.html — appka je cache-first PWA, takže bez bumpu
+// by spolupracovníci s nainštalovanou appkou naďalej dostávali starú
+// (chybnú) verziu z cache a oprava straty dát by sa k nim nedostala.
+const CACHE_NAME = 'partners-v4';
 
 const CACHE_ASSETS = [
   '/partners-planning/',
